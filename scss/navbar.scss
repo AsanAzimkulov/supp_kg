@@ -11,10 +11,10 @@
 		color: $header-color;
 		font-weight: 500;
 		img {
-			width: 200px;
-			@media (max-width: 991px) {
-				width: 150px;
-			}
+			width: 44px;
+			// @media (max-width: 991px) {
+			// 	width: 150px;
+			// }
 		}
 	}
 	.navbar-nav {
