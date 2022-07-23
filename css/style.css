@@ -20999,3 +20999,172 @@ section {
     flex-wrap: wrap;
   }
 }
+
+#navbarTogglerDemo01 {
+  overflow-y: hidden;
+}
+
+
+/* For script styles */
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+  max-height: 100vh;
+}
+
+
+/* Cart Styles */
+nav {
+  margin-bottom: 1em !important;
+}
+
+.cart {
+  box-shadow: 0 0 5px #DDD;
+  padding: 20px;
+}
+
+.product-image {
+  max-width: 300px;
+  height: auto;
+}
+
+.product {
+  max-width: 300px;
+  min-height: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 50px;
+  margin-right: 3em;
+}
+
+
+.products {}
+
+
+.products-container {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+
+.icon-minus,
+.icon-plus {
+  font-size: 1.3em;
+}
+
+
+.product_control-round {
+  border-radius: 50%;
+  width: 20%;
+}
+
+.product_control-round-button {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.product-qty-input-wrapper {
+  width: 50%;
+}
+
+.product-qty-input-group {
+  display: flex;
+  justify-content: space-between;
+  height: 90px;
+  margin-top: 10px;
+}
+
+
+.product-add-to-cart-button {}
+
+.product-title {
+  height: 100px;
+  text-align: center;
+
+}
+
+
+@media(max-width: 1200px) and (min-width: 992px) {
+  .products-container {
+    justify-content: space-around;
+  }
+}
+
+@media(max-width: 768px) {
+  .product {
+    /* margin: 0 auto;
+    margin-bottom: 50px; */
+    max-width: 220px;
+    margin-right: 2em;
+  }
+
+  .product-image {
+    max-width: 220px;
+  }
+
+  .product-title {
+    height: 60px;
+  }
+
+  .product_control-round {
+    width: 15%;
+  }
+
+  .product_control-round-button {
+    width: 15%;
+  }
+
+
+  .product-qty-input-wrapper input {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .product-qty-input-wrapper {
+    width: 55%;
+    margin-left: 2em;
+  }
+
+}
+
+@media(max-width: 544px) {
+  .products-container {
+    justify-content: space-around;
+  }
+
+  .product {
+    max-width: 100%;
+    margin-right: 1em;
+  }
+
+  .product-image {
+    max-width: 100%;
+  }
+
+  .product_control-round {
+    width: 20%;
+  }
+
+  .product_control-round-button {
+    width: 20%;
+  }
+
+
+  .product-qty-input-wrapper input {
+    width: 100%;
+    margin: 0;
+  }
+
+  .product-qty-input-wrapper {
+    width: 55%;
+    margin-left: 9px;
+  }
+
+}
