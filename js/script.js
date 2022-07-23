@@ -78,6 +78,7 @@ var helpers = {
 
       name: object.getAttribute('data-name'),
       price: object.getAttribute('data-price'),
+      imageUrl: object.getAttribute('data-image-url'),
       id: object.getAttribute('data-id'),
       count: count.value,
       total: parseInt(object.getAttribute('data-price')) * parseInt(count.value)
@@ -99,7 +100,7 @@ var helpers = {
   },
   emptyView: function () {
 
-    this.setHtml('cartItems', '<p>Nothing to see here</p>');
+    this.setHtml('cartItems', '<p class="cart-empty-title">Корзина пуста</p>');
     this.updateTotal();
 
   },
@@ -144,6 +145,7 @@ var cart = {
 
       this.items.push({
         id: item.id,
+        imageUrl: item.imageUrl,
         name: item.name,
         price: item.price,
         count: item.count,
@@ -191,6 +193,7 @@ var cart = {
 
         _item.count = parseInt(object.count) + parseInt(_item.count);
         _item.total = parseInt(object.total) + parseInt(_item.total);
+        _item.imageUrl = object.imageUrl
         this.items[i] = _item;
         storage.saveCart(this.items);
 
