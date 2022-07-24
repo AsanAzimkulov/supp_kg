@@ -114,7 +114,7 @@
         </div>
         <ul class="navbar-nav ml-auto align-items-center">
           <li class="nav-item active">
-            <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#home">Главная<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#about">О нас</a>
@@ -155,7 +155,7 @@
                       * всю продукцию можно увидеть ниже
                     </span>
                   </p>
-                  <a href="#" class="btn btn-secondary mt-3">Купить</a>
+                  <a href="#products" class="btn btn-secondary mt-3">Купить</a>
                 </div>
                 <div class="mt-5 mt-lg-0">
                   <img src="images/bad_promo.png" alt="marsmello" class="img-fluid" data-aos="zoom-in-up">
@@ -307,15 +307,10 @@
         <h2 class="mb-5">Мы в соцсетях</h2>
         <div class="row">
           <div class="col-sm-12">
-            <div class="d-sm-flex justify-content-between align-items-center socials-fix">
+            <div class="d-sm-flex justify-content-between align-items-center socials-fix flex-wrap">
               <a href="https://api.whatsapp.com/send?phone=+996 708 488889">
                 <img src="images/whatsapp-text-logo.png" alt="WhatsApp" class="p-2 p-lg-0" data-aos="fade-down"
                   data-aos-offset="-400" width="170">
-              </a>
-              <a href="tel:+996 708 488889" class="social-link-phone">
-                <img src="images/phone-icon.png" alt="phone call icon" class="p-2 p-lg-0" data-aos="fade-up"
-                  data-aos-offset="-400" width="50" class="social-icons-phone-image">
-                <span>Позвонить</span>
               </a>
               <a href="mailto:12.510.i.s.i.510@gmail.com">
                 <img src="images/gmail-logo-text.png" alt="gmail" class="p-2 p-lg-0" data-aos="fade-down"
@@ -329,6 +324,11 @@
                 <img src="images/telegram-logo-text.png" alt="Telegram" class="p-2 p-lg-0" data-aos="fade-down"
                   data-aos-offset="-400" width="170">
               </a>
+              <a href="tel:+996 708 488889" class="social-link-phone">
+                <img src="images/phone-icon.png" alt="phone call icon" class="p-2 p-lg-0 social-icons-phone-image"
+                  data-aos="fade-up" data-aos-offset="-400" width="45">
+                <span data-aos="fade-up" data-aos-offset="-400">Позвонить</span>
+              </a>
             </div>
           </div>
         </div>
@@ -339,10 +339,14 @@
         <div>
           <h1 class="mb-5">Каталог:</h1>
           <div class="d-flex row products-container">
-            <div class="product medium-4 columns" data-name="Calcium, Magnesium & Zink" data-price="650" data-id="0"
-              data-image-url="images/calcium_magnesium_zink.png">
+            <div class="product medium-4 columns"
+              data-name="Кальций, магний, цинк, Calcium Magnesium & Zinc, Mason Natural, 100 таблеток" data-price="890"
+              data-id="0" data-image-url="images/calcium_magnesium_zink.png">
               <img src="images/calcium_magnesium_zink.png" alt="Calcium, Magnesium & Zink" class="product-image" />
-              <h3 class="product-title">Calcium, Magnesium & Zink</h3>
+              <h4 class="product-title">Кальций, магний, цинк, Calcium Magnesium & Zinc, Mason Natural, 100 таблеток
+              </h4>
+              <h5 class="product-price">Цена: <span>890</span> сом/шт</h5>
+
               <div class="input-group product-qty-input-group">
                 <span class="input-group-btn product_control-round">
                   <button type="button" class="btn btn-danger btn-number product_control-round-button" data-type="minus"
@@ -362,13 +366,14 @@
                 </span>
               </div>
               <!-- <input type="text" class="count" value="1" /> -->
-              <button class="tiny btn btn-outline-primary m-auto">Add to cart</button>
+              <button class="tiny btn btn-outline-primary m-auto">Добавить в корзину</button>
             </div>
-            <div class="product medium-4 columns" data-name="Zink citrate" data-price="600" data-id="1"
-              data-image-url="images/zinc_citrate.png">
+            <div class="product medium-4 columns" data-name="21st Century, цитрат цинка, 50 мг, 60 таблеток"
+              data-price="770" data-id="1" data-image-url="images/zinc_citrate.png">
               <img src="images/zinc_citrate.png" alt="Zink citrate" class="product-image" />
-              <h3 class="product-title">Zink citrate</h3>
+              <h4 class="product-title">21st Century, цитрат цинка, 50 мг, 60 таблеток</h4>
               <!-- <input type="text" class="count" value="1" /> -->
+              <h5 class="product-price">Цена: <span>770</span> сом/шт</h5>
               <div class="input-group product-qty-input-group">
                 <span class="input-group-btn product_control-round">
                   <button type="button" class="btn btn-danger btn-number product_control-round-button" data-type="minus"
@@ -387,12 +392,14 @@
                   </button>
                 </span>
               </div>
-              <button class="tiny btn btn-outline-primary m-auto product-add-to-cart-button">Add to cart</button>
+              <button class="tiny btn btn-outline-primary m-auto product-add-to-cart-button">Добавить в корзину</button>
             </div>
-            <div class="product medium-4 columns" data-name="L-Arginine Gold California" data-price="1250" data-id="2"
+            <div class="product medium-4 columns" data-name="L-Arginine Gold California" data-price="1000" data-id="2"
               data-image-url="images/l_arginine.png">
-              <img src="images/l_arginine.png" alt="L-Arginine Gold California" class="product-image" />
-              <h3 class="product-title">L-Arginine Gold California</h3>
+              <img src="images/l_arginine.png"
+                alt="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" class="product-image" />
+              <h4 class="product-title">California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул</h4>
+              <h5 class="product-price">Цена: <span>1000</span> сом/шт</h5>
               <!-- <input type="text" class="count" value="1" /> -->
               <div class="input-group product-qty-input-group">
                 <span class="input-group-btn product_control-round">
@@ -412,7 +419,7 @@
                   </button>
                 </span>
               </div>
-              <button class="tiny btn btn-outline-primary m-auto">Add to cart</button>
+              <button class="tiny btn btn-outline-primary m-auto">Добавить в корзину</button>
             </div>
           </div>
         </div>
@@ -475,13 +482,16 @@
             </address>
             <div class="social-icons">
               <h6 class="footer-title font-weight-bold">
-                Social Share
+                Поделиться в соцсетях
               </h6>
               <div class="d-flex">
-                <a href="#"><i class="mdi mdi-github-circle"></i></a>
-                <a href="#"><i class="mdi mdi-facebook-box"></i></a>
-                <a href="#"><i class="mdi mdi-twitter"></i></a>
-                <a href="#"><i class="mdi mdi-dribbble"></i></a>
+                <a href="https://api.whatsapp.com/send?text=Магазин Бадов г.Бишкек:%0ahttps://supp-kg.vercel.app/"><img
+                    src="images/whatsapp-text-logo.png" width="170px" alt="whatsapp" /></a>
+                <a href="mailto:?&subject=Магазин Бадов г.Бишкек:&body=https://supp-kg.vercel.app/"><img
+                    src="images/gmail-logo-text.png" class="footer-gmail-link" width="170px" alt="gmail" /></a>
+                <a
+                  href="https://telegram.me/share/url?url=https://telegram.me/share/url?url=<URL>&text=Магазин Бадов г.Бишкек:%0ahttps://supp-kg.vercel.app/"><img
+                    src="images/telegram-logo-text.png" class="mt-2" width="170px" alt="gmail" /></a>
               </div>
             </div>
           </div>
@@ -490,11 +500,11 @@
               <div class="col-sm-4 beg-footer-row">
                 <h6 class="footer-title">Social Share</h6>
                 <ul class="list-footer">
-                  <li><a href="#" class="footer-link">Home</a></li>
-                  <li><a href="#" class="footer-link">About</a></li>
-                  <li><a href="#" class="footer-link">Services</a></li>
-                  <li><a href="#" class="footer-link">Portfolio</a></li>
-                  <li><a href="#" class="footer-link">Contact</a></li>
+                  <li><a href="" class="footer-link">Home</a></li>
+                  <li><a href="" class="footer-link">About</a></li>
+                  <li><a href="" class="footer-link">Services</a></li>
+                  <li><a href="" class="footer-link">Portfolio</a></li>
+                  <li><a href="" class="footer-link">Contact</a></li>
                 </ul>
               </div>
             </div>
@@ -525,15 +535,7 @@
     <script type="text/template" id="cartT">
       <% _.each(items, function (item) { %> <div class = "panel product cart-item"> <img src=" <%= item.imageUrl %> " class = 'product-image' alt= " <%= item.imageUrl %> " /> <h3> <%= item.name %> </h3>  <span class="label">
     <%= item.count %>
-    <% if(item.count == 1)
-    {%>
-      штукa
-    <%}%>
-
-    <% if(item.count > 1)
-    {%>
-      штуки
-    <%}%> за <%= item.total %>сом</span > </div>
+    шт/<%= item.total %>сом</span > </div>
     <% }); %>
     </script>
   </footer>

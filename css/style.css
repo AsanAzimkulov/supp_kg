@@ -20426,7 +20426,7 @@ html {
 .home {
   background: url("../images/banner-bg.svg");
   background-repeat-y: no-repeat;
-  background-position: 0 -50px;
+  background-position: 0 -48px;
   padding-top: 103px;
 }
 
@@ -21082,9 +21082,21 @@ section {
 .product-add-to-cart-button {}
 
 .product-title {
-  height: 100px;
+  height: 130px;
   text-align: center;
+  font-size: 1.6em;
+}
 
+@media(max-width: 768px) {
+  .product-title {
+    height: 140px !important;
+    font-size: 1.4em;
+  }
+
+}
+
+.product-price {
+  color: #2c2d34;
 }
 
 
@@ -21176,16 +21188,71 @@ section {
   width: 170px;
   text-decoration: none;
   color: black;
-  font-size: 1.3em;
+  font-size: 1.4em;
   font-weight: 500;
+  display: flex;
+  flex-wrap: no-wrap;
+  align-items: center;
+}
+
+@media(max-width: 372px) {
+  .socials-fix img {
+    display: block;
+    margin: 0 auto;
+    width: 80vw;
+  }
+
+  .social-link-phone img {
+    display: inline;
+    margin: 0;
+    width: 70px !important;
+  }
+
+  .social-link-phone {
+    margin: 0 auto;
+    display: flex;
+    width: 80vw;
+    font-size: 1.8em;
+  }
+}
+
+@media (min-width: 768px)and (max-width: 992px) {
+  .social-link-phone {
+    margin-right: 25px;
+  }
+}
+
+@media(max-width: 768px) {
+  .social-link-phone {
+    margin-top: 20px;
+  }
 }
 
 .social-link-phone span {
   margin-left: 10px;
 }
 
+@media(max-width: 992px) {
+  .social-icons-phone-image {
+    width: 60px !important;
 
-.social-icons-phone-image {}
+  }
+}
+
+@media(min-width: 991px) {
+  .social-icons-phone-image {
+    width: 45px;
+
+  }
+}
+
+/* @media(min-width: 991px) and (max-width: 991px) {
+  .social-icons-phone {
+    width: 100%;
+  }
+} */
+
+
 
 /* Cart Styles */
 nav {
@@ -21220,6 +21287,7 @@ nav {
 
 .cart-item h3 {
   margin: 6px;
+  font-size: 1.4em;
 }
 
 .cart-item {}
@@ -21265,6 +21333,12 @@ nav {
   display: flex;
   justify-self: flex-start;
   justify-content: space-between;
+}
+
+@media(min-width: 559px) {
+  .cart .row {
+    margin-bottom: 30px;
+  }
 }
 
 .cart .row>div {
@@ -21321,4 +21395,12 @@ nav {
   .cart-item:last-child {
     margin-left: 0;
   }
+}
+
+
+
+/* footer */
+
+.footer-gmail-link {
+  margin-top: -1em;
 }
