@@ -21079,7 +21079,14 @@ section {
 }
 
 
-.product-add-to-cart-button {}
+@media(max-width: 600px) {
+  .product-add-to-cart-button {
+    height: 70px;
+    font-size: 1.3em;
+  }
+}
+
+
 
 .product-title {
   height: 130px;
@@ -21332,6 +21339,11 @@ nav {
   .cart {
     width: calc(100vw + 20px);
     margin-left: 5px;
+  }
+
+  .cart .row button {
+    height: 60px;
+    font-size: 1.2em;
   }
 }
 
