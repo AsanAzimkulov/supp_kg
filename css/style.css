@@ -20976,6 +20976,7 @@ section {
 
 
 
+
 @media(max-width: 800px) {
   .fixed-cart {
     margin-left: 80vw;
@@ -21448,7 +21449,7 @@ nav {
 
 
 
-.cart-overlay #popup-cart-overlay {
+.overlay #app-overlay {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -21480,10 +21481,6 @@ nav {
   }
 }
 
-
-.cart-item:last-child {
-  margin-left: 1.7em;
-}
 
 @media(min-width: 1201px) {
   .cart-item:last-child {

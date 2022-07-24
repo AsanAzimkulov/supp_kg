@@ -69,7 +69,6 @@ var helpers = {
 
   },
   itemData: function (object) {
-
     var count = object.querySelector(".count"),
       patt = new RegExp("^[1-9]([0-9]+)?$");
     count.value = (patt.test(count.value) === true) ? parseInt(count.value) : 1;
@@ -217,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
     helpers.emptyView();
 
   }
-  var products = document.querySelectorAll('.product button');
+  var products = document.querySelectorAll('.product-add-to-cart-button');
   [].forEach.call(products, function (product) {
 
     product.addEventListener('click', function (e) {

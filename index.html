@@ -31,7 +31,6 @@
         templateId: 'template_n5c9a8q',
       }
     }
-
   </script>
   <script type="text/javascript">
       (function () {
@@ -99,8 +98,31 @@
 
     </div>
   </div>
+
+
+  <div class="product-popup">
+    <div class="medium-4 columns">
+      <div class="product-popup-body">
+        <a href="javascript:;" class="close-cart"><i class="mdi mdi-close"></i></a>
+        <h1>Корзина</h1>
+        <div class="row">
+          <div class="medium-6 columns">
+            <button class="tiny btn btn-outline-primary m-auto" id="clear">Очистить корзину</button>
+          </div>
+          <div class="medium-6 columns">
+            <button class="tiny btn btn-outline-primary m-auto" id='to-checkout'
+              title="Work in progress">Заказать</button>
+          </div>
+        </div>
+        <div id="cartItems" class="products-container">Loading cart...</div>
+        <hr style="margin: 0 0 10px 0" />
+        <p style='font-size: 1.1em;'>Стоимость: <strong id="totalPrice">0 сом</strong></p>
+      </div>
+
+    </div>
+  </div>
   <div id="mobile-menu-overlay"></div>
-  <div id="popup-cart-overlay"></div>
+  <div id="app-overlay"></div>
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#"><img src="images/logobad.svg" alt="Marshmallow" height="64"><span
@@ -399,9 +421,10 @@
             </div>
             <div class="product medium-4 columns" data-name="L-Arginine Gold California" data-price="1000" data-id="2"
               data-image-url="images/l_arginine.png">
-              <img src="images/l_arginine.png"
-                alt="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" class="product-image" />
-              <h4 class="product-title">California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул</h4>
+              <div class="div"><img src="images/l_arginine.png"
+                  alt="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" class="product-image" />
+                <h4 class="product-title">California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул</h4>
+              </div>
               <h5 class="product-price">Цена: <span>1000</span> сом/шт</h5>
               <!-- <input type="text" class="count" value="1" /> -->
               <div class="input-group product-qty-input-group">
@@ -448,13 +471,13 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <input class="form-control contact-way" id="mail" placeholder="Способ связи*" name="contact_way"
-                      type="text">
+                      type="text" required minlength="5">
                   </div>
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <textarea name="message" id="message" class="form-control message" placeholder="Сообщение*" rows="5"
-                      required minlength="5"></textarea>
+                    <textarea name="message" id="message" class="form-control message" placeholder="Сообщение*"
+                      rows="5"></textarea>
                   </div>
                 </div>
                 <div class="col-sm-12">
@@ -548,6 +571,8 @@
   <script src="vendors/jquery-flipster/js/jquery.flipster.min.js"></script>
   <script src="js/template.js"></script>
   <script src="js/plus_minus.js" type="text/javascript"></script>
+  <script src="js/main.js"></script>
+  <script src="js/product.js"></script>
 </body>
 
 </html>
