@@ -46,6 +46,7 @@
       $('body').removeClass("cart-overlay");
       $('body').removeClass('overflow-y-hidden');
     });
+    $('.cart').on("click", (e) => e.stopPropagation())
 
     $("#to-checkout").click(function () {
       $('.navbar').removeClass('navbar-mobile-hidden')

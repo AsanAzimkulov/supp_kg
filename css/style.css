@@ -20385,7 +20385,7 @@ h6,
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 99;
+  z-index: 109;
   -webkit-transition: all .9s;
   -moz-transition: all .8s;
   -ms-transition: all .8s;
@@ -20409,7 +20409,7 @@ h6,
 }
 
 .sidebar-overlay .navbar .navbar-collapse {
-  z-index: 100;
+  z-index: 110;
 }
 
 .sidebar-overlay.fixed-on-scroll {
@@ -21376,7 +21376,7 @@ nav {
 }
 
 .cart .row button {
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 
 @media(max-width: 600px) {
@@ -21416,13 +21416,15 @@ nav {
   display: flex;
   justify-content: center;
   position: fixed;
-  z-index: 9999;
-  width: 100vw;
+  z-index: 100;
+  width: 102vw;
   height: 100vh;
   display: none;
   overflow-y: scroll;
 
 }
+
+
 
 .close-cart {
   display: flex;
@@ -21517,5 +21519,15 @@ nav {
 @media(min-width:576px) and (max-width: 767px) {
   .footer-gmail-link {
     margin-left: -1em;
+  }
+}
+
+@media(min-width: 1200px) {
+  .footer-socials img {
+    width: 150px;
+  }
+
+  .footer-socials {
+    justify-content: space-between;
   }
 }
