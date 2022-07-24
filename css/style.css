@@ -21150,6 +21150,22 @@ section {
 
 }
 
+
+.home-main-button {
+  font-size: 1.3em;
+}
+
+@media(max-width: 600px) {
+  .home-main-button {
+    font-size: 1.4em;
+    margin-top: 10px;
+  }
+
+  .form-send-button {
+    font-size: 1.3em;
+  }
+}
+
 @media(max-width: 544px) {
   .products-container {
     justify-content: space-around;
@@ -21202,6 +21218,11 @@ section {
   align-items: center;
 }
 
+.social-link-phone:hover {
+  color: black;
+  text-decoration: none;
+}
+
 @media(max-width: 372px) {
   .socials-fix img {
     display: block;
@@ -21212,14 +21233,30 @@ section {
   .social-link-phone img {
     display: inline;
     margin: 0;
-    width: 70px !important;
+    width: 85px !important;
   }
 
   .social-link-phone {
     margin: 0 auto;
     display: flex;
     width: 80vw;
-    font-size: 1.8em;
+    font-size: 2.3em;
+  }
+
+  .social-link-gmail {
+    display: block;
+    margin: -2em 0 -2em -2.3em;
+  }
+
+  .social-link-telegram-wrapper {
+    width: 76vw !important;
+    margin-left: -4px;
+  }
+}
+
+@media(max-width: 402px) {
+  .social-link-telegram {
+    margin-top: 1em;
   }
 }
 
@@ -21252,6 +21289,9 @@ section {
 
   }
 }
+
+
+
 
 /* @media(min-width: 991px) and (max-width: 991px) {
   .social-icons-phone {
@@ -21313,6 +21353,7 @@ nav {
   margin-left: 30px;
   min-width: 300px;
   min-height: 300px;
+  pointer-events: all;
 
 }
 
@@ -21334,6 +21375,9 @@ nav {
   }
 }
 
+.cart .row button {
+  font-size: 1.5em;
+}
 
 @media(max-width: 600px) {
   .cart {
@@ -21383,8 +21427,24 @@ nav {
 .close-cart {
   display: flex;
   justify-content: flex-end;
-  font-size: 2em;
+  font-size: 2.2em;
 }
+
+@media(max-width: 768px) {
+  .close-cart {
+    font-size: 2.4em;
+  }
+}
+
+@media(max-width: 500px) {
+  .close-cart {
+    font-size: 2.6em;
+  }
+}
+
+
+
+
 
 .cart-overlay #popup-cart-overlay {
   position: fixed;
@@ -21435,4 +21495,27 @@ nav {
 
 .footer-gmail-link {
   margin-top: -1em;
+}
+
+@media(max-width: 368px) {
+  .footer-gmail-link {
+    width: 190px;
+    margin-left: -1em;
+    margin-top: 1em !important;
+  }
+}
+
+
+
+@media(min-width:576px) and (max-width: 991px) {
+  .footer-gmail-link {
+    margin-top: 0.8em !important;
+    /* margin-left: -1em; */
+  }
+}
+
+@media(min-width:576px) and (max-width: 767px) {
+  .footer-gmail-link {
+    margin-left: -1em;
+  }
 }

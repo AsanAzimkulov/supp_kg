@@ -39,7 +39,8 @@
       $('body').addClass("cart-overlay");
       $('body').addClass('overflow-y-hidden');
     });
-    $("#popup-cart-overlay, .close-cart").click(function () {
+
+    $(".cart-wrapper, .close-cart").click(function () {
       $('.navbar').removeClass('navbar-mobile-hidden')
       $('.cart-wrapper').removeClass('d-block');
       $('body').removeClass("cart-overlay");
