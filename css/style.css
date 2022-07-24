@@ -21302,7 +21302,7 @@ nav {
   padding: 40px;
   background: white;
   transform: scale(0.8);
-  margin-top: -30px;
+  margin-top: -10px;
   margin-left: 30px;
   min-width: 300px;
   min-height: 300px;
@@ -21324,6 +21324,14 @@ nav {
 @media(min-width: 2500px) {
   .cart {
     margin-top: 10vh;
+  }
+}
+
+
+@media(max-width: 600px) {
+  .cart {
+    width: calc(100vw + 20px);
+    margin-left: 5px;
   }
 }
 
@@ -21384,6 +21392,18 @@ nav {
 .cart-empty-title {
   font-size: 3em;
   margin: 50px auto;
+}
+
+@media(max-width: 426px) {
+  .cart-empty-title {
+    font-size: 2.5em;
+  }
+}
+
+@media(max-width: 375px) {
+  .cart-empty-title {
+    font-size: 2em;
+  }
 }
 
 
