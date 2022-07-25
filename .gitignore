@@ -3,7 +3,6 @@ package-lock.json
 **/.DS_Store
 gulpfile.js
 package-lock.json
-vendors
-scss
+vendors/
+scss/
 .vscode
-node_modules
