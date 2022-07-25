@@ -1,3 +1,8 @@
 node_modules/
 package-lock.json
 **/.DS_Store
+gulpfile.js
+package-lock.json
+vendors
+scss
+.vscode
