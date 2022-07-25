@@ -14,2132 +14,3459 @@
   */
 !function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports,require("jquery"),require("popper.js")):"function"==typeof define&&define.amd?define(["exports","jquery","popper.js"],e):e((t="undefined"!=typeof globalThis?globalThis:t||self).bootstrap={},t.jQuery,t.Popper)}(this,(function(t,e,n){"use strict";function i(t){return t&&"object"==typeof t&&"default"in t?t:{default:t}}var o=i(e),a=i(n);function s(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}function l(t,e,n){return e&&s(t.prototype,e),n&&s(t,n),Object.defineProperty(t,"prototype",{writable:!1}),t}function r(){return r=Object.assign?Object.assign.bind():function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var i in n)Object.prototype.hasOwnProperty.call(n,i)&&(t[i]=n[i])}return t},r.apply(this,arguments)}function u(t,e){return u=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(t,e){return t.__proto__=e,t},u(t,e)}var f="transitionend";var d={TRANSITION_END:"bsTransitionEnd",getUID:function(t){do{t+=~~(1e6*Math.random())}while(document.getElementById(t));return t},getSelectorFromElement:function(t){var e=t.getAttribute("data-target");if(!e||"#"===e){var n=t.getAttribute("href");e=n&&"#"!==n?n.trim():""}try{return document.querySelector(e)?e:null}catch(t){return null}},getTransitionDurationFromElement:function(t){if(!t)return 0;var e=o.default(t).css("transition-duration"),n=o.default(t).css("transition-delay"),i=parseFloat(e),a=parseFloat(n);return i||a?(e=e.split(",")[0],n=n.split(",")[0],1e3*(parseFloat(e)+parseFloat(n))):0},reflow:function(t){return t.offsetHeight},triggerTransitionEnd:function(t){o.default(t).trigger(f)},supportsTransitionEnd:function(){return Boolean(f)},isElement:function(t){return(t[0]||t).nodeType},typeCheckConfig:function(t,e,n){for(var i in n)if(Object.prototype.hasOwnProperty.call(n,i)){var o=n[i],a=e[i],s=a&&d.isElement(a)?"element":null===(l=a)||"undefined"==typeof l?""+l:{}.toString.call(l).match(/\s([a-z]+)/i)[1].toLowerCase();if(!new RegExp(o).test(s))throw new Error(t.toUpperCase()+': Option "'+i+'" provided type "'+s+'" but expected type "'+o+'".')}var l},findShadowRoot:function(t){if(!document.documentElement.attachShadow)return null;if("function"==typeof t.getRootNode){var e=t.getRootNode();return e instanceof ShadowRoot?e:null}return t instanceof ShadowRoot?t:t.parentNode?d.findShadowRoot(t.parentNode):null},jQueryDetection:function(){if("undefined"==typeof o.default)throw new TypeError("Bootstrap's JavaScript requires jQuery. jQuery must be included before Bootstrap's JavaScript.");var t=o.default.fn.jquery.split(" ")[0].split(".");if(t[0]<2&&t[1]<9||1===t[0]&&9===t[1]&&t[2]<1||t[0]>=4)throw new Error("Bootstrap's JavaScript requires at least jQuery v1.9.1 but less than v4.0.0")}};d.jQueryDetection(),o.default.fn.emulateTransitionEnd=function(t){var e=this,n=!1;return o.default(this).one(d.TRANSITION_END,(function(){n=!0})),setTimeout((function(){n||d.triggerTransitionEnd(e)}),t),this},o.default.event.special[d.TRANSITION_END]={bindType:f,delegateType:f,handle:function(t){if(o.default(t.target).is(this))return t.handleObj.handler.apply(this,arguments)}};var c="bs.alert",h=o.default.fn.alert,g=function(){function t(t){this._element=t}var e=t.prototype;return e.close=function(t){var e=this._element;t&&(e=this._getRootElement(t)),this._triggerCloseEvent(e).isDefaultPrevented()||this._removeElement(e)},e.dispose=function(){o.default.removeData(this._element,c),this._element=null},e._getRootElement=function(t){var e=d.getSelectorFromElement(t),n=!1;return e&&(n=document.querySelector(e)),n||(n=o.default(t).closest(".alert")[0]),n},e._triggerCloseEvent=function(t){var e=o.default.Event("close.bs.alert");return o.default(t).trigger(e),e},e._removeElement=function(t){var e=this;if(o.default(t).removeClass("show"),o.default(t).hasClass("fade")){var n=d.getTransitionDurationFromElement(t);o.default(t).one(d.TRANSITION_END,(function(n){return e._destroyElement(t,n)})).emulateTransitionEnd(n)}else this._destroyElement(t)},e._destroyElement=function(t){o.default(t).detach().trigger("closed.bs.alert").remove()},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this),i=n.data(c);i||(i=new t(this),n.data(c,i)),"close"===e&&i[e](this)}))},t._handleDismiss=function(t){return function(e){e&&e.preventDefault(),t.close(this)}},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}}]),t}();o.default(document).on("click.bs.alert.data-api",'[data-dismiss="alert"]',g._handleDismiss(new g)),o.default.fn.alert=g._jQueryInterface,o.default.fn.alert.Constructor=g,o.default.fn.alert.noConflict=function(){return o.default.fn.alert=h,g._jQueryInterface};var m="bs.button",p=o.default.fn.button,_="active",v='[data-toggle^="button"]',y='input:not([type="hidden"])',b=".btn",E=function(){function t(t){this._element=t,this.shouldAvoidTriggerChange=!1}var e=t.prototype;return e.toggle=function(){var t=!0,e=!0,n=o.default(this._element).closest('[data-toggle="buttons"]')[0];if(n){var i=this._element.querySelector(y);if(i){if("radio"===i.type)if(i.checked&&this._element.classList.contains(_))t=!1;else{var a=n.querySelector(".active");a&&o.default(a).removeClass(_)}t&&("checkbox"!==i.type&&"radio"!==i.type||(i.checked=!this._element.classList.contains(_)),this.shouldAvoidTriggerChange||o.default(i).trigger("change")),i.focus(),e=!1}}this._element.hasAttribute("disabled")||this._element.classList.contains("disabled")||(e&&this._element.setAttribute("aria-pressed",!this._element.classList.contains(_)),t&&o.default(this._element).toggleClass(_))},e.dispose=function(){o.default.removeData(this._element,m),this._element=null},t._jQueryInterface=function(e,n){return this.each((function(){var i=o.default(this),a=i.data(m);a||(a=new t(this),i.data(m,a)),a.shouldAvoidTriggerChange=n,"toggle"===e&&a[e]()}))},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}}]),t}();o.default(document).on("click.bs.button.data-api",v,(function(t){var e=t.target,n=e;if(o.default(e).hasClass("btn")||(e=o.default(e).closest(b)[0]),!e||e.hasAttribute("disabled")||e.classList.contains("disabled"))t.preventDefault();else{var i=e.querySelector(y);if(i&&(i.hasAttribute("disabled")||i.classList.contains("disabled")))return void t.preventDefault();"INPUT"!==n.tagName&&"LABEL"===e.tagName||E._jQueryInterface.call(o.default(e),"toggle","INPUT"===n.tagName)}})).on("focus.bs.button.data-api blur.bs.button.data-api",v,(function(t){var e=o.default(t.target).closest(b)[0];o.default(e).toggleClass("focus",/^focus(in)?$/.test(t.type))})),o.default(window).on("load.bs.button.data-api",(function(){for(var t=[].slice.call(document.querySelectorAll('[data-toggle="buttons"] .btn')),e=0,n=t.length;e<n;e++){var i=t[e],o=i.querySelector(y);o.checked||o.hasAttribute("checked")?i.classList.add(_):i.classList.remove(_)}for(var a=0,s=(t=[].slice.call(document.querySelectorAll('[data-toggle="button"]'))).length;a<s;a++){var l=t[a];"true"===l.getAttribute("aria-pressed")?l.classList.add(_):l.classList.remove(_)}})),o.default.fn.button=E._jQueryInterface,o.default.fn.button.Constructor=E,o.default.fn.button.noConflict=function(){return o.default.fn.button=p,E._jQueryInterface};var T="carousel",w="bs.carousel",C=o.default.fn[T],S="active",N="next",D="prev",A="slid.bs.carousel",I=".active.carousel-item",k={interval:5e3,keyboard:!0,slide:!1,pause:"hover",wrap:!0,touch:!0},O={interval:"(number|boolean)",keyboard:"boolean",slide:"(boolean|string)",pause:"(string|boolean)",wrap:"boolean",touch:"boolean"},j={TOUCH:"touch",PEN:"pen"},P=function(){function t(t,e){this._items=null,this._interval=null,this._activeElement=null,this._isPaused=!1,this._isSliding=!1,this.touchTimeout=null,this.touchStartX=0,this.touchDeltaX=0,this._config=this._getConfig(e),this._element=t,this._indicatorsElement=this._element.querySelector(".carousel-indicators"),this._touchSupported="ontouchstart"in document.documentElement||navigator.maxTouchPoints>0,this._pointerEvent=Boolean(window.PointerEvent||window.MSPointerEvent),this._addEventListeners()}var e=t.prototype;return e.next=function(){this._isSliding||this._slide(N)},e.nextWhenVisible=function(){var t=o.default(this._element);!document.hidden&&t.is(":visible")&&"hidden"!==t.css("visibility")&&this.next()},e.prev=function(){this._isSliding||this._slide(D)},e.pause=function(t){t||(this._isPaused=!0),this._element.querySelector(".carousel-item-next, .carousel-item-prev")&&(d.triggerTransitionEnd(this._element),this.cycle(!0)),clearInterval(this._interval),this._interval=null},e.cycle=function(t){t||(this._isPaused=!1),this._interval&&(clearInterval(this._interval),this._interval=null),this._config.interval&&!this._isPaused&&(this._updateInterval(),this._interval=setInterval((document.visibilityState?this.nextWhenVisible:this.next).bind(this),this._config.interval))},e.to=function(t){var e=this;this._activeElement=this._element.querySelector(I);var n=this._getItemIndex(this._activeElement);if(!(t>this._items.length-1||t<0))if(this._isSliding)o.default(this._element).one(A,(function(){return e.to(t)}));else{if(n===t)return this.pause(),void this.cycle();var i=t>n?N:D;this._slide(i,this._items[t])}},e.dispose=function(){o.default(this._element).off(".bs.carousel"),o.default.removeData(this._element,w),this._items=null,this._config=null,this._element=null,this._interval=null,this._isPaused=null,this._isSliding=null,this._activeElement=null,this._indicatorsElement=null},e._getConfig=function(t){return t=r({},k,t),d.typeCheckConfig(T,t,O),t},e._handleSwipe=function(){var t=Math.abs(this.touchDeltaX);if(!(t<=40)){var e=t/this.touchDeltaX;this.touchDeltaX=0,e>0&&this.prev(),e<0&&this.next()}},e._addEventListeners=function(){var t=this;this._config.keyboard&&o.default(this._element).on("keydown.bs.carousel",(function(e){return t._keydown(e)})),"hover"===this._config.pause&&o.default(this._element).on("mouseenter.bs.carousel",(function(e){return t.pause(e)})).on("mouseleave.bs.carousel",(function(e){return t.cycle(e)})),this._config.touch&&this._addTouchEventListeners()},e._addTouchEventListeners=function(){var t=this;if(this._touchSupported){var e=function(e){t._pointerEvent&&j[e.originalEvent.pointerType.toUpperCase()]?t.touchStartX=e.originalEvent.clientX:t._pointerEvent||(t.touchStartX=e.originalEvent.touches[0].clientX)},n=function(e){t._pointerEvent&&j[e.originalEvent.pointerType.toUpperCase()]&&(t.touchDeltaX=e.originalEvent.clientX-t.touchStartX),t._handleSwipe(),"hover"===t._config.pause&&(t.pause(),t.touchTimeout&&clearTimeout(t.touchTimeout),t.touchTimeout=setTimeout((function(e){return t.cycle(e)}),500+t._config.interval))};o.default(this._element.querySelectorAll(".carousel-item img")).on("dragstart.bs.carousel",(function(t){return t.preventDefault()})),this._pointerEvent?(o.default(this._element).on("pointerdown.bs.carousel",(function(t){return e(t)})),o.default(this._element).on("pointerup.bs.carousel",(function(t){return n(t)})),this._element.classList.add("pointer-event")):(o.default(this._element).on("touchstart.bs.carousel",(function(t){return e(t)})),o.default(this._element).on("touchmove.bs.carousel",(function(e){return function(e){t.touchDeltaX=e.originalEvent.touches&&e.originalEvent.touches.length>1?0:e.originalEvent.touches[0].clientX-t.touchStartX}(e)})),o.default(this._element).on("touchend.bs.carousel",(function(t){return n(t)})))}},e._keydown=function(t){if(!/input|textarea/i.test(t.target.tagName))switch(t.which){case 37:t.preventDefault(),this.prev();break;case 39:t.preventDefault(),this.next()}},e._getItemIndex=function(t){return this._items=t&&t.parentNode?[].slice.call(t.parentNode.querySelectorAll(".carousel-item")):[],this._items.indexOf(t)},e._getItemByDirection=function(t,e){var n=t===N,i=t===D,o=this._getItemIndex(e),a=this._items.length-1;if((i&&0===o||n&&o===a)&&!this._config.wrap)return e;var s=(o+(t===D?-1:1))%this._items.length;return-1===s?this._items[this._items.length-1]:this._items[s]},e._triggerSlideEvent=function(t,e){var n=this._getItemIndex(t),i=this._getItemIndex(this._element.querySelector(I)),a=o.default.Event("slide.bs.carousel",{relatedTarget:t,direction:e,from:i,to:n});return o.default(this._element).trigger(a),a},e._setActiveIndicatorElement=function(t){if(this._indicatorsElement){var e=[].slice.call(this._indicatorsElement.querySelectorAll(".active"));o.default(e).removeClass(S);var n=this._indicatorsElement.children[this._getItemIndex(t)];n&&o.default(n).addClass(S)}},e._updateInterval=function(){var t=this._activeElement||this._element.querySelector(I);if(t){var e=parseInt(t.getAttribute("data-interval"),10);e?(this._config.defaultInterval=this._config.defaultInterval||this._config.interval,this._config.interval=e):this._config.interval=this._config.defaultInterval||this._config.interval}},e._slide=function(t,e){var n,i,a,s=this,l=this._element.querySelector(I),r=this._getItemIndex(l),u=e||l&&this._getItemByDirection(t,l),f=this._getItemIndex(u),c=Boolean(this._interval);if(t===N?(n="carousel-item-left",i="carousel-item-next",a="left"):(n="carousel-item-right",i="carousel-item-prev",a="right"),u&&o.default(u).hasClass(S))this._isSliding=!1;else if(!this._triggerSlideEvent(u,a).isDefaultPrevented()&&l&&u){this._isSliding=!0,c&&this.pause(),this._setActiveIndicatorElement(u),this._activeElement=u;var h=o.default.Event(A,{relatedTarget:u,direction:a,from:r,to:f});if(o.default(this._element).hasClass("slide")){o.default(u).addClass(i),d.reflow(u),o.default(l).addClass(n),o.default(u).addClass(n);var g=d.getTransitionDurationFromElement(l);o.default(l).one(d.TRANSITION_END,(function(){o.default(u).removeClass(n+" "+i).addClass(S),o.default(l).removeClass("active "+i+" "+n),s._isSliding=!1,setTimeout((function(){return o.default(s._element).trigger(h)}),0)})).emulateTransitionEnd(g)}else o.default(l).removeClass(S),o.default(u).addClass(S),this._isSliding=!1,o.default(this._element).trigger(h);c&&this.cycle()}},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this).data(w),i=r({},k,o.default(this).data());"object"==typeof e&&(i=r({},i,e));var a="string"==typeof e?e:i.slide;if(n||(n=new t(this,i),o.default(this).data(w,n)),"number"==typeof e)n.to(e);else if("string"==typeof a){if("undefined"==typeof n[a])throw new TypeError('No method named "'+a+'"');n[a]()}else i.interval&&i.ride&&(n.pause(),n.cycle())}))},t._dataApiClickHandler=function(e){var n=d.getSelectorFromElement(this);if(n){var i=o.default(n)[0];if(i&&o.default(i).hasClass("carousel")){var a=r({},o.default(i).data(),o.default(this).data()),s=this.getAttribute("data-slide-to");s&&(a.interval=!1),t._jQueryInterface.call(o.default(i),a),s&&o.default(i).data(w).to(s),e.preventDefault()}}},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"Default",get:function(){return k}}]),t}();o.default(document).on("click.bs.carousel.data-api","[data-slide], [data-slide-to]",P._dataApiClickHandler),o.default(window).on("load.bs.carousel.data-api",(function(){for(var t=[].slice.call(document.querySelectorAll('[data-ride="carousel"]')),e=0,n=t.length;e<n;e++){var i=o.default(t[e]);P._jQueryInterface.call(i,i.data())}})),o.default.fn[T]=P._jQueryInterface,o.default.fn[T].Constructor=P,o.default.fn[T].noConflict=function(){return o.default.fn[T]=C,P._jQueryInterface};var L="collapse",R="bs.collapse",x=o.default.fn[L],q="show",F="collapse",Q="collapsing",B="collapsed",H="width",U='[data-toggle="collapse"]',M={toggle:!0,parent:""},W={toggle:"boolean",parent:"(string|element)"},V=function(){function t(t,e){this._isTransitioning=!1,this._element=t,this._config=this._getConfig(e),this._triggerArray=[].slice.call(document.querySelectorAll('[data-toggle="collapse"][href="#'+t.id+'"],[data-toggle="collapse"][data-target="#'+t.id+'"]'));for(var n=[].slice.call(document.querySelectorAll(U)),i=0,o=n.length;i<o;i++){var a=n[i],s=d.getSelectorFromElement(a),l=[].slice.call(document.querySelectorAll(s)).filter((function(e){return e===t}));null!==s&&l.length>0&&(this._selector=s,this._triggerArray.push(a))}this._parent=this._config.parent?this._getParent():null,this._config.parent||this._addAriaAndCollapsedClass(this._element,this._triggerArray),this._config.toggle&&this.toggle()}var e=t.prototype;return e.toggle=function(){o.default(this._element).hasClass(q)?this.hide():this.show()},e.show=function(){var e,n,i=this;if(!(this._isTransitioning||o.default(this._element).hasClass(q)||(this._parent&&0===(e=[].slice.call(this._parent.querySelectorAll(".show, .collapsing")).filter((function(t){return"string"==typeof i._config.parent?t.getAttribute("data-parent")===i._config.parent:t.classList.contains(F)}))).length&&(e=null),e&&(n=o.default(e).not(this._selector).data(R))&&n._isTransitioning))){var a=o.default.Event("show.bs.collapse");if(o.default(this._element).trigger(a),!a.isDefaultPrevented()){e&&(t._jQueryInterface.call(o.default(e).not(this._selector),"hide"),n||o.default(e).data(R,null));var s=this._getDimension();o.default(this._element).removeClass(F).addClass(Q),this._element.style[s]=0,this._triggerArray.length&&o.default(this._triggerArray).removeClass(B).attr("aria-expanded",!0),this.setTransitioning(!0);var l="scroll"+(s[0].toUpperCase()+s.slice(1)),r=d.getTransitionDurationFromElement(this._element);o.default(this._element).one(d.TRANSITION_END,(function(){o.default(i._element).removeClass(Q).addClass("collapse show"),i._element.style[s]="",i.setTransitioning(!1),o.default(i._element).trigger("shown.bs.collapse")})).emulateTransitionEnd(r),this._element.style[s]=this._element[l]+"px"}}},e.hide=function(){var t=this;if(!this._isTransitioning&&o.default(this._element).hasClass(q)){var e=o.default.Event("hide.bs.collapse");if(o.default(this._element).trigger(e),!e.isDefaultPrevented()){var n=this._getDimension();this._element.style[n]=this._element.getBoundingClientRect()[n]+"px",d.reflow(this._element),o.default(this._element).addClass(Q).removeClass("collapse show");var i=this._triggerArray.length;if(i>0)for(var a=0;a<i;a++){var s=this._triggerArray[a],l=d.getSelectorFromElement(s);null!==l&&(o.default([].slice.call(document.querySelectorAll(l))).hasClass(q)||o.default(s).addClass(B).attr("aria-expanded",!1))}this.setTransitioning(!0),this._element.style[n]="";var r=d.getTransitionDurationFromElement(this._element);o.default(this._element).one(d.TRANSITION_END,(function(){t.setTransitioning(!1),o.default(t._element).removeClass(Q).addClass(F).trigger("hidden.bs.collapse")})).emulateTransitionEnd(r)}}},e.setTransitioning=function(t){this._isTransitioning=t},e.dispose=function(){o.default.removeData(this._element,R),this._config=null,this._parent=null,this._element=null,this._triggerArray=null,this._isTransitioning=null},e._getConfig=function(t){return(t=r({},M,t)).toggle=Boolean(t.toggle),d.typeCheckConfig(L,t,W),t},e._getDimension=function(){return o.default(this._element).hasClass(H)?H:"height"},e._getParent=function(){var e,n=this;d.isElement(this._config.parent)?(e=this._config.parent,"undefined"!=typeof this._config.parent.jquery&&(e=this._config.parent[0])):e=document.querySelector(this._config.parent);var i='[data-toggle="collapse"][data-parent="'+this._config.parent+'"]',a=[].slice.call(e.querySelectorAll(i));return o.default(a).each((function(e,i){n._addAriaAndCollapsedClass(t._getTargetFromElement(i),[i])})),e},e._addAriaAndCollapsedClass=function(t,e){var n=o.default(t).hasClass(q);e.length&&o.default(e).toggleClass(B,!n).attr("aria-expanded",n)},t._getTargetFromElement=function(t){var e=d.getSelectorFromElement(t);return e?document.querySelector(e):null},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this),i=n.data(R),a=r({},M,n.data(),"object"==typeof e&&e?e:{});if(!i&&a.toggle&&"string"==typeof e&&/show|hide/.test(e)&&(a.toggle=!1),i||(i=new t(this,a),n.data(R,i)),"string"==typeof e){if("undefined"==typeof i[e])throw new TypeError('No method named "'+e+'"');i[e]()}}))},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"Default",get:function(){return M}}]),t}();o.default(document).on("click.bs.collapse.data-api",U,(function(t){"A"===t.currentTarget.tagName&&t.preventDefault();var e=o.default(this),n=d.getSelectorFromElement(this),i=[].slice.call(document.querySelectorAll(n));o.default(i).each((function(){var t=o.default(this),n=t.data(R)?"toggle":e.data();V._jQueryInterface.call(t,n)}))})),o.default.fn[L]=V._jQueryInterface,o.default.fn[L].Constructor=V,o.default.fn[L].noConflict=function(){return o.default.fn[L]=x,V._jQueryInterface};var z="dropdown",K="bs.dropdown",X=o.default.fn[z],Y=new RegExp("38|40|27"),$="disabled",J="show",G="dropdown-menu-right",Z="hide.bs.dropdown",tt="hidden.bs.dropdown",et="click.bs.dropdown.data-api",nt="keydown.bs.dropdown.data-api",it='[data-toggle="dropdown"]',ot=".dropdown-menu",at={offset:0,flip:!0,boundary:"scrollParent",reference:"toggle",display:"dynamic",popperConfig:null},st={offset:"(number|string|function)",flip:"boolean",boundary:"(string|element)",reference:"(string|element)",display:"string",popperConfig:"(null|object)"},lt=function(){function t(t,e){this._element=t,this._popper=null,this._config=this._getConfig(e),this._menu=this._getMenuElement(),this._inNavbar=this._detectNavbar(),this._addEventListeners()}var e=t.prototype;return e.toggle=function(){if(!this._element.disabled&&!o.default(this._element).hasClass($)){var e=o.default(this._menu).hasClass(J);t._clearMenus(),e||this.show(!0)}},e.show=function(e){if(void 0===e&&(e=!1),!(this._element.disabled||o.default(this._element).hasClass($)||o.default(this._menu).hasClass(J))){var n={relatedTarget:this._element},i=o.default.Event("show.bs.dropdown",n),s=t._getParentFromElement(this._element);if(o.default(s).trigger(i),!i.isDefaultPrevented()){if(!this._inNavbar&&e){if("undefined"==typeof a.default)throw new TypeError("Bootstrap's dropdowns require Popper (https://popper.js.org)");var l=this._element;"parent"===this._config.reference?l=s:d.isElement(this._config.reference)&&(l=this._config.reference,"undefined"!=typeof this._config.reference.jquery&&(l=this._config.reference[0])),"scrollParent"!==this._config.boundary&&o.default(s).addClass("position-static"),this._popper=new a.default(l,this._menu,this._getPopperConfig())}"ontouchstart"in document.documentElement&&0===o.default(s).closest(".navbar-nav").length&&o.default(document.body).children().on("mouseover",null,o.default.noop),this._element.focus(),this._element.setAttribute("aria-expanded",!0),o.default(this._menu).toggleClass(J),o.default(s).toggleClass(J).trigger(o.default.Event("shown.bs.dropdown",n))}}},e.hide=function(){if(!this._element.disabled&&!o.default(this._element).hasClass($)&&o.default(this._menu).hasClass(J)){var e={relatedTarget:this._element},n=o.default.Event(Z,e),i=t._getParentFromElement(this._element);o.default(i).trigger(n),n.isDefaultPrevented()||(this._popper&&this._popper.destroy(),o.default(this._menu).toggleClass(J),o.default(i).toggleClass(J).trigger(o.default.Event(tt,e)))}},e.dispose=function(){o.default.removeData(this._element,K),o.default(this._element).off(".bs.dropdown"),this._element=null,this._menu=null,null!==this._popper&&(this._popper.destroy(),this._popper=null)},e.update=function(){this._inNavbar=this._detectNavbar(),null!==this._popper&&this._popper.scheduleUpdate()},e._addEventListeners=function(){var t=this;o.default(this._element).on("click.bs.dropdown",(function(e){e.preventDefault(),e.stopPropagation(),t.toggle()}))},e._getConfig=function(t){return t=r({},this.constructor.Default,o.default(this._element).data(),t),d.typeCheckConfig(z,t,this.constructor.DefaultType),t},e._getMenuElement=function(){if(!this._menu){var e=t._getParentFromElement(this._element);e&&(this._menu=e.querySelector(ot))}return this._menu},e._getPlacement=function(){var t=o.default(this._element.parentNode),e="bottom-start";return t.hasClass("dropup")?e=o.default(this._menu).hasClass(G)?"top-end":"top-start":t.hasClass("dropright")?e="right-start":t.hasClass("dropleft")?e="left-start":o.default(this._menu).hasClass(G)&&(e="bottom-end"),e},e._detectNavbar=function(){return o.default(this._element).closest(".navbar").length>0},e._getOffset=function(){var t=this,e={};return"function"==typeof this._config.offset?e.fn=function(e){return e.offsets=r({},e.offsets,t._config.offset(e.offsets,t._element)),e}:e.offset=this._config.offset,e},e._getPopperConfig=function(){var t={placement:this._getPlacement(),modifiers:{offset:this._getOffset(),flip:{enabled:this._config.flip},preventOverflow:{boundariesElement:this._config.boundary}}};return"static"===this._config.display&&(t.modifiers.applyStyle={enabled:!1}),r({},t,this._config.popperConfig)},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this).data(K);if(n||(n=new t(this,"object"==typeof e?e:null),o.default(this).data(K,n)),"string"==typeof e){if("undefined"==typeof n[e])throw new TypeError('No method named "'+e+'"');n[e]()}}))},t._clearMenus=function(e){if(!e||3!==e.which&&("keyup"!==e.type||9===e.which))for(var n=[].slice.call(document.querySelectorAll(it)),i=0,a=n.length;i<a;i++){var s=t._getParentFromElement(n[i]),l=o.default(n[i]).data(K),r={relatedTarget:n[i]};if(e&&"click"===e.type&&(r.clickEvent=e),l){var u=l._menu;if(o.default(s).hasClass(J)&&!(e&&("click"===e.type&&/input|textarea/i.test(e.target.tagName)||"keyup"===e.type&&9===e.which)&&o.default.contains(s,e.target))){var f=o.default.Event(Z,r);o.default(s).trigger(f),f.isDefaultPrevented()||("ontouchstart"in document.documentElement&&o.default(document.body).children().off("mouseover",null,o.default.noop),n[i].setAttribute("aria-expanded","false"),l._popper&&l._popper.destroy(),o.default(u).removeClass(J),o.default(s).removeClass(J).trigger(o.default.Event(tt,r)))}}}},t._getParentFromElement=function(t){var e,n=d.getSelectorFromElement(t);return n&&(e=document.querySelector(n)),e||t.parentNode},t._dataApiKeydownHandler=function(e){if(!(/input|textarea/i.test(e.target.tagName)?32===e.which||27!==e.which&&(40!==e.which&&38!==e.which||o.default(e.target).closest(ot).length):!Y.test(e.which))&&!this.disabled&&!o.default(this).hasClass($)){var n=t._getParentFromElement(this),i=o.default(n).hasClass(J);if(i||27!==e.which){if(e.preventDefault(),e.stopPropagation(),!i||27===e.which||32===e.which)return 27===e.which&&o.default(n.querySelector(it)).trigger("focus"),void o.default(this).trigger("click");var a=[].slice.call(n.querySelectorAll(".dropdown-menu .dropdown-item:not(.disabled):not(:disabled)")).filter((function(t){return o.default(t).is(":visible")}));if(0!==a.length){var s=a.indexOf(e.target);38===e.which&&s>0&&s--,40===e.which&&s<a.length-1&&s++,s<0&&(s=0),a[s].focus()}}}},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"Default",get:function(){return at}},{key:"DefaultType",get:function(){return st}}]),t}();o.default(document).on(nt,it,lt._dataApiKeydownHandler).on(nt,ot,lt._dataApiKeydownHandler).on(et+" keyup.bs.dropdown.data-api",lt._clearMenus).on(et,it,(function(t){t.preventDefault(),t.stopPropagation(),lt._jQueryInterface.call(o.default(this),"toggle")})).on(et,".dropdown form",(function(t){t.stopPropagation()})),o.default.fn[z]=lt._jQueryInterface,o.default.fn[z].Constructor=lt,o.default.fn[z].noConflict=function(){return o.default.fn[z]=X,lt._jQueryInterface};var rt="bs.modal",ut=o.default.fn.modal,ft="modal-open",dt="fade",ct="show",ht="modal-static",gt="hidden.bs.modal",mt="show.bs.modal",pt="focusin.bs.modal",_t="resize.bs.modal",vt="click.dismiss.bs.modal",yt="keydown.dismiss.bs.modal",bt="mousedown.dismiss.bs.modal",Et=".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",Tt={backdrop:!0,keyboard:!0,focus:!0,show:!0},wt={backdrop:"(boolean|string)",keyboard:"boolean",focus:"boolean",show:"boolean"},Ct=function(){function t(t,e){this._config=this._getConfig(e),this._element=t,this._dialog=t.querySelector(".modal-dialog"),this._backdrop=null,this._isShown=!1,this._isBodyOverflowing=!1,this._ignoreBackdropClick=!1,this._isTransitioning=!1,this._scrollbarWidth=0}var e=t.prototype;return e.toggle=function(t){return this._isShown?this.hide():this.show(t)},e.show=function(t){var e=this;if(!this._isShown&&!this._isTransitioning){var n=o.default.Event(mt,{relatedTarget:t});o.default(this._element).trigger(n),n.isDefaultPrevented()||(this._isShown=!0,o.default(this._element).hasClass(dt)&&(this._isTransitioning=!0),this._checkScrollbar(),this._setScrollbar(),this._adjustDialog(),this._setEscapeEvent(),this._setResizeEvent(),o.default(this._element).on(vt,'[data-dismiss="modal"]',(function(t){return e.hide(t)})),o.default(this._dialog).on(bt,(function(){o.default(e._element).one("mouseup.dismiss.bs.modal",(function(t){o.default(t.target).is(e._element)&&(e._ignoreBackdropClick=!0)}))})),this._showBackdrop((function(){return e._showElement(t)})))}},e.hide=function(t){var e=this;if(t&&t.preventDefault(),this._isShown&&!this._isTransitioning){var n=o.default.Event("hide.bs.modal");if(o.default(this._element).trigger(n),this._isShown&&!n.isDefaultPrevented()){this._isShown=!1;var i=o.default(this._element).hasClass(dt);if(i&&(this._isTransitioning=!0),this._setEscapeEvent(),this._setResizeEvent(),o.default(document).off(pt),o.default(this._element).removeClass(ct),o.default(this._element).off(vt),o.default(this._dialog).off(bt),i){var a=d.getTransitionDurationFromElement(this._element);o.default(this._element).one(d.TRANSITION_END,(function(t){return e._hideModal(t)})).emulateTransitionEnd(a)}else this._hideModal()}}},e.dispose=function(){[window,this._element,this._dialog].forEach((function(t){return o.default(t).off(".bs.modal")})),o.default(document).off(pt),o.default.removeData(this._element,rt),this._config=null,this._element=null,this._dialog=null,this._backdrop=null,this._isShown=null,this._isBodyOverflowing=null,this._ignoreBackdropClick=null,this._isTransitioning=null,this._scrollbarWidth=null},e.handleUpdate=function(){this._adjustDialog()},e._getConfig=function(t){return t=r({},Tt,t),d.typeCheckConfig("modal",t,wt),t},e._triggerBackdropTransition=function(){var t=this,e=o.default.Event("hidePrevented.bs.modal");if(o.default(this._element).trigger(e),!e.isDefaultPrevented()){var n=this._element.scrollHeight>document.documentElement.clientHeight;n||(this._element.style.overflowY="hidden"),this._element.classList.add(ht);var i=d.getTransitionDurationFromElement(this._dialog);o.default(this._element).off(d.TRANSITION_END),o.default(this._element).one(d.TRANSITION_END,(function(){t._element.classList.remove(ht),n||o.default(t._element).one(d.TRANSITION_END,(function(){t._element.style.overflowY=""})).emulateTransitionEnd(t._element,i)})).emulateTransitionEnd(i),this._element.focus()}},e._showElement=function(t){var e=this,n=o.default(this._element).hasClass(dt),i=this._dialog?this._dialog.querySelector(".modal-body"):null;this._element.parentNode&&this._element.parentNode.nodeType===Node.ELEMENT_NODE||document.body.appendChild(this._element),this._element.style.display="block",this._element.removeAttribute("aria-hidden"),this._element.setAttribute("aria-modal",!0),this._element.setAttribute("role","dialog"),o.default(this._dialog).hasClass("modal-dialog-scrollable")&&i?i.scrollTop=0:this._element.scrollTop=0,n&&d.reflow(this._element),o.default(this._element).addClass(ct),this._config.focus&&this._enforceFocus();var a=o.default.Event("shown.bs.modal",{relatedTarget:t}),s=function(){e._config.focus&&e._element.focus(),e._isTransitioning=!1,o.default(e._element).trigger(a)};if(n){var l=d.getTransitionDurationFromElement(this._dialog);o.default(this._dialog).one(d.TRANSITION_END,s).emulateTransitionEnd(l)}else s()},e._enforceFocus=function(){var t=this;o.default(document).off(pt).on(pt,(function(e){document!==e.target&&t._element!==e.target&&0===o.default(t._element).has(e.target).length&&t._element.focus()}))},e._setEscapeEvent=function(){var t=this;this._isShown?o.default(this._element).on(yt,(function(e){t._config.keyboard&&27===e.which?(e.preventDefault(),t.hide()):t._config.keyboard||27!==e.which||t._triggerBackdropTransition()})):this._isShown||o.default(this._element).off(yt)},e._setResizeEvent=function(){var t=this;this._isShown?o.default(window).on(_t,(function(e){return t.handleUpdate(e)})):o.default(window).off(_t)},e._hideModal=function(){var t=this;this._element.style.display="none",this._element.setAttribute("aria-hidden",!0),this._element.removeAttribute("aria-modal"),this._element.removeAttribute("role"),this._isTransitioning=!1,this._showBackdrop((function(){o.default(document.body).removeClass(ft),t._resetAdjustments(),t._resetScrollbar(),o.default(t._element).trigger(gt)}))},e._removeBackdrop=function(){this._backdrop&&(o.default(this._backdrop).remove(),this._backdrop=null)},e._showBackdrop=function(t){var e=this,n=o.default(this._element).hasClass(dt)?dt:"";if(this._isShown&&this._config.backdrop){if(this._backdrop=document.createElement("div"),this._backdrop.className="modal-backdrop",n&&this._backdrop.classList.add(n),o.default(this._backdrop).appendTo(document.body),o.default(this._element).on(vt,(function(t){e._ignoreBackdropClick?e._ignoreBackdropClick=!1:t.target===t.currentTarget&&("static"===e._config.backdrop?e._triggerBackdropTransition():e.hide())})),n&&d.reflow(this._backdrop),o.default(this._backdrop).addClass(ct),!t)return;if(!n)return void t();var i=d.getTransitionDurationFromElement(this._backdrop);o.default(this._backdrop).one(d.TRANSITION_END,t).emulateTransitionEnd(i)}else if(!this._isShown&&this._backdrop){o.default(this._backdrop).removeClass(ct);var a=function(){e._removeBackdrop(),t&&t()};if(o.default(this._element).hasClass(dt)){var s=d.getTransitionDurationFromElement(this._backdrop);o.default(this._backdrop).one(d.TRANSITION_END,a).emulateTransitionEnd(s)}else a()}else t&&t()},e._adjustDialog=function(){var t=this._element.scrollHeight>document.documentElement.clientHeight;!this._isBodyOverflowing&&t&&(this._element.style.paddingLeft=this._scrollbarWidth+"px"),this._isBodyOverflowing&&!t&&(this._element.style.paddingRight=this._scrollbarWidth+"px")},e._resetAdjustments=function(){this._element.style.paddingLeft="",this._element.style.paddingRight=""},e._checkScrollbar=function(){var t=document.body.getBoundingClientRect();this._isBodyOverflowing=Math.round(t.left+t.right)<window.innerWidth,this._scrollbarWidth=this._getScrollbarWidth()},e._setScrollbar=function(){var t=this;if(this._isBodyOverflowing){var e=[].slice.call(document.querySelectorAll(Et)),n=[].slice.call(document.querySelectorAll(".sticky-top"));o.default(e).each((function(e,n){var i=n.style.paddingRight,a=o.default(n).css("padding-right");o.default(n).data("padding-right",i).css("padding-right",parseFloat(a)+t._scrollbarWidth+"px")})),o.default(n).each((function(e,n){var i=n.style.marginRight,a=o.default(n).css("margin-right");o.default(n).data("margin-right",i).css("margin-right",parseFloat(a)-t._scrollbarWidth+"px")}));var i=document.body.style.paddingRight,a=o.default(document.body).css("padding-right");o.default(document.body).data("padding-right",i).css("padding-right",parseFloat(a)+this._scrollbarWidth+"px")}o.default(document.body).addClass(ft)},e._resetScrollbar=function(){var t=[].slice.call(document.querySelectorAll(Et));o.default(t).each((function(t,e){var n=o.default(e).data("padding-right");o.default(e).removeData("padding-right"),e.style.paddingRight=n||""}));var e=[].slice.call(document.querySelectorAll(".sticky-top"));o.default(e).each((function(t,e){var n=o.default(e).data("margin-right");"undefined"!=typeof n&&o.default(e).css("margin-right",n).removeData("margin-right")}));var n=o.default(document.body).data("padding-right");o.default(document.body).removeData("padding-right"),document.body.style.paddingRight=n||""},e._getScrollbarWidth=function(){var t=document.createElement("div");t.className="modal-scrollbar-measure",document.body.appendChild(t);var e=t.getBoundingClientRect().width-t.clientWidth;return document.body.removeChild(t),e},t._jQueryInterface=function(e,n){return this.each((function(){var i=o.default(this).data(rt),a=r({},Tt,o.default(this).data(),"object"==typeof e&&e?e:{});if(i||(i=new t(this,a),o.default(this).data(rt,i)),"string"==typeof e){if("undefined"==typeof i[e])throw new TypeError('No method named "'+e+'"');i[e](n)}else a.show&&i.show(n)}))},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"Default",get:function(){return Tt}}]),t}();o.default(document).on("click.bs.modal.data-api",'[data-toggle="modal"]',(function(t){var e,n=this,i=d.getSelectorFromElement(this);i&&(e=document.querySelector(i));var a=o.default(e).data(rt)?"toggle":r({},o.default(e).data(),o.default(this).data());"A"!==this.tagName&&"AREA"!==this.tagName||t.preventDefault();var s=o.default(e).one(mt,(function(t){t.isDefaultPrevented()||s.one(gt,(function(){o.default(n).is(":visible")&&n.focus()}))}));Ct._jQueryInterface.call(o.default(e),a,this)})),o.default.fn.modal=Ct._jQueryInterface,o.default.fn.modal.Constructor=Ct,o.default.fn.modal.noConflict=function(){return o.default.fn.modal=ut,Ct._jQueryInterface};var St=["background","cite","href","itemtype","longdesc","poster","src","xlink:href"],Nt=/^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#/?]|$))/i,Dt=/^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[\d+/a-z]+=*$/i;function At(t,e,n){if(0===t.length)return t;if(n&&"function"==typeof n)return n(t);for(var i=(new window.DOMParser).parseFromString(t,"text/html"),o=Object.keys(e),a=[].slice.call(i.body.querySelectorAll("*")),s=function(t,n){var i=a[t],s=i.nodeName.toLowerCase();if(-1===o.indexOf(i.nodeName.toLowerCase()))return i.parentNode.removeChild(i),"continue";var l=[].slice.call(i.attributes),r=[].concat(e["*"]||[],e[s]||[]);l.forEach((function(t){(function(t,e){var n=t.nodeName.toLowerCase();if(-1!==e.indexOf(n))return-1===St.indexOf(n)||Boolean(Nt.test(t.nodeValue)||Dt.test(t.nodeValue));for(var i=e.filter((function(t){return t instanceof RegExp})),o=0,a=i.length;o<a;o++)if(i[o].test(n))return!0;return!1})(t,r)||i.removeAttribute(t.nodeName)}))},l=0,r=a.length;l<r;l++)s(l);return i.body.innerHTML}var It="tooltip",kt="bs.tooltip",Ot=o.default.fn.tooltip,jt=new RegExp("(^|\\s)bs-tooltip\\S+","g"),Pt=["sanitize","whiteList","sanitizeFn"],Lt="fade",Rt="show",xt="show",qt="out",Ft="hover",Qt="focus",Bt={AUTO:"auto",TOP:"top",RIGHT:"right",BOTTOM:"bottom",LEFT:"left"},Ht={animation:!0,template:'<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,selector:!1,placement:"top",offset:0,container:!1,fallbackPlacement:"flip",boundary:"scrollParent",customClass:"",sanitize:!0,sanitizeFn:null,whiteList:{"*":["class","dir","id","lang","role",/^aria-[\w-]*$/i],a:["target","href","title","rel"],area:[],b:[],br:[],col:[],code:[],div:[],em:[],hr:[],h1:[],h2:[],h3:[],h4:[],h5:[],h6:[],i:[],img:["src","srcset","alt","title","width","height"],li:[],ol:[],p:[],pre:[],s:[],small:[],span:[],sub:[],sup:[],strong:[],u:[],ul:[]},popperConfig:null},Ut={animation:"boolean",template:"string",title:"(string|element|function)",trigger:"string",delay:"(number|object)",html:"boolean",selector:"(string|boolean)",placement:"(string|function)",offset:"(number|string|function)",container:"(string|element|boolean)",fallbackPlacement:"(string|array)",boundary:"(string|element)",customClass:"(string|function)",sanitize:"boolean",sanitizeFn:"(null|function)",whiteList:"object",popperConfig:"(null|object)"},Mt={HIDE:"hide.bs.tooltip",HIDDEN:"hidden.bs.tooltip",SHOW:"show.bs.tooltip",SHOWN:"shown.bs.tooltip",INSERTED:"inserted.bs.tooltip",CLICK:"click.bs.tooltip",FOCUSIN:"focusin.bs.tooltip",FOCUSOUT:"focusout.bs.tooltip",MOUSEENTER:"mouseenter.bs.tooltip",MOUSELEAVE:"mouseleave.bs.tooltip"},Wt=function(){function t(t,e){if("undefined"==typeof a.default)throw new TypeError("Bootstrap's tooltips require Popper (https://popper.js.org)");this._isEnabled=!0,this._timeout=0,this._hoverState="",this._activeTrigger={},this._popper=null,this.element=t,this.config=this._getConfig(e),this.tip=null,this._setListeners()}var e=t.prototype;return e.enable=function(){this._isEnabled=!0},e.disable=function(){this._isEnabled=!1},e.toggleEnabled=function(){this._isEnabled=!this._isEnabled},e.toggle=function(t){if(this._isEnabled)if(t){var e=this.constructor.DATA_KEY,n=o.default(t.currentTarget).data(e);n||(n=new this.constructor(t.currentTarget,this._getDelegateConfig()),o.default(t.currentTarget).data(e,n)),n._activeTrigger.click=!n._activeTrigger.click,n._isWithActiveTrigger()?n._enter(null,n):n._leave(null,n)}else{if(o.default(this.getTipElement()).hasClass(Rt))return void this._leave(null,this);this._enter(null,this)}},e.dispose=function(){clearTimeout(this._timeout),o.default.removeData(this.element,this.constructor.DATA_KEY),o.default(this.element).off(this.constructor.EVENT_KEY),o.default(this.element).closest(".modal").off("hide.bs.modal",this._hideModalHandler),this.tip&&o.default(this.tip).remove(),this._isEnabled=null,this._timeout=null,this._hoverState=null,this._activeTrigger=null,this._popper&&this._popper.destroy(),this._popper=null,this.element=null,this.config=null,this.tip=null},e.show=function(){var t=this;if("none"===o.default(this.element).css("display"))throw new Error("Please use show on visible elements");var e=o.default.Event(this.constructor.Event.SHOW);if(this.isWithContent()&&this._isEnabled){o.default(this.element).trigger(e);var n=d.findShadowRoot(this.element),i=o.default.contains(null!==n?n:this.element.ownerDocument.documentElement,this.element);if(e.isDefaultPrevented()||!i)return;var s=this.getTipElement(),l=d.getUID(this.constructor.NAME);s.setAttribute("id",l),this.element.setAttribute("aria-describedby",l),this.setContent(),this.config.animation&&o.default(s).addClass(Lt);var r="function"==typeof this.config.placement?this.config.placement.call(this,s,this.element):this.config.placement,u=this._getAttachment(r);this.addAttachmentClass(u);var f=this._getContainer();o.default(s).data(this.constructor.DATA_KEY,this),o.default.contains(this.element.ownerDocument.documentElement,this.tip)||o.default(s).appendTo(f),o.default(this.element).trigger(this.constructor.Event.INSERTED),this._popper=new a.default(this.element,s,this._getPopperConfig(u)),o.default(s).addClass(Rt),o.default(s).addClass(this.config.customClass),"ontouchstart"in document.documentElement&&o.default(document.body).children().on("mouseover",null,o.default.noop);var c=function(){t.config.animation&&t._fixTransition();var e=t._hoverState;t._hoverState=null,o.default(t.element).trigger(t.constructor.Event.SHOWN),e===qt&&t._leave(null,t)};if(o.default(this.tip).hasClass(Lt)){var h=d.getTransitionDurationFromElement(this.tip);o.default(this.tip).one(d.TRANSITION_END,c).emulateTransitionEnd(h)}else c()}},e.hide=function(t){var e=this,n=this.getTipElement(),i=o.default.Event(this.constructor.Event.HIDE),a=function(){e._hoverState!==xt&&n.parentNode&&n.parentNode.removeChild(n),e._cleanTipClass(),e.element.removeAttribute("aria-describedby"),o.default(e.element).trigger(e.constructor.Event.HIDDEN),null!==e._popper&&e._popper.destroy(),t&&t()};if(o.default(this.element).trigger(i),!i.isDefaultPrevented()){if(o.default(n).removeClass(Rt),"ontouchstart"in document.documentElement&&o.default(document.body).children().off("mouseover",null,o.default.noop),this._activeTrigger.click=!1,this._activeTrigger.focus=!1,this._activeTrigger.hover=!1,o.default(this.tip).hasClass(Lt)){var s=d.getTransitionDurationFromElement(n);o.default(n).one(d.TRANSITION_END,a).emulateTransitionEnd(s)}else a();this._hoverState=""}},e.update=function(){null!==this._popper&&this._popper.scheduleUpdate()},e.isWithContent=function(){return Boolean(this.getTitle())},e.addAttachmentClass=function(t){o.default(this.getTipElement()).addClass("bs-tooltip-"+t)},e.getTipElement=function(){return this.tip=this.tip||o.default(this.config.template)[0],this.tip},e.setContent=function(){var t=this.getTipElement();this.setElementContent(o.default(t.querySelectorAll(".tooltip-inner")),this.getTitle()),o.default(t).removeClass("fade show")},e.setElementContent=function(t,e){"object"!=typeof e||!e.nodeType&&!e.jquery?this.config.html?(this.config.sanitize&&(e=At(e,this.config.whiteList,this.config.sanitizeFn)),t.html(e)):t.text(e):this.config.html?o.default(e).parent().is(t)||t.empty().append(e):t.text(o.default(e).text())},e.getTitle=function(){var t=this.element.getAttribute("data-original-title");return t||(t="function"==typeof this.config.title?this.config.title.call(this.element):this.config.title),t},e._getPopperConfig=function(t){var e=this;return r({},{placement:t,modifiers:{offset:this._getOffset(),flip:{behavior:this.config.fallbackPlacement},arrow:{element:".arrow"},preventOverflow:{boundariesElement:this.config.boundary}},onCreate:function(t){t.originalPlacement!==t.placement&&e._handlePopperPlacementChange(t)},onUpdate:function(t){return e._handlePopperPlacementChange(t)}},this.config.popperConfig)},e._getOffset=function(){var t=this,e={};return"function"==typeof this.config.offset?e.fn=function(e){return e.offsets=r({},e.offsets,t.config.offset(e.offsets,t.element)),e}:e.offset=this.config.offset,e},e._getContainer=function(){return!1===this.config.container?document.body:d.isElement(this.config.container)?o.default(this.config.container):o.default(document).find(this.config.container)},e._getAttachment=function(t){return Bt[t.toUpperCase()]},e._setListeners=function(){var t=this;this.config.trigger.split(" ").forEach((function(e){if("click"===e)o.default(t.element).on(t.constructor.Event.CLICK,t.config.selector,(function(e){return t.toggle(e)}));else if("manual"!==e){var n=e===Ft?t.constructor.Event.MOUSEENTER:t.constructor.Event.FOCUSIN,i=e===Ft?t.constructor.Event.MOUSELEAVE:t.constructor.Event.FOCUSOUT;o.default(t.element).on(n,t.config.selector,(function(e){return t._enter(e)})).on(i,t.config.selector,(function(e){return t._leave(e)}))}})),this._hideModalHandler=function(){t.element&&t.hide()},o.default(this.element).closest(".modal").on("hide.bs.modal",this._hideModalHandler),this.config.selector?this.config=r({},this.config,{trigger:"manual",selector:""}):this._fixTitle()},e._fixTitle=function(){var t=typeof this.element.getAttribute("data-original-title");(this.element.getAttribute("title")||"string"!==t)&&(this.element.setAttribute("data-original-title",this.element.getAttribute("title")||""),this.element.setAttribute("title",""))},e._enter=function(t,e){var n=this.constructor.DATA_KEY;(e=e||o.default(t.currentTarget).data(n))||(e=new this.constructor(t.currentTarget,this._getDelegateConfig()),o.default(t.currentTarget).data(n,e)),t&&(e._activeTrigger["focusin"===t.type?Qt:Ft]=!0),o.default(e.getTipElement()).hasClass(Rt)||e._hoverState===xt?e._hoverState=xt:(clearTimeout(e._timeout),e._hoverState=xt,e.config.delay&&e.config.delay.show?e._timeout=setTimeout((function(){e._hoverState===xt&&e.show()}),e.config.delay.show):e.show())},e._leave=function(t,e){var n=this.constructor.DATA_KEY;(e=e||o.default(t.currentTarget).data(n))||(e=new this.constructor(t.currentTarget,this._getDelegateConfig()),o.default(t.currentTarget).data(n,e)),t&&(e._activeTrigger["focusout"===t.type?Qt:Ft]=!1),e._isWithActiveTrigger()||(clearTimeout(e._timeout),e._hoverState=qt,e.config.delay&&e.config.delay.hide?e._timeout=setTimeout((function(){e._hoverState===qt&&e.hide()}),e.config.delay.hide):e.hide())},e._isWithActiveTrigger=function(){for(var t in this._activeTrigger)if(this._activeTrigger[t])return!0;return!1},e._getConfig=function(t){var e=o.default(this.element).data();return Object.keys(e).forEach((function(t){-1!==Pt.indexOf(t)&&delete e[t]})),"number"==typeof(t=r({},this.constructor.Default,e,"object"==typeof t&&t?t:{})).delay&&(t.delay={show:t.delay,hide:t.delay}),"number"==typeof t.title&&(t.title=t.title.toString()),"number"==typeof t.content&&(t.content=t.content.toString()),d.typeCheckConfig(It,t,this.constructor.DefaultType),t.sanitize&&(t.template=At(t.template,t.whiteList,t.sanitizeFn)),t},e._getDelegateConfig=function(){var t={};if(this.config)for(var e in this.config)this.constructor.Default[e]!==this.config[e]&&(t[e]=this.config[e]);return t},e._cleanTipClass=function(){var t=o.default(this.getTipElement()),e=t.attr("class").match(jt);null!==e&&e.length&&t.removeClass(e.join(""))},e._handlePopperPlacementChange=function(t){this.tip=t.instance.popper,this._cleanTipClass(),this.addAttachmentClass(this._getAttachment(t.placement))},e._fixTransition=function(){var t=this.getTipElement(),e=this.config.animation;null===t.getAttribute("x-placement")&&(o.default(t).removeClass(Lt),this.config.animation=!1,this.hide(),this.show(),this.config.animation=e)},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this),i=n.data(kt),a="object"==typeof e&&e;if((i||!/dispose|hide/.test(e))&&(i||(i=new t(this,a),n.data(kt,i)),"string"==typeof e)){if("undefined"==typeof i[e])throw new TypeError('No method named "'+e+'"');i[e]()}}))},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"Default",get:function(){return Ht}},{key:"NAME",get:function(){return It}},{key:"DATA_KEY",get:function(){return kt}},{key:"Event",get:function(){return Mt}},{key:"EVENT_KEY",get:function(){return".bs.tooltip"}},{key:"DefaultType",get:function(){return Ut}}]),t}();o.default.fn.tooltip=Wt._jQueryInterface,o.default.fn.tooltip.Constructor=Wt,o.default.fn.tooltip.noConflict=function(){return o.default.fn.tooltip=Ot,Wt._jQueryInterface};var Vt="bs.popover",zt=o.default.fn.popover,Kt=new RegExp("(^|\\s)bs-popover\\S+","g"),Xt=r({},Wt.Default,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'}),Yt=r({},Wt.DefaultType,{content:"(string|element|function)"}),$t={HIDE:"hide.bs.popover",HIDDEN:"hidden.bs.popover",SHOW:"show.bs.popover",SHOWN:"shown.bs.popover",INSERTED:"inserted.bs.popover",CLICK:"click.bs.popover",FOCUSIN:"focusin.bs.popover",FOCUSOUT:"focusout.bs.popover",MOUSEENTER:"mouseenter.bs.popover",MOUSELEAVE:"mouseleave.bs.popover"},Jt=function(t){var e,n;function i(){return t.apply(this,arguments)||this}n=t,(e=i).prototype=Object.create(n.prototype),e.prototype.constructor=e,u(e,n);var a=i.prototype;return a.isWithContent=function(){return this.getTitle()||this._getContent()},a.addAttachmentClass=function(t){o.default(this.getTipElement()).addClass("bs-popover-"+t)},a.getTipElement=function(){return this.tip=this.tip||o.default(this.config.template)[0],this.tip},a.setContent=function(){var t=o.default(this.getTipElement());this.setElementContent(t.find(".popover-header"),this.getTitle());var e=this._getContent();"function"==typeof e&&(e=e.call(this.element)),this.setElementContent(t.find(".popover-body"),e),t.removeClass("fade show")},a._getContent=function(){return this.element.getAttribute("data-content")||this.config.content},a._cleanTipClass=function(){var t=o.default(this.getTipElement()),e=t.attr("class").match(Kt);null!==e&&e.length>0&&t.removeClass(e.join(""))},i._jQueryInterface=function(t){return this.each((function(){var e=o.default(this).data(Vt),n="object"==typeof t?t:null;if((e||!/dispose|hide/.test(t))&&(e||(e=new i(this,n),o.default(this).data(Vt,e)),"string"==typeof t)){if("undefined"==typeof e[t])throw new TypeError('No method named "'+t+'"');e[t]()}}))},l(i,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"Default",get:function(){return Xt}},{key:"NAME",get:function(){return"popover"}},{key:"DATA_KEY",get:function(){return Vt}},{key:"Event",get:function(){return $t}},{key:"EVENT_KEY",get:function(){return".bs.popover"}},{key:"DefaultType",get:function(){return Yt}}]),i}(Wt);o.default.fn.popover=Jt._jQueryInterface,o.default.fn.popover.Constructor=Jt,o.default.fn.popover.noConflict=function(){return o.default.fn.popover=zt,Jt._jQueryInterface};var Gt="scrollspy",Zt="bs.scrollspy",te=o.default.fn[Gt],ee="active",ne="position",ie=".nav, .list-group",oe={offset:10,method:"auto",target:""},ae={offset:"number",method:"string",target:"(string|element)"},se=function(){function t(t,e){var n=this;this._element=t,this._scrollElement="BODY"===t.tagName?window:t,this._config=this._getConfig(e),this._selector=this._config.target+" .nav-link,"+this._config.target+" .list-group-item,"+this._config.target+" .dropdown-item",this._offsets=[],this._targets=[],this._activeTarget=null,this._scrollHeight=0,o.default(this._scrollElement).on("scroll.bs.scrollspy",(function(t){return n._process(t)})),this.refresh(),this._process()}var e=t.prototype;return e.refresh=function(){var t=this,e=this._scrollElement===this._scrollElement.window?"offset":ne,n="auto"===this._config.method?e:this._config.method,i=n===ne?this._getScrollTop():0;this._offsets=[],this._targets=[],this._scrollHeight=this._getScrollHeight(),[].slice.call(document.querySelectorAll(this._selector)).map((function(t){var e,a=d.getSelectorFromElement(t);if(a&&(e=document.querySelector(a)),e){var s=e.getBoundingClientRect();if(s.width||s.height)return[o.default(e)[n]().top+i,a]}return null})).filter(Boolean).sort((function(t,e){return t[0]-e[0]})).forEach((function(e){t._offsets.push(e[0]),t._targets.push(e[1])}))},e.dispose=function(){o.default.removeData(this._element,Zt),o.default(this._scrollElement).off(".bs.scrollspy"),this._element=null,this._scrollElement=null,this._config=null,this._selector=null,this._offsets=null,this._targets=null,this._activeTarget=null,this._scrollHeight=null},e._getConfig=function(t){if("string"!=typeof(t=r({},oe,"object"==typeof t&&t?t:{})).target&&d.isElement(t.target)){var e=o.default(t.target).attr("id");e||(e=d.getUID(Gt),o.default(t.target).attr("id",e)),t.target="#"+e}return d.typeCheckConfig(Gt,t,ae),t},e._getScrollTop=function(){return this._scrollElement===window?this._scrollElement.pageYOffset:this._scrollElement.scrollTop},e._getScrollHeight=function(){return this._scrollElement.scrollHeight||Math.max(document.body.scrollHeight,document.documentElement.scrollHeight)},e._getOffsetHeight=function(){return this._scrollElement===window?window.innerHeight:this._scrollElement.getBoundingClientRect().height},e._process=function(){var t=this._getScrollTop()+this._config.offset,e=this._getScrollHeight(),n=this._config.offset+e-this._getOffsetHeight();if(this._scrollHeight!==e&&this.refresh(),t>=n){var i=this._targets[this._targets.length-1];this._activeTarget!==i&&this._activate(i)}else{if(this._activeTarget&&t<this._offsets[0]&&this._offsets[0]>0)return this._activeTarget=null,void this._clear();for(var o=this._offsets.length;o--;)this._activeTarget!==this._targets[o]&&t>=this._offsets[o]&&("undefined"==typeof this._offsets[o+1]||t<this._offsets[o+1])&&this._activate(this._targets[o])}},e._activate=function(t){this._activeTarget=t,this._clear();var e=this._selector.split(",").map((function(e){return e+'[data-target="'+t+'"],'+e+'[href="'+t+'"]'})),n=o.default([].slice.call(document.querySelectorAll(e.join(","))));n.hasClass("dropdown-item")?(n.closest(".dropdown").find(".dropdown-toggle").addClass(ee),n.addClass(ee)):(n.addClass(ee),n.parents(ie).prev(".nav-link, .list-group-item").addClass(ee),n.parents(ie).prev(".nav-item").children(".nav-link").addClass(ee)),o.default(this._scrollElement).trigger("activate.bs.scrollspy",{relatedTarget:t})},e._clear=function(){[].slice.call(document.querySelectorAll(this._selector)).filter((function(t){return t.classList.contains(ee)})).forEach((function(t){return t.classList.remove(ee)}))},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this).data(Zt);if(n||(n=new t(this,"object"==typeof e&&e),o.default(this).data(Zt,n)),"string"==typeof e){if("undefined"==typeof n[e])throw new TypeError('No method named "'+e+'"');n[e]()}}))},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"Default",get:function(){return oe}}]),t}();o.default(window).on("load.bs.scrollspy.data-api",(function(){for(var t=[].slice.call(document.querySelectorAll('[data-spy="scroll"]')),e=t.length;e--;){var n=o.default(t[e]);se._jQueryInterface.call(n,n.data())}})),o.default.fn[Gt]=se._jQueryInterface,o.default.fn[Gt].Constructor=se,o.default.fn[Gt].noConflict=function(){return o.default.fn[Gt]=te,se._jQueryInterface};var le="bs.tab",re=o.default.fn.tab,ue="active",fe="fade",de="show",ce=".active",he="> li > .active",ge=function(){function t(t){this._element=t}var e=t.prototype;return e.show=function(){var t=this;if(!(this._element.parentNode&&this._element.parentNode.nodeType===Node.ELEMENT_NODE&&o.default(this._element).hasClass(ue)||o.default(this._element).hasClass("disabled")||this._element.hasAttribute("disabled"))){var e,n,i=o.default(this._element).closest(".nav, .list-group")[0],a=d.getSelectorFromElement(this._element);if(i){var s="UL"===i.nodeName||"OL"===i.nodeName?he:ce;n=(n=o.default.makeArray(o.default(i).find(s)))[n.length-1]}var l=o.default.Event("hide.bs.tab",{relatedTarget:this._element}),r=o.default.Event("show.bs.tab",{relatedTarget:n});if(n&&o.default(n).trigger(l),o.default(this._element).trigger(r),!r.isDefaultPrevented()&&!l.isDefaultPrevented()){a&&(e=document.querySelector(a)),this._activate(this._element,i);var u=function(){var e=o.default.Event("hidden.bs.tab",{relatedTarget:t._element}),i=o.default.Event("shown.bs.tab",{relatedTarget:n});o.default(n).trigger(e),o.default(t._element).trigger(i)};e?this._activate(e,e.parentNode,u):u()}}},e.dispose=function(){o.default.removeData(this._element,le),this._element=null},e._activate=function(t,e,n){var i=this,a=(!e||"UL"!==e.nodeName&&"OL"!==e.nodeName?o.default(e).children(ce):o.default(e).find(he))[0],s=n&&a&&o.default(a).hasClass(fe),l=function(){return i._transitionComplete(t,a,n)};if(a&&s){var r=d.getTransitionDurationFromElement(a);o.default(a).removeClass(de).one(d.TRANSITION_END,l).emulateTransitionEnd(r)}else l()},e._transitionComplete=function(t,e,n){if(e){o.default(e).removeClass(ue);var i=o.default(e.parentNode).find("> .dropdown-menu .active")[0];i&&o.default(i).removeClass(ue),"tab"===e.getAttribute("role")&&e.setAttribute("aria-selected",!1)}o.default(t).addClass(ue),"tab"===t.getAttribute("role")&&t.setAttribute("aria-selected",!0),d.reflow(t),t.classList.contains(fe)&&t.classList.add(de);var a=t.parentNode;if(a&&"LI"===a.nodeName&&(a=a.parentNode),a&&o.default(a).hasClass("dropdown-menu")){var s=o.default(t).closest(".dropdown")[0];if(s){var l=[].slice.call(s.querySelectorAll(".dropdown-toggle"));o.default(l).addClass(ue)}t.setAttribute("aria-expanded",!0)}n&&n()},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this),i=n.data(le);if(i||(i=new t(this),n.data(le,i)),"string"==typeof e){if("undefined"==typeof i[e])throw new TypeError('No method named "'+e+'"');i[e]()}}))},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}}]),t}();o.default(document).on("click.bs.tab.data-api",'[data-toggle="tab"], [data-toggle="pill"], [data-toggle="list"]',(function(t){t.preventDefault(),ge._jQueryInterface.call(o.default(this),"show")})),o.default.fn.tab=ge._jQueryInterface,o.default.fn.tab.Constructor=ge,o.default.fn.tab.noConflict=function(){return o.default.fn.tab=re,ge._jQueryInterface};var me="bs.toast",pe=o.default.fn.toast,_e="hide",ve="show",ye="showing",be="click.dismiss.bs.toast",Ee={animation:!0,autohide:!0,delay:500},Te={animation:"boolean",autohide:"boolean",delay:"number"},we=function(){function t(t,e){this._element=t,this._config=this._getConfig(e),this._timeout=null,this._setListeners()}var e=t.prototype;return e.show=function(){var t=this,e=o.default.Event("show.bs.toast");if(o.default(this._element).trigger(e),!e.isDefaultPrevented()){this._clearTimeout(),this._config.animation&&this._element.classList.add("fade");var n=function(){t._element.classList.remove(ye),t._element.classList.add(ve),o.default(t._element).trigger("shown.bs.toast"),t._config.autohide&&(t._timeout=setTimeout((function(){t.hide()}),t._config.delay))};if(this._element.classList.remove(_e),d.reflow(this._element),this._element.classList.add(ye),this._config.animation){var i=d.getTransitionDurationFromElement(this._element);o.default(this._element).one(d.TRANSITION_END,n).emulateTransitionEnd(i)}else n()}},e.hide=function(){if(this._element.classList.contains(ve)){var t=o.default.Event("hide.bs.toast");o.default(this._element).trigger(t),t.isDefaultPrevented()||this._close()}},e.dispose=function(){this._clearTimeout(),this._element.classList.contains(ve)&&this._element.classList.remove(ve),o.default(this._element).off(be),o.default.removeData(this._element,me),this._element=null,this._config=null},e._getConfig=function(t){return t=r({},Ee,o.default(this._element).data(),"object"==typeof t&&t?t:{}),d.typeCheckConfig("toast",t,this.constructor.DefaultType),t},e._setListeners=function(){var t=this;o.default(this._element).on(be,'[data-dismiss="toast"]',(function(){return t.hide()}))},e._close=function(){var t=this,e=function(){t._element.classList.add(_e),o.default(t._element).trigger("hidden.bs.toast")};if(this._element.classList.remove(ve),this._config.animation){var n=d.getTransitionDurationFromElement(this._element);o.default(this._element).one(d.TRANSITION_END,e).emulateTransitionEnd(n)}else e()},e._clearTimeout=function(){clearTimeout(this._timeout),this._timeout=null},t._jQueryInterface=function(e){return this.each((function(){var n=o.default(this),i=n.data(me);if(i||(i=new t(this,"object"==typeof e&&e),n.data(me,i)),"string"==typeof e){if("undefined"==typeof i[e])throw new TypeError('No method named "'+e+'"');i[e](this)}}))},l(t,null,[{key:"VERSION",get:function(){return"4.6.2"}},{key:"DefaultType",get:function(){return Te}},{key:"Default",get:function(){return Ee}}]),t}();o.default.fn.toast=we._jQueryInterface,o.default.fn.toast.Constructor=we,o.default.fn.toast.noConflict=function(){return o.default.fn.toast=pe,we._jQueryInterface},t.Alert=g,t.Button=E,t.Carousel=P,t.Collapse=V,t.Dropdown=lt,t.Modal=Ct,t.Popover=Jt,t.Scrollspy=se,t.Tab=ge,t.Toast=we,t.Tooltip=Wt,t.Util=d,Object.defineProperty(t,"__esModule",{value:!0})}));
 //# sourceMappingURL=bootstrap.min.js.map
-import { existsSync, open, read, closeSync, close } from 'fs';
-import { hostname } from 'os';
-import { Stream } from 'stream';
-import { TextEncoder, TextDecoder } from 'util';
-import { createHmac } from 'crypto';
-import { EventEmitter } from 'events';
-import { Socket } from 'net';
-import { connect, TLSSocket, createSecureContext } from 'tls';
+/**
+ * Owl Carousel v2.3.4
+ * Copyright 2013-2018 David Deutsch
+ * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
+ */
+/**
+ * Owl carousel
+ * @version 2.3.4
+ * @author Bartosz Wojciechowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
+ * @todo Lazy Load Icon
+ * @todo prevent animationend bubling
+ * @todo itemsScaleUp
+ * @todo Test Zepto
+ * @todo stagePadding calculate wrong active classes
+ */
+;(function($, window, document, undefined) {
 
-/*
- * Operator tokens and which tokens are expected to end the sequence
- */
-const OPERATORS = new Map([
-    ['"', '"'],
-    ['(', ')'],
-    ['<', '>'],
-    [',', ''],
-    // Groups are ended by semicolons
-    [':', ';'],
-    // Semicolons are not a legal delimiter per the RFC2822 grammar other
-    // than for terminating a group, but they are also not valid for any
-    // other use in this context.  Given that some mail clients have
-    // historically allowed the semicolon as a delimiter equivalent to the
-    // comma in their UI, it makes sense to treat them the same as a comma
-    // when used outside of a group.
-    [';', ''],
-]);
-/**
- * Tokenizes the original input string
- *
- * @param {string | string[] | undefined} address string(s) to tokenize
- * @return {AddressToken[]} An array of operator|text tokens
- */
-function tokenizeAddress(address = '') {
-    var _a, _b;
-    const tokens = [];
-    let token = undefined;
-    let operator = undefined;
-    for (const character of address.toString()) {
-        if (((_a = operator === null || operator === void 0 ? void 0 : operator.length) !== null && _a !== void 0 ? _a : 0) > 0 && character === operator) {
-            tokens.push({ type: 'operator', value: character });
-            token = undefined;
-            operator = undefined;
-        }
-        else if (((_b = operator === null || operator === void 0 ? void 0 : operator.length) !== null && _b !== void 0 ? _b : 0) === 0 && OPERATORS.has(character)) {
-            tokens.push({ type: 'operator', value: character });
-            token = undefined;
-            operator = OPERATORS.get(character);
-        }
-        else {
-            if (token == null) {
-                token = { type: 'text', value: character };
-                tokens.push(token);
-            }
-            else {
-                token.value += character;
-            }
-        }
-    }
-    return tokens
-        .map((x) => {
-        x.value = x.value.trim();
-        return x;
-    })
-        .filter((x) => x.value.length > 0);
-}
-/**
- * Converts tokens for a single address into an address object
- *
- * @param {AddressToken[]} tokens Tokens object
- * @return {AddressObject[]} addresses object array
- */
-function convertAddressTokens(tokens) {
-    const addressObjects = [];
-    const groups = [];
-    let addresses = [];
-    let comments = [];
-    let texts = [];
-    let state = 'text';
-    let isGroup = false;
-    function handleToken(token) {
-        if (token.type === 'operator') {
-            switch (token.value) {
-                case '<':
-                    state = 'address';
-                    break;
-                case '(':
-                    state = 'comment';
-                    break;
-                case ':':
-                    state = 'group';
-                    isGroup = true;
-                    break;
-                default:
-                    state = 'text';
-                    break;
-            }
-        }
-        else if (token.value.length > 0) {
-            switch (state) {
-                case 'address':
-                    addresses.push(token.value);
-                    break;
-                case 'comment':
-                    comments.push(token.value);
-                    break;
-                case 'group':
-                    groups.push(token.value);
-                    break;
-                default:
-                    texts.push(token.value);
-                    break;
-            }
-        }
-    }
-    // Filter out <addresses>, (comments) and regular text
-    for (const token of tokens) {
-        handleToken(token);
-    }
-    // If there is no text but a comment, replace the two
-    if (texts.length === 0 && comments.length > 0) {
-        texts = [...comments];
-        comments = [];
-    }
-    // http://tools.ietf.org/html/rfc2822#appendix-A.1.3
-    if (isGroup) {
-        addressObjects.push({
-            name: texts.length === 0 ? undefined : texts.join(' '),
-            group: groups.length > 0 ? addressparser(groups.join(',')) : [],
-        });
-    }
-    else {
-        // If no address was found, try to detect one from regular text
-        if (addresses.length === 0 && texts.length > 0) {
-            for (let i = texts.length - 1; i >= 0; i--) {
-                if (texts[i].match(/^[^@\s]+@[^@\s]+$/)) {
-                    addresses = texts.splice(i, 1);
-                    break;
-                }
-            }
-            // still no address
-            if (addresses.length === 0) {
-                for (let i = texts.length - 1; i >= 0; i--) {
-                    texts[i] = texts[i]
-                        .replace(/\s*\b[^@\s]+@[^@\s]+\b\s*/, (address) => {
-                        if (addresses.length === 0) {
-                            addresses = [address.trim()];
-                            return ' ';
-                        }
-                        else {
-                            return address;
-                        }
-                    })
-                        .trim();
-                    if (addresses.length > 0) {
-                        break;
-                    }
-                }
-            }
-        }
-        // If there's still is no text but a comment exixts, replace the two
-        if (texts.length === 0 && comments.length > 0) {
-            texts = [...comments];
-            comments = [];
-        }
-        // Keep only the first address occurence, push others to regular text
-        if (addresses.length > 1) {
-            texts = [...texts, ...addresses.splice(1)];
-        }
-        if (addresses.length === 0 && isGroup) {
-            return [];
-        }
-        else {
-            // Join values with spaces
-            let address = addresses.join(' ');
-            let name = texts.length === 0 ? address : texts.join(' ');
-            if (address === name) {
-                if (address.match(/@/)) {
-                    name = '';
-                }
-                else {
-                    address = '';
-                }
-            }
-            addressObjects.push({ address, name });
-        }
-    }
-    return addressObjects;
-}
-/**
- * Parses structured e-mail addresses from an address field
- *
- * Example:
- *
- *    "Name <address@domain>"
- *
- * will be converted to
- *
- *     [{name: "Name", address: "address@domain"}]
- *
- * @param {string | string[] | undefined} address Address field
- * @return {AddressObject[]} An array of address objects
- */
-function addressparser(address) {
-    const addresses = [];
-    let tokens = [];
-    for (const token of tokenizeAddress(address)) {
-        if (token.type === 'operator' &&
-            (token.value === ',' || token.value === ';')) {
-            if (tokens.length > 0) {
-                addresses.push(...convertAddressTokens(tokens));
-            }
-            tokens = [];
-        }
-        else {
-            tokens.push(token);
-        }
-    }
-    if (tokens.length > 0) {
-        addresses.push(...convertAddressTokens(tokens));
-    }
-    return addresses;
-}
+	/**
+	 * Creates a carousel.
+	 * @class The Owl Carousel.
+	 * @public
+	 * @param {HTMLElement|jQuery} element - The element to create the carousel for.
+	 * @param {Object} [options] - The options
+	 */
+	function Owl(element, options) {
+
+		/**
+		 * Current settings for the carousel.
+		 * @public
+		 */
+		this.settings = null;
+
+		/**
+		 * Current options set by the caller including defaults.
+		 * @public
+		 */
+		this.options = $.extend({}, Owl.Defaults, options);
+
+		/**
+		 * Plugin element.
+		 * @public
+		 */
+		this.$element = $(element);
+
+		/**
+		 * Proxied event handlers.
+		 * @protected
+		 */
+		this._handlers = {};
+
+		/**
+		 * References to the running plugins of this carousel.
+		 * @protected
+		 */
+		this._plugins = {};
+
+		/**
+		 * Currently suppressed events to prevent them from being retriggered.
+		 * @protected
+		 */
+		this._supress = {};
+
+		/**
+		 * Absolute current position.
+		 * @protected
+		 */
+		this._current = null;
+
+		/**
+		 * Animation speed in milliseconds.
+		 * @protected
+		 */
+		this._speed = null;
+
+		/**
+		 * Coordinates of all items in pixel.
+		 * @todo The name of this member is missleading.
+		 * @protected
+		 */
+		this._coordinates = [];
+
+		/**
+		 * Current breakpoint.
+		 * @todo Real media queries would be nice.
+		 * @protected
+		 */
+		this._breakpoint = null;
+
+		/**
+		 * Current width of the plugin element.
+		 */
+		this._width = null;
+
+		/**
+		 * All real items.
+		 * @protected
+		 */
+		this._items = [];
+
+		/**
+		 * All cloned items.
+		 * @protected
+		 */
+		this._clones = [];
+
+		/**
+		 * Merge values of all items.
+		 * @todo Maybe this could be part of a plugin.
+		 * @protected
+		 */
+		this._mergers = [];
+
+		/**
+		 * Widths of all items.
+		 */
+		this._widths = [];
+
+		/**
+		 * Invalidated parts within the update process.
+		 * @protected
+		 */
+		this._invalidated = {};
+
+		/**
+		 * Ordered list of workers for the update process.
+		 * @protected
+		 */
+		this._pipe = [];
+
+		/**
+		 * Current state information for the drag operation.
+		 * @todo #261
+		 * @protected
+		 */
+		this._drag = {
+			time: null,
+			target: null,
+			pointer: null,
+			stage: {
+				start: null,
+				current: null
+			},
+			direction: null
+		};
+
+		/**
+		 * Current state information and their tags.
+		 * @type {Object}
+		 * @protected
+		 */
+		this._states = {
+			current: {},
+			tags: {
+				'initializing': [ 'busy' ],
+				'animating': [ 'busy' ],
+				'dragging': [ 'interacting' ]
+			}
+		};
+
+		$.each([ 'onResize', 'onThrottledResize' ], $.proxy(function(i, handler) {
+			this._handlers[handler] = $.proxy(this[handler], this);
+		}, this));
+
+		$.each(Owl.Plugins, $.proxy(function(key, plugin) {
+			this._plugins[key.charAt(0).toLowerCase() + key.slice(1)]
+				= new plugin(this);
+		}, this));
+
+		$.each(Owl.Workers, $.proxy(function(priority, worker) {
+			this._pipe.push({
+				'filter': worker.filter,
+				'run': $.proxy(worker.run, this)
+			});
+		}, this));
+
+		this.setup();
+		this.initialize();
+	}
+
+	/**
+	 * Default options for the carousel.
+	 * @public
+	 */
+	Owl.Defaults = {
+		items: 3,
+		loop: false,
+		center: false,
+		rewind: false,
+		checkVisibility: true,
+
+		mouseDrag: true,
+		touchDrag: true,
+		pullDrag: true,
+		freeDrag: false,
+
+		margin: 0,
+		stagePadding: 0,
+
+		merge: false,
+		mergeFit: true,
+		autoWidth: false,
+
+		startPosition: 0,
+		rtl: false,
+
+		smartSpeed: 250,
+		fluidSpeed: false,
+		dragEndSpeed: false,
+
+		responsive: {},
+		responsiveRefreshRate: 200,
+		responsiveBaseElement: window,
+
+		fallbackEasing: 'swing',
+		slideTransition: '',
+
+		info: false,
+
+		nestedItemSelector: false,
+		itemElement: 'div',
+		stageElement: 'div',
+
+		refreshClass: 'owl-refresh',
+		loadedClass: 'owl-loaded',
+		loadingClass: 'owl-loading',
+		rtlClass: 'owl-rtl',
+		responsiveClass: 'owl-responsive',
+		dragClass: 'owl-drag',
+		itemClass: 'owl-item',
+		stageClass: 'owl-stage',
+		stageOuterClass: 'owl-stage-outer',
+		grabClass: 'owl-grab'
+	};
+
+	/**
+	 * Enumeration for width.
+	 * @public
+	 * @readonly
+	 * @enum {String}
+	 */
+	Owl.Width = {
+		Default: 'default',
+		Inner: 'inner',
+		Outer: 'outer'
+	};
+
+	/**
+	 * Enumeration for types.
+	 * @public
+	 * @readonly
+	 * @enum {String}
+	 */
+	Owl.Type = {
+		Event: 'event',
+		State: 'state'
+	};
+
+	/**
+	 * Contains all registered plugins.
+	 * @public
+	 */
+	Owl.Plugins = {};
+
+	/**
+	 * List of workers involved in the update process.
+	 */
+	Owl.Workers = [ {
+		filter: [ 'width', 'settings' ],
+		run: function() {
+			this._width = this.$element.width();
+		}
+	}, {
+		filter: [ 'width', 'items', 'settings' ],
+		run: function(cache) {
+			cache.current = this._items && this._items[this.relative(this._current)];
+		}
+	}, {
+		filter: [ 'items', 'settings' ],
+		run: function() {
+			this.$stage.children('.cloned').remove();
+		}
+	}, {
+		filter: [ 'width', 'items', 'settings' ],
+		run: function(cache) {
+			var margin = this.settings.margin || '',
+				grid = !this.settings.autoWidth,
+				rtl = this.settings.rtl,
+				css = {
+					'width': 'auto',
+					'margin-left': rtl ? margin : '',
+					'margin-right': rtl ? '' : margin
+				};
+
+			!grid && this.$stage.children().css(css);
+
+			cache.css = css;
+		}
+	}, {
+		filter: [ 'width', 'items', 'settings' ],
+		run: function(cache) {
+			var width = (this.width() / this.settings.items).toFixed(3) - this.settings.margin,
+				merge = null,
+				iterator = this._items.length,
+				grid = !this.settings.autoWidth,
+				widths = [];
+
+			cache.items = {
+				merge: false,
+				width: width
+			};
+
+			while (iterator--) {
+				merge = this._mergers[iterator];
+				merge = this.settings.mergeFit && Math.min(merge, this.settings.items) || merge;
+
+				cache.items.merge = merge > 1 || cache.items.merge;
+
+				widths[iterator] = !grid ? this._items[iterator].width() : width * merge;
+			}
+
+			this._widths = widths;
+		}
+	}, {
+		filter: [ 'items', 'settings' ],
+		run: function() {
+			var clones = [],
+				items = this._items,
+				settings = this.settings,
+				// TODO: Should be computed from number of min width items in stage
+				view = Math.max(settings.items * 2, 4),
+				size = Math.ceil(items.length / 2) * 2,
+				repeat = settings.loop && items.length ? settings.rewind ? view : Math.max(view, size) : 0,
+				append = '',
+				prepend = '';
+
+			repeat /= 2;
+
+			while (repeat > 0) {
+				// Switch to only using appended clones
+				clones.push(this.normalize(clones.length / 2, true));
+				append = append + items[clones[clones.length - 1]][0].outerHTML;
+				clones.push(this.normalize(items.length - 1 - (clones.length - 1) / 2, true));
+				prepend = items[clones[clones.length - 1]][0].outerHTML + prepend;
+				repeat -= 1;
+			}
+
+			this._clones = clones;
+
+			$(append).addClass('cloned').appendTo(this.$stage);
+			$(prepend).addClass('cloned').prependTo(this.$stage);
+		}
+	}, {
+		filter: [ 'width', 'items', 'settings' ],
+		run: function() {
+			var rtl = this.settings.rtl ? 1 : -1,
+				size = this._clones.length + this._items.length,
+				iterator = -1,
+				previous = 0,
+				current = 0,
+				coordinates = [];
+
+			while (++iterator < size) {
+				previous = coordinates[iterator - 1] || 0;
+				current = this._widths[this.relative(iterator)] + this.settings.margin;
+				coordinates.push(previous + current * rtl);
+			}
+
+			this._coordinates = coordinates;
+		}
+	}, {
+		filter: [ 'width', 'items', 'settings' ],
+		run: function() {
+			var padding = this.settings.stagePadding,
+				coordinates = this._coordinates,
+				css = {
+					'width': Math.ceil(Math.abs(coordinates[coordinates.length - 1])) + padding * 2,
+					'padding-left': padding || '',
+					'padding-right': padding || ''
+				};
+
+			this.$stage.css(css);
+		}
+	}, {
+		filter: [ 'width', 'items', 'settings' ],
+		run: function(cache) {
+			var iterator = this._coordinates.length,
+				grid = !this.settings.autoWidth,
+				items = this.$stage.children();
+
+			if (grid && cache.items.merge) {
+				while (iterator--) {
+					cache.css.width = this._widths[this.relative(iterator)];
+					items.eq(iterator).css(cache.css);
+				}
+			} else if (grid) {
+				cache.css.width = cache.items.width;
+				items.css(cache.css);
+			}
+		}
+	}, {
+		filter: [ 'items' ],
+		run: function() {
+			this._coordinates.length < 1 && this.$stage.removeAttr('style');
+		}
+	}, {
+		filter: [ 'width', 'items', 'settings' ],
+		run: function(cache) {
+			cache.current = cache.current ? this.$stage.children().index(cache.current) : 0;
+			cache.current = Math.max(this.minimum(), Math.min(this.maximum(), cache.current));
+			this.reset(cache.current);
+		}
+	}, {
+		filter: [ 'position' ],
+		run: function() {
+			this.animate(this.coordinates(this._current));
+		}
+	}, {
+		filter: [ 'width', 'position', 'items', 'settings' ],
+		run: function() {
+			var rtl = this.settings.rtl ? 1 : -1,
+				padding = this.settings.stagePadding * 2,
+				begin = this.coordinates(this.current()) + padding,
+				end = begin + this.width() * rtl,
+				inner, outer, matches = [], i, n;
+
+			for (i = 0, n = this._coordinates.length; i < n; i++) {
+				inner = this._coordinates[i - 1] || 0;
+				outer = Math.abs(this._coordinates[i]) + padding * rtl;
+
+				if ((this.op(inner, '<=', begin) && (this.op(inner, '>', end)))
+					|| (this.op(outer, '<', begin) && this.op(outer, '>', end))) {
+					matches.push(i);
+				}
+			}
+
+			this.$stage.children('.active').removeClass('active');
+			this.$stage.children(':eq(' + matches.join('), :eq(') + ')').addClass('active');
+
+			this.$stage.children('.center').removeClass('center');
+			if (this.settings.center) {
+				this.$stage.children().eq(this.current()).addClass('center');
+			}
+		}
+	} ];
+
+	/**
+	 * Create the stage DOM element
+	 */
+	Owl.prototype.initializeStage = function() {
+		this.$stage = this.$element.find('.' + this.settings.stageClass);
+
+		// if the stage is already in the DOM, grab it and skip stage initialization
+		if (this.$stage.length) {
+			return;
+		}
+
+		this.$element.addClass(this.options.loadingClass);
+
+		// create stage
+		this.$stage = $('<' + this.settings.stageElement + '>', {
+			"class": this.settings.stageClass
+		}).wrap( $( '<div/>', {
+			"class": this.settings.stageOuterClass
+		}));
+
+		// append stage
+		this.$element.append(this.$stage.parent());
+	};
+
+	/**
+	 * Create item DOM elements
+	 */
+	Owl.prototype.initializeItems = function() {
+		var $items = this.$element.find('.owl-item');
+
+		// if the items are already in the DOM, grab them and skip item initialization
+		if ($items.length) {
+			this._items = $items.get().map(function(item) {
+				return $(item);
+			});
+
+			this._mergers = this._items.map(function() {
+				return 1;
+			});
+
+			this.refresh();
+
+			return;
+		}
+
+		// append content
+		this.replace(this.$element.children().not(this.$stage.parent()));
+
+		// check visibility
+		if (this.isVisible()) {
+			// update view
+			this.refresh();
+		} else {
+			// invalidate width
+			this.invalidate('width');
+		}
+
+		this.$element
+			.removeClass(this.options.loadingClass)
+			.addClass(this.options.loadedClass);
+	};
+
+	/**
+	 * Initializes the carousel.
+	 * @protected
+	 */
+	Owl.prototype.initialize = function() {
+		this.enter('initializing');
+		this.trigger('initialize');
+
+		this.$element.toggleClass(this.settings.rtlClass, this.settings.rtl);
+
+		if (this.settings.autoWidth && !this.is('pre-loading')) {
+			var imgs, nestedSelector, width;
+			imgs = this.$element.find('img');
+			nestedSelector = this.settings.nestedItemSelector ? '.' + this.settings.nestedItemSelector : undefined;
+			width = this.$element.children(nestedSelector).width();
+
+			if (imgs.length && width <= 0) {
+				this.preloadAutoWidthImages(imgs);
+			}
+		}
+
+		this.initializeStage();
+		this.initializeItems();
+
+		// register event handlers
+		this.registerEventHandlers();
+
+		this.leave('initializing');
+		this.trigger('initialized');
+	};
+
+	/**
+	 * @returns {Boolean} visibility of $element
+	 *                    if you know the carousel will always be visible you can set `checkVisibility` to `false` to
+	 *                    prevent the expensive browser layout forced reflow the $element.is(':visible') does
+	 */
+	Owl.prototype.isVisible = function() {
+		return this.settings.checkVisibility
+			? this.$element.is(':visible')
+			: true;
+	};
+
+	/**
+	 * Setups the current settings.
+	 * @todo Remove responsive classes. Why should adaptive designs be brought into IE8?
+	 * @todo Support for media queries by using `matchMedia` would be nice.
+	 * @public
+	 */
+	Owl.prototype.setup = function() {
+		var viewport = this.viewport(),
+			overwrites = this.options.responsive,
+			match = -1,
+			settings = null;
+
+		if (!overwrites) {
+			settings = $.extend({}, this.options);
+		} else {
+			$.each(overwrites, function(breakpoint) {
+				if (breakpoint <= viewport && breakpoint > match) {
+					match = Number(breakpoint);
+				}
+			});
+
+			settings = $.extend({}, this.options, overwrites[match]);
+			if (typeof settings.stagePadding === 'function') {
+				settings.stagePadding = settings.stagePadding();
+			}
+			delete settings.responsive;
+
+			// responsive class
+			if (settings.responsiveClass) {
+				this.$element.attr('class',
+					this.$element.attr('class').replace(new RegExp('(' + this.options.responsiveClass + '-)\\S+\\s', 'g'), '$1' + match)
+				);
+			}
+		}
+
+		this.trigger('change', { property: { name: 'settings', value: settings } });
+		this._breakpoint = match;
+		this.settings = settings;
+		this.invalidate('settings');
+		this.trigger('changed', { property: { name: 'settings', value: this.settings } });
+	};
+
+	/**
+	 * Updates option logic if necessery.
+	 * @protected
+	 */
+	Owl.prototype.optionsLogic = function() {
+		if (this.settings.autoWidth) {
+			this.settings.stagePadding = false;
+			this.settings.merge = false;
+		}
+	};
+
+	/**
+	 * Prepares an item before add.
+	 * @todo Rename event parameter `content` to `item`.
+	 * @protected
+	 * @returns {jQuery|HTMLElement} - The item container.
+	 */
+	Owl.prototype.prepare = function(item) {
+		var event = this.trigger('prepare', { content: item });
+
+		if (!event.data) {
+			event.data = $('<' + this.settings.itemElement + '/>')
+				.addClass(this.options.itemClass).append(item)
+		}
+
+		this.trigger('prepared', { content: event.data });
+
+		return event.data;
+	};
+
+	/**
+	 * Updates the view.
+	 * @public
+	 */
+	Owl.prototype.update = function() {
+		var i = 0,
+			n = this._pipe.length,
+			filter = $.proxy(function(p) { return this[p] }, this._invalidated),
+			cache = {};
+
+		while (i < n) {
+			if (this._invalidated.all || $.grep(this._pipe[i].filter, filter).length > 0) {
+				this._pipe[i].run(cache);
+			}
+			i++;
+		}
+
+		this._invalidated = {};
+
+		!this.is('valid') && this.enter('valid');
+	};
+
+	/**
+	 * Gets the width of the view.
+	 * @public
+	 * @param {Owl.Width} [dimension=Owl.Width.Default] - The dimension to return.
+	 * @returns {Number} - The width of the view in pixel.
+	 */
+	Owl.prototype.width = function(dimension) {
+		dimension = dimension || Owl.Width.Default;
+		switch (dimension) {
+			case Owl.Width.Inner:
+			case Owl.Width.Outer:
+				return this._width;
+			default:
+				return this._width - this.settings.stagePadding * 2 + this.settings.margin;
+		}
+	};
+
+	/**
+	 * Refreshes the carousel primarily for adaptive purposes.
+	 * @public
+	 */
+	Owl.prototype.refresh = function() {
+		this.enter('refreshing');
+		this.trigger('refresh');
+
+		this.setup();
+
+		this.optionsLogic();
+
+		this.$element.addClass(this.options.refreshClass);
+
+		this.update();
+
+		this.$element.removeClass(this.options.refreshClass);
+
+		this.leave('refreshing');
+		this.trigger('refreshed');
+	};
+
+	/**
+	 * Checks window `resize` event.
+	 * @protected
+	 */
+	Owl.prototype.onThrottledResize = function() {
+		window.clearTimeout(this.resizeTimer);
+		this.resizeTimer = window.setTimeout(this._handlers.onResize, this.settings.responsiveRefreshRate);
+	};
+
+	/**
+	 * Checks window `resize` event.
+	 * @protected
+	 */
+	Owl.prototype.onResize = function() {
+		if (!this._items.length) {
+			return false;
+		}
+
+		if (this._width === this.$element.width()) {
+			return false;
+		}
+
+		if (!this.isVisible()) {
+			return false;
+		}
+
+		this.enter('resizing');
+
+		if (this.trigger('resize').isDefaultPrevented()) {
+			this.leave('resizing');
+			return false;
+		}
+
+		this.invalidate('width');
+
+		this.refresh();
+
+		this.leave('resizing');
+		this.trigger('resized');
+	};
+
+	/**
+	 * Registers event handlers.
+	 * @todo Check `msPointerEnabled`
+	 * @todo #261
+	 * @protected
+	 */
+	Owl.prototype.registerEventHandlers = function() {
+		if ($.support.transition) {
+			this.$stage.on($.support.transition.end + '.owl.core', $.proxy(this.onTransitionEnd, this));
+		}
+
+		if (this.settings.responsive !== false) {
+			this.on(window, 'resize', this._handlers.onThrottledResize);
+		}
+
+		if (this.settings.mouseDrag) {
+			this.$element.addClass(this.options.dragClass);
+			this.$stage.on('mousedown.owl.core', $.proxy(this.onDragStart, this));
+			this.$stage.on('dragstart.owl.core selectstart.owl.core', function() { return false });
+		}
+
+		if (this.settings.touchDrag){
+			this.$stage.on('touchstart.owl.core', $.proxy(this.onDragStart, this));
+			this.$stage.on('touchcancel.owl.core', $.proxy(this.onDragEnd, this));
+		}
+	};
+
+	/**
+	 * Handles `touchstart` and `mousedown` events.
+	 * @todo Horizontal swipe threshold as option
+	 * @todo #261
+	 * @protected
+	 * @param {Event} event - The event arguments.
+	 */
+	Owl.prototype.onDragStart = function(event) {
+		var stage = null;
+
+		if (event.which === 3) {
+			return;
+		}
+
+		if ($.support.transform) {
+			stage = this.$stage.css('transform').replace(/.*\(|\)| /g, '').split(',');
+			stage = {
+				x: stage[stage.length === 16 ? 12 : 4],
+				y: stage[stage.length === 16 ? 13 : 5]
+			};
+		} else {
+			stage = this.$stage.position();
+			stage = {
+				x: this.settings.rtl ?
+					stage.left + this.$stage.width() - this.width() + this.settings.margin :
+					stage.left,
+				y: stage.top
+			};
+		}
+
+		if (this.is('animating')) {
+			$.support.transform ? this.animate(stage.x) : this.$stage.stop()
+			this.invalidate('position');
+		}
+
+		this.$element.toggleClass(this.options.grabClass, event.type === 'mousedown');
+
+		this.speed(0);
+
+		this._drag.time = new Date().getTime();
+		this._drag.target = $(event.target);
+		this._drag.stage.start = stage;
+		this._drag.stage.current = stage;
+		this._drag.pointer = this.pointer(event);
+
+		$(document).on('mouseup.owl.core touchend.owl.core', $.proxy(this.onDragEnd, this));
+
+		$(document).one('mousemove.owl.core touchmove.owl.core', $.proxy(function(event) {
+			var delta = this.difference(this._drag.pointer, this.pointer(event));
+
+			$(document).on('mousemove.owl.core touchmove.owl.core', $.proxy(this.onDragMove, this));
+
+			if (Math.abs(delta.x) < Math.abs(delta.y) && this.is('valid')) {
+				return;
+			}
+
+			event.preventDefault();
+
+			this.enter('dragging');
+			this.trigger('drag');
+		}, this));
+	};
+
+	/**
+	 * Handles the `touchmove` and `mousemove` events.
+	 * @todo #261
+	 * @protected
+	 * @param {Event} event - The event arguments.
+	 */
+	Owl.prototype.onDragMove = function(event) {
+		var minimum = null,
+			maximum = null,
+			pull = null,
+			delta = this.difference(this._drag.pointer, this.pointer(event)),
+			stage = this.difference(this._drag.stage.start, delta);
+
+		if (!this.is('dragging')) {
+			return;
+		}
+
+		event.preventDefault();
+
+		if (this.settings.loop) {
+			minimum = this.coordinates(this.minimum());
+			maximum = this.coordinates(this.maximum() + 1) - minimum;
+			stage.x = (((stage.x - minimum) % maximum + maximum) % maximum) + minimum;
+		} else {
+			minimum = this.settings.rtl ? this.coordinates(this.maximum()) : this.coordinates(this.minimum());
+			maximum = this.settings.rtl ? this.coordinates(this.minimum()) : this.coordinates(this.maximum());
+			pull = this.settings.pullDrag ? -1 * delta.x / 5 : 0;
+			stage.x = Math.max(Math.min(stage.x, minimum + pull), maximum + pull);
+		}
+
+		this._drag.stage.current = stage;
+
+		this.animate(stage.x);
+	};
+
+	/**
+	 * Handles the `touchend` and `mouseup` events.
+	 * @todo #261
+	 * @todo Threshold for click event
+	 * @protected
+	 * @param {Event} event - The event arguments.
+	 */
+	Owl.prototype.onDragEnd = function(event) {
+		var delta = this.difference(this._drag.pointer, this.pointer(event)),
+			stage = this._drag.stage.current,
+			direction = delta.x > 0 ^ this.settings.rtl ? 'left' : 'right';
+
+		$(document).off('.owl.core');
+
+		this.$element.removeClass(this.options.grabClass);
+
+		if (delta.x !== 0 && this.is('dragging') || !this.is('valid')) {
+			this.speed(this.settings.dragEndSpeed || this.settings.smartSpeed);
+			this.current(this.closest(stage.x, delta.x !== 0 ? direction : this._drag.direction));
+			this.invalidate('position');
+			this.update();
+
+			this._drag.direction = direction;
+
+			if (Math.abs(delta.x) > 3 || new Date().getTime() - this._drag.time > 300) {
+				this._drag.target.one('click.owl.core', function() { return false; });
+			}
+		}
+
+		if (!this.is('dragging')) {
+			return;
+		}
+
+		this.leave('dragging');
+		this.trigger('dragged');
+	};
+
+	/**
+	 * Gets absolute position of the closest item for a coordinate.
+	 * @todo Setting `freeDrag` makes `closest` not reusable. See #165.
+	 * @protected
+	 * @param {Number} coordinate - The coordinate in pixel.
+	 * @param {String} direction - The direction to check for the closest item. Ether `left` or `right`.
+	 * @return {Number} - The absolute position of the closest item.
+	 */
+	Owl.prototype.closest = function(coordinate, direction) {
+		var position = -1,
+			pull = 30,
+			width = this.width(),
+			coordinates = this.coordinates();
+
+		if (!this.settings.freeDrag) {
+			// check closest item
+			$.each(coordinates, $.proxy(function(index, value) {
+				// on a left pull, check on current index
+				if (direction === 'left' && coordinate > value - pull && coordinate < value + pull) {
+					position = index;
+				// on a right pull, check on previous index
+				// to do so, subtract width from value and set position = index + 1
+				} else if (direction === 'right' && coordinate > value - width - pull && coordinate < value - width + pull) {
+					position = index + 1;
+				} else if (this.op(coordinate, '<', value)
+					&& this.op(coordinate, '>', coordinates[index + 1] !== undefined ? coordinates[index + 1] : value - width)) {
+					position = direction === 'left' ? index + 1 : index;
+				}
+				return position === -1;
+			}, this));
+		}
+
+		if (!this.settings.loop) {
+			// non loop boundries
+			if (this.op(coordinate, '>', coordinates[this.minimum()])) {
+				position = coordinate = this.minimum();
+			} else if (this.op(coordinate, '<', coordinates[this.maximum()])) {
+				position = coordinate = this.maximum();
+			}
+		}
+
+		return position;
+	};
+
+	/**
+	 * Animates the stage.
+	 * @todo #270
+	 * @public
+	 * @param {Number} coordinate - The coordinate in pixels.
+	 */
+	Owl.prototype.animate = function(coordinate) {
+		var animate = this.speed() > 0;
+
+		this.is('animating') && this.onTransitionEnd();
+
+		if (animate) {
+			this.enter('animating');
+			this.trigger('translate');
+		}
+
+		if ($.support.transform3d && $.support.transition) {
+			this.$stage.css({
+				transform: 'translate3d(' + coordinate + 'px,0px,0px)',
+				transition: (this.speed() / 1000) + 's' + (
+					this.settings.slideTransition ? ' ' + this.settings.slideTransition : ''
+				)
+			});
+		} else if (animate) {
+			this.$stage.animate({
+				left: coordinate + 'px'
+			}, this.speed(), this.settings.fallbackEasing, $.proxy(this.onTransitionEnd, this));
+		} else {
+			this.$stage.css({
+				left: coordinate + 'px'
+			});
+		}
+	};
+
+	/**
+	 * Checks whether the carousel is in a specific state or not.
+	 * @param {String} state - The state to check.
+	 * @returns {Boolean} - The flag which indicates if the carousel is busy.
+	 */
+	Owl.prototype.is = function(state) {
+		return this._states.current[state] && this._states.current[state] > 0;
+	};
+
+	/**
+	 * Sets the absolute position of the current item.
+	 * @public
+	 * @param {Number} [position] - The new absolute position or nothing to leave it unchanged.
+	 * @returns {Number} - The absolute position of the current item.
+	 */
+	Owl.prototype.current = function(position) {
+		if (position === undefined) {
+			return this._current;
+		}
+
+		if (this._items.length === 0) {
+			return undefined;
+		}
+
+		position = this.normalize(position);
+
+		if (this._current !== position) {
+			var event = this.trigger('change', { property: { name: 'position', value: position } });
+
+			if (event.data !== undefined) {
+				position = this.normalize(event.data);
+			}
+
+			this._current = position;
+
+			this.invalidate('position');
+
+			this.trigger('changed', { property: { name: 'position', value: this._current } });
+		}
+
+		return this._current;
+	};
+
+	/**
+	 * Invalidates the given part of the update routine.
+	 * @param {String} [part] - The part to invalidate.
+	 * @returns {Array.<String>} - The invalidated parts.
+	 */
+	Owl.prototype.invalidate = function(part) {
+		if ($.type(part) === 'string') {
+			this._invalidated[part] = true;
+			this.is('valid') && this.leave('valid');
+		}
+		return $.map(this._invalidated, function(v, i) { return i });
+	};
+
+	/**
+	 * Resets the absolute position of the current item.
+	 * @public
+	 * @param {Number} position - The absolute position of the new item.
+	 */
+	Owl.prototype.reset = function(position) {
+		position = this.normalize(position);
+
+		if (position === undefined) {
+			return;
+		}
+
+		this._speed = 0;
+		this._current = position;
+
+		this.suppress([ 'translate', 'translated' ]);
+
+		this.animate(this.coordinates(position));
+
+		this.release([ 'translate', 'translated' ]);
+	};
+
+	/**
+	 * Normalizes an absolute or a relative position of an item.
+	 * @public
+	 * @param {Number} position - The absolute or relative position to normalize.
+	 * @param {Boolean} [relative=false] - Whether the given position is relative or not.
+	 * @returns {Number} - The normalized position.
+	 */
+	Owl.prototype.normalize = function(position, relative) {
+		var n = this._items.length,
+			m = relative ? 0 : this._clones.length;
+
+		if (!this.isNumeric(position) || n < 1) {
+			position = undefined;
+		} else if (position < 0 || position >= n + m) {
+			position = ((position - m / 2) % n + n) % n + m / 2;
+		}
+
+		return position;
+	};
+
+	/**
+	 * Converts an absolute position of an item into a relative one.
+	 * @public
+	 * @param {Number} position - The absolute position to convert.
+	 * @returns {Number} - The converted position.
+	 */
+	Owl.prototype.relative = function(position) {
+		position -= this._clones.length / 2;
+		return this.normalize(position, true);
+	};
+
+	/**
+	 * Gets the maximum position for the current item.
+	 * @public
+	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
+	 * @returns {Number}
+	 */
+	Owl.prototype.maximum = function(relative) {
+		var settings = this.settings,
+			maximum = this._coordinates.length,
+			iterator,
+			reciprocalItemsWidth,
+			elementWidth;
+
+		if (settings.loop) {
+			maximum = this._clones.length / 2 + this._items.length - 1;
+		} else if (settings.autoWidth || settings.merge) {
+			iterator = this._items.length;
+			if (iterator) {
+				reciprocalItemsWidth = this._items[--iterator].width();
+				elementWidth = this.$element.width();
+				while (iterator--) {
+					reciprocalItemsWidth += this._items[iterator].width() + this.settings.margin;
+					if (reciprocalItemsWidth > elementWidth) {
+						break;
+					}
+				}
+			}
+			maximum = iterator + 1;
+		} else if (settings.center) {
+			maximum = this._items.length - 1;
+		} else {
+			maximum = this._items.length - settings.items;
+		}
+
+		if (relative) {
+			maximum -= this._clones.length / 2;
+		}
+
+		return Math.max(maximum, 0);
+	};
+
+	/**
+	 * Gets the minimum position for the current item.
+	 * @public
+	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
+	 * @returns {Number}
+	 */
+	Owl.prototype.minimum = function(relative) {
+		return relative ? 0 : this._clones.length / 2;
+	};
+
+	/**
+	 * Gets an item at the specified relative position.
+	 * @public
+	 * @param {Number} [position] - The relative position of the item.
+	 * @return {jQuery|Array.<jQuery>} - The item at the given position or all items if no position was given.
+	 */
+	Owl.prototype.items = function(position) {
+		if (position === undefined) {
+			return this._items.slice();
+		}
+
+		position = this.normalize(position, true);
+		return this._items[position];
+	};
+
+	/**
+	 * Gets an item at the specified relative position.
+	 * @public
+	 * @param {Number} [position] - The relative position of the item.
+	 * @return {jQuery|Array.<jQuery>} - The item at the given position or all items if no position was given.
+	 */
+	Owl.prototype.mergers = function(position) {
+		if (position === undefined) {
+			return this._mergers.slice();
+		}
+
+		position = this.normalize(position, true);
+		return this._mergers[position];
+	};
+
+	/**
+	 * Gets the absolute positions of clones for an item.
+	 * @public
+	 * @param {Number} [position] - The relative position of the item.
+	 * @returns {Array.<Number>} - The absolute positions of clones for the item or all if no position was given.
+	 */
+	Owl.prototype.clones = function(position) {
+		var odd = this._clones.length / 2,
+			even = odd + this._items.length,
+			map = function(index) { return index % 2 === 0 ? even + index / 2 : odd - (index + 1) / 2 };
+
+		if (position === undefined) {
+			return $.map(this._clones, function(v, i) { return map(i) });
+		}
+
+		return $.map(this._clones, function(v, i) { return v === position ? map(i) : null });
+	};
+
+	/**
+	 * Sets the current animation speed.
+	 * @public
+	 * @param {Number} [speed] - The animation speed in milliseconds or nothing to leave it unchanged.
+	 * @returns {Number} - The current animation speed in milliseconds.
+	 */
+	Owl.prototype.speed = function(speed) {
+		if (speed !== undefined) {
+			this._speed = speed;
+		}
+
+		return this._speed;
+	};
+
+	/**
+	 * Gets the coordinate of an item.
+	 * @todo The name of this method is missleanding.
+	 * @public
+	 * @param {Number} position - The absolute position of the item within `minimum()` and `maximum()`.
+	 * @returns {Number|Array.<Number>} - The coordinate of the item in pixel or all coordinates.
+	 */
+	Owl.prototype.coordinates = function(position) {
+		var multiplier = 1,
+			newPosition = position - 1,
+			coordinate;
+
+		if (position === undefined) {
+			return $.map(this._coordinates, $.proxy(function(coordinate, index) {
+				return this.coordinates(index);
+			}, this));
+		}
+
+		if (this.settings.center) {
+			if (this.settings.rtl) {
+				multiplier = -1;
+				newPosition = position + 1;
+			}
+
+			coordinate = this._coordinates[position];
+			coordinate += (this.width() - coordinate + (this._coordinates[newPosition] || 0)) / 2 * multiplier;
+		} else {
+			coordinate = this._coordinates[newPosition] || 0;
+		}
+
+		coordinate = Math.ceil(coordinate);
+
+		return coordinate;
+	};
+
+	/**
+	 * Calculates the speed for a translation.
+	 * @protected
+	 * @param {Number} from - The absolute position of the start item.
+	 * @param {Number} to - The absolute position of the target item.
+	 * @param {Number} [factor=undefined] - The time factor in milliseconds.
+	 * @returns {Number} - The time in milliseconds for the translation.
+	 */
+	Owl.prototype.duration = function(from, to, factor) {
+		if (factor === 0) {
+			return 0;
+		}
+
+		return Math.min(Math.max(Math.abs(to - from), 1), 6) * Math.abs((factor || this.settings.smartSpeed));
+	};
+
+	/**
+	 * Slides to the specified item.
+	 * @public
+	 * @param {Number} position - The position of the item.
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
+	 */
+	Owl.prototype.to = function(position, speed) {
+		var current = this.current(),
+			revert = null,
+			distance = position - this.relative(current),
+			direction = (distance > 0) - (distance < 0),
+			items = this._items.length,
+			minimum = this.minimum(),
+			maximum = this.maximum();
+
+		if (this.settings.loop) {
+			if (!this.settings.rewind && Math.abs(distance) > items / 2) {
+				distance += direction * -1 * items;
+			}
+
+			position = current + distance;
+			revert = ((position - minimum) % items + items) % items + minimum;
+
+			if (revert !== position && revert - distance <= maximum && revert - distance > 0) {
+				current = revert - distance;
+				position = revert;
+				this.reset(current);
+			}
+		} else if (this.settings.rewind) {
+			maximum += 1;
+			position = (position % maximum + maximum) % maximum;
+		} else {
+			position = Math.max(minimum, Math.min(maximum, position));
+		}
+
+		this.speed(this.duration(current, position, speed));
+		this.current(position);
+
+		if (this.isVisible()) {
+			this.update();
+		}
+	};
+
+	/**
+	 * Slides to the next item.
+	 * @public
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
+	 */
+	Owl.prototype.next = function(speed) {
+		speed = speed || false;
+		this.to(this.relative(this.current()) + 1, speed);
+	};
+
+	/**
+	 * Slides to the previous item.
+	 * @public
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
+	 */
+	Owl.prototype.prev = function(speed) {
+		speed = speed || false;
+		this.to(this.relative(this.current()) - 1, speed);
+	};
+
+	/**
+	 * Handles the end of an animation.
+	 * @protected
+	 * @param {Event} event - The event arguments.
+	 */
+	Owl.prototype.onTransitionEnd = function(event) {
+
+		// if css2 animation then event object is undefined
+		if (event !== undefined) {
+			event.stopPropagation();
+
+			// Catch only owl-stage transitionEnd event
+			if ((event.target || event.srcElement || event.originalTarget) !== this.$stage.get(0)) {
+				return false;
+			}
+		}
+
+		this.leave('animating');
+		this.trigger('translated');
+	};
+
+	/**
+	 * Gets viewport width.
+	 * @protected
+	 * @return {Number} - The width in pixel.
+	 */
+	Owl.prototype.viewport = function() {
+		var width;
+		if (this.options.responsiveBaseElement !== window) {
+			width = $(this.options.responsiveBaseElement).width();
+		} else if (window.innerWidth) {
+			width = window.innerWidth;
+		} else if (document.documentElement && document.documentElement.clientWidth) {
+			width = document.documentElement.clientWidth;
+		} else {
+			console.warn('Can not detect viewport width.');
+		}
+		return width;
+	};
+
+	/**
+	 * Replaces the current content.
+	 * @public
+	 * @param {HTMLElement|jQuery|String} content - The new content.
+	 */
+	Owl.prototype.replace = function(content) {
+		this.$stage.empty();
+		this._items = [];
+
+		if (content) {
+			content = (content instanceof jQuery) ? content : $(content);
+		}
+
+		if (this.settings.nestedItemSelector) {
+			content = content.find('.' + this.settings.nestedItemSelector);
+		}
+
+		content.filter(function() {
+			return this.nodeType === 1;
+		}).each($.proxy(function(index, item) {
+			item = this.prepare(item);
+			this.$stage.append(item);
+			this._items.push(item);
+			this._mergers.push(item.find('[data-merge]').addBack('[data-merge]').attr('data-merge') * 1 || 1);
+		}, this));
+
+		this.reset(this.isNumeric(this.settings.startPosition) ? this.settings.startPosition : 0);
+
+		this.invalidate('items');
+	};
+
+	/**
+	 * Adds an item.
+	 * @todo Use `item` instead of `content` for the event arguments.
+	 * @public
+	 * @param {HTMLElement|jQuery|String} content - The item content to add.
+	 * @param {Number} [position] - The relative position at which to insert the item otherwise the item will be added to the end.
+	 */
+	Owl.prototype.add = function(content, position) {
+		var current = this.relative(this._current);
+
+		position = position === undefined ? this._items.length : this.normalize(position, true);
+		content = content instanceof jQuery ? content : $(content);
+
+		this.trigger('add', { content: content, position: position });
+
+		content = this.prepare(content);
+
+		if (this._items.length === 0 || position === this._items.length) {
+			this._items.length === 0 && this.$stage.append(content);
+			this._items.length !== 0 && this._items[position - 1].after(content);
+			this._items.push(content);
+			this._mergers.push(content.find('[data-merge]').addBack('[data-merge]').attr('data-merge') * 1 || 1);
+		} else {
+			this._items[position].before(content);
+			this._items.splice(position, 0, content);
+			this._mergers.splice(position, 0, content.find('[data-merge]').addBack('[data-merge]').attr('data-merge') * 1 || 1);
+		}
+
+		this._items[current] && this.reset(this._items[current].index());
+
+		this.invalidate('items');
+
+		this.trigger('added', { content: content, position: position });
+	};
+
+	/**
+	 * Removes an item by its position.
+	 * @todo Use `item` instead of `content` for the event arguments.
+	 * @public
+	 * @param {Number} position - The relative position of the item to remove.
+	 */
+	Owl.prototype.remove = function(position) {
+		position = this.normalize(position, true);
+
+		if (position === undefined) {
+			return;
+		}
+
+		this.trigger('remove', { content: this._items[position], position: position });
+
+		this._items[position].remove();
+		this._items.splice(position, 1);
+		this._mergers.splice(position, 1);
+
+		this.invalidate('items');
+
+		this.trigger('removed', { content: null, position: position });
+	};
+
+	/**
+	 * Preloads images with auto width.
+	 * @todo Replace by a more generic approach
+	 * @protected
+	 */
+	Owl.prototype.preloadAutoWidthImages = function(images) {
+		images.each($.proxy(function(i, element) {
+			this.enter('pre-loading');
+			element = $(element);
+			$(new Image()).one('load', $.proxy(function(e) {
+				element.attr('src', e.target.src);
+				element.css('opacity', 1);
+				this.leave('pre-loading');
+				!this.is('pre-loading') && !this.is('initializing') && this.refresh();
+			}, this)).attr('src', element.attr('src') || element.attr('data-src') || element.attr('data-src-retina'));
+		}, this));
+	};
+
+	/**
+	 * Destroys the carousel.
+	 * @public
+	 */
+	Owl.prototype.destroy = function() {
+
+		this.$element.off('.owl.core');
+		this.$stage.off('.owl.core');
+		$(document).off('.owl.core');
+
+		if (this.settings.responsive !== false) {
+			window.clearTimeout(this.resizeTimer);
+			this.off(window, 'resize', this._handlers.onThrottledResize);
+		}
+
+		for (var i in this._plugins) {
+			this._plugins[i].destroy();
+		}
+
+		this.$stage.children('.cloned').remove();
+
+		this.$stage.unwrap();
+		this.$stage.children().contents().unwrap();
+		this.$stage.children().unwrap();
+		this.$stage.remove();
+		this.$element
+			.removeClass(this.options.refreshClass)
+			.removeClass(this.options.loadingClass)
+			.removeClass(this.options.loadedClass)
+			.removeClass(this.options.rtlClass)
+			.removeClass(this.options.dragClass)
+			.removeClass(this.options.grabClass)
+			.attr('class', this.$element.attr('class').replace(new RegExp(this.options.responsiveClass + '-\\S+\\s', 'g'), ''))
+			.removeData('owl.carousel');
+	};
+
+	/**
+	 * Operators to calculate right-to-left and left-to-right.
+	 * @protected
+	 * @param {Number} [a] - The left side operand.
+	 * @param {String} [o] - The operator.
+	 * @param {Number} [b] - The right side operand.
+	 */
+	Owl.prototype.op = function(a, o, b) {
+		var rtl = this.settings.rtl;
+		switch (o) {
+			case '<':
+				return rtl ? a > b : a < b;
+			case '>':
+				return rtl ? a < b : a > b;
+			case '>=':
+				return rtl ? a <= b : a >= b;
+			case '<=':
+				return rtl ? a >= b : a <= b;
+			default:
+				break;
+		}
+	};
+
+	/**
+	 * Attaches to an internal event.
+	 * @protected
+	 * @param {HTMLElement} element - The event source.
+	 * @param {String} event - The event name.
+	 * @param {Function} listener - The event handler to attach.
+	 * @param {Boolean} capture - Wether the event should be handled at the capturing phase or not.
+	 */
+	Owl.prototype.on = function(element, event, listener, capture) {
+		if (element.addEventListener) {
+			element.addEventListener(event, listener, capture);
+		} else if (element.attachEvent) {
+			element.attachEvent('on' + event, listener);
+		}
+	};
+
+	/**
+	 * Detaches from an internal event.
+	 * @protected
+	 * @param {HTMLElement} element - The event source.
+	 * @param {String} event - The event name.
+	 * @param {Function} listener - The attached event handler to detach.
+	 * @param {Boolean} capture - Wether the attached event handler was registered as a capturing listener or not.
+	 */
+	Owl.prototype.off = function(element, event, listener, capture) {
+		if (element.removeEventListener) {
+			element.removeEventListener(event, listener, capture);
+		} else if (element.detachEvent) {
+			element.detachEvent('on' + event, listener);
+		}
+	};
+
+	/**
+	 * Triggers a public event.
+	 * @todo Remove `status`, `relatedTarget` should be used instead.
+	 * @protected
+	 * @param {String} name - The event name.
+	 * @param {*} [data=null] - The event data.
+	 * @param {String} [namespace=carousel] - The event namespace.
+	 * @param {String} [state] - The state which is associated with the event.
+	 * @param {Boolean} [enter=false] - Indicates if the call enters the specified state or not.
+	 * @returns {Event} - The event arguments.
+	 */
+	Owl.prototype.trigger = function(name, data, namespace, state, enter) {
+		var status = {
+			item: { count: this._items.length, index: this.current() }
+		}, handler = $.camelCase(
+			$.grep([ 'on', name, namespace ], function(v) { return v })
+				.join('-').toLowerCase()
+		), event = $.Event(
+			[ name, 'owl', namespace || 'carousel' ].join('.').toLowerCase(),
+			$.extend({ relatedTarget: this }, status, data)
+		);
+
+		if (!this._supress[name]) {
+			$.each(this._plugins, function(name, plugin) {
+				if (plugin.onTrigger) {
+					plugin.onTrigger(event);
+				}
+			});
+
+			this.register({ type: Owl.Type.Event, name: name });
+			this.$element.trigger(event);
+
+			if (this.settings && typeof this.settings[handler] === 'function') {
+				this.settings[handler].call(this, event);
+			}
+		}
+
+		return event;
+	};
+
+	/**
+	 * Enters a state.
+	 * @param name - The state name.
+	 */
+	Owl.prototype.enter = function(name) {
+		$.each([ name ].concat(this._states.tags[name] || []), $.proxy(function(i, name) {
+			if (this._states.current[name] === undefined) {
+				this._states.current[name] = 0;
+			}
+
+			this._states.current[name]++;
+		}, this));
+	};
+
+	/**
+	 * Leaves a state.
+	 * @param name - The state name.
+	 */
+	Owl.prototype.leave = function(name) {
+		$.each([ name ].concat(this._states.tags[name] || []), $.proxy(function(i, name) {
+			this._states.current[name]--;
+		}, this));
+	};
+
+	/**
+	 * Registers an event or state.
+	 * @public
+	 * @param {Object} object - The event or state to register.
+	 */
+	Owl.prototype.register = function(object) {
+		if (object.type === Owl.Type.Event) {
+			if (!$.event.special[object.name]) {
+				$.event.special[object.name] = {};
+			}
+
+			if (!$.event.special[object.name].owl) {
+				var _default = $.event.special[object.name]._default;
+				$.event.special[object.name]._default = function(e) {
+					if (_default && _default.apply && (!e.namespace || e.namespace.indexOf('owl') === -1)) {
+						return _default.apply(this, arguments);
+					}
+					return e.namespace && e.namespace.indexOf('owl') > -1;
+				};
+				$.event.special[object.name].owl = true;
+			}
+		} else if (object.type === Owl.Type.State) {
+			if (!this._states.tags[object.name]) {
+				this._states.tags[object.name] = object.tags;
+			} else {
+				this._states.tags[object.name] = this._states.tags[object.name].concat(object.tags);
+			}
+
+			this._states.tags[object.name] = $.grep(this._states.tags[object.name], $.proxy(function(tag, i) {
+				return $.inArray(tag, this._states.tags[object.name]) === i;
+			}, this));
+		}
+	};
+
+	/**
+	 * Suppresses events.
+	 * @protected
+	 * @param {Array.<String>} events - The events to suppress.
+	 */
+	Owl.prototype.suppress = function(events) {
+		$.each(events, $.proxy(function(index, event) {
+			this._supress[event] = true;
+		}, this));
+	};
+
+	/**
+	 * Releases suppressed events.
+	 * @protected
+	 * @param {Array.<String>} events - The events to release.
+	 */
+	Owl.prototype.release = function(events) {
+		$.each(events, $.proxy(function(index, event) {
+			delete this._supress[event];
+		}, this));
+	};
+
+	/**
+	 * Gets unified pointer coordinates from event.
+	 * @todo #261
+	 * @protected
+	 * @param {Event} - The `mousedown` or `touchstart` event.
+	 * @returns {Object} - Contains `x` and `y` coordinates of current pointer position.
+	 */
+	Owl.prototype.pointer = function(event) {
+		var result = { x: null, y: null };
+
+		event = event.originalEvent || event || window.event;
+
+		event = event.touches && event.touches.length ?
+			event.touches[0] : event.changedTouches && event.changedTouches.length ?
+				event.changedTouches[0] : event;
+
+		if (event.pageX) {
+			result.x = event.pageX;
+			result.y = event.pageY;
+		} else {
+			result.x = event.clientX;
+			result.y = event.clientY;
+		}
+
+		return result;
+	};
+
+	/**
+	 * Determines if the input is a Number or something that can be coerced to a Number
+	 * @protected
+	 * @param {Number|String|Object|Array|Boolean|RegExp|Function|Symbol} - The input to be tested
+	 * @returns {Boolean} - An indication if the input is a Number or can be coerced to a Number
+	 */
+	Owl.prototype.isNumeric = function(number) {
+		return !isNaN(parseFloat(number));
+	};
+
+	/**
+	 * Gets the difference of two vectors.
+	 * @todo #261
+	 * @protected
+	 * @param {Object} - The first vector.
+	 * @param {Object} - The second vector.
+	 * @returns {Object} - The difference.
+	 */
+	Owl.prototype.difference = function(first, second) {
+		return {
+			x: first.x - second.x,
+			y: first.y - second.y
+		};
+	};
+
+	/**
+	 * The jQuery Plugin for the Owl Carousel
+	 * @todo Navigation plugin `next` and `prev`
+	 * @public
+	 */
+	$.fn.owlCarousel = function(option) {
+		var args = Array.prototype.slice.call(arguments, 1);
+
+		return this.each(function() {
+			var $this = $(this),
+				data = $this.data('owl.carousel');
+
+			if (!data) {
+				data = new Owl(this, typeof option == 'object' && option);
+				$this.data('owl.carousel', data);
+
+				$.each([
+					'next', 'prev', 'to', 'destroy', 'refresh', 'replace', 'add', 'remove'
+				], function(i, event) {
+					data.register({ type: Owl.Type.Event, name: event });
+					data.$element.on(event + '.owl.carousel.core', $.proxy(function(e) {
+						if (e.namespace && e.relatedTarget !== this) {
+							this.suppress([ event ]);
+							data[event].apply(this, [].slice.call(arguments, 1));
+							this.release([ event ]);
+						}
+					}, data));
+				});
+			}
+
+			if (typeof option == 'string' && option.charAt(0) !== '_') {
+				data[option].apply(data, args);
+			}
+		});
+	};
+
+	/**
+	 * The constructor for the jQuery Plugin
+	 * @public
+	 */
+	$.fn.owlCarousel.Constructor = Owl;
+
+})(window.Zepto || window.jQuery, window, document);
 
 /**
- * @param {Date} [date] an optional date to convert to RFC2822 format
- * @param {boolean} [useUtc] whether to parse the date as UTC (default: false)
- * @returns {string} the converted date
+ * AutoRefresh Plugin
+ * @version 2.3.4
+ * @author Artus Kolanowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
  */
-function getRFC2822Date(date = new Date(), useUtc = false) {
-    if (useUtc) {
-        return getRFC2822DateUTC(date);
-    }
-    const dates = date
-        .toString()
-        .replace('GMT', '')
-        .replace(/\s\(.*\)$/, '')
-        .split(' ');
-    dates[0] = dates[0] + ',';
-    const day = dates[1];
-    dates[1] = dates[2];
-    dates[2] = day;
-    return dates.join(' ');
-}
-/**
- * @param {Date} [date] an optional date to convert to RFC2822 format (UTC)
- * @returns {string} the converted date
- */
-function getRFC2822DateUTC(date = new Date()) {
-    const dates = date.toUTCString().split(' ');
-    dates.pop(); // remove timezone
-    dates.push('+0000');
-    return dates.join(' ');
-}
-/**
- * RFC 2822 regex
- * @see https://tools.ietf.org/html/rfc2822#section-3.3
- * @see https://github.com/moment/moment/blob/a831fc7e2694281ce31e4f090bbcf90a690f0277/src/lib/create/from-string.js#L101
- */
-const rfc2822re = /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/;
-/**
- * @param {string} [date] a string to check for conformance to the [rfc2822](https://tools.ietf.org/html/rfc2822#section-3.3) standard
- * @returns {boolean} the result of the conformance check
- */
-function isRFC2822Date(date) {
-    return rfc2822re.test(date);
-}
+;(function($, window, document, undefined) {
 
-// adapted from https://github.com/emailjs/emailjs-mime-codec/blob/6909c706b9f09bc0e5c3faf48f723cca53e5b352/src/mimecodec.js
-const encoder = new TextEncoder();
-/**
- * @see https://tools.ietf.org/html/rfc2045#section-6.7
- */
-const RANGES = [
-    [0x09],
-    [0x0a],
-    [0x0d],
-    [0x20, 0x3c],
-    [0x3e, 0x7e], // >?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}
-];
-const LOOKUP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
-const MAX_CHUNK_LENGTH = 16383; // must be multiple of 3
-const MAX_MIME_WORD_LENGTH = 52;
-const MAX_B64_MIME_WORD_BYTE_LENGTH = 39;
-function tripletToBase64(num) {
-    return (LOOKUP[(num >> 18) & 0x3f] +
-        LOOKUP[(num >> 12) & 0x3f] +
-        LOOKUP[(num >> 6) & 0x3f] +
-        LOOKUP[num & 0x3f]);
-}
-function encodeChunk(uint8, start, end) {
-    let output = '';
-    for (let i = start; i < end; i += 3) {
-        output += tripletToBase64((uint8[i] << 16) + (uint8[i + 1] << 8) + uint8[i + 2]);
-    }
-    return output;
-}
-function encodeBase64(data) {
-    const len = data.length;
-    const extraBytes = len % 3; // if we have 1 byte left, pad 2 bytes
-    let output = '';
-    // go through the array every three bytes, we'll deal with trailing stuff later
-    for (let i = 0, len2 = len - extraBytes; i < len2; i += MAX_CHUNK_LENGTH) {
-        output += encodeChunk(data, i, i + MAX_CHUNK_LENGTH > len2 ? len2 : i + MAX_CHUNK_LENGTH);
-    }
-    // pad the end with zeros, but make sure to not forget the extra bytes
-    if (extraBytes === 1) {
-        const tmp = data[len - 1];
-        output += LOOKUP[tmp >> 2];
-        output += LOOKUP[(tmp << 4) & 0x3f];
-        output += '==';
-    }
-    else if (extraBytes === 2) {
-        const tmp = (data[len - 2] << 8) + data[len - 1];
-        output += LOOKUP[tmp >> 10];
-        output += LOOKUP[(tmp >> 4) & 0x3f];
-        output += LOOKUP[(tmp << 2) & 0x3f];
-        output += '=';
-    }
-    return output;
-}
-/**
- * Splits a mime encoded string. Needed for dividing mime words into smaller chunks
- *
- * @param {string} str Mime encoded string to be split up
- * @param {number} maxlen Maximum length of characters for one part (minimum 12)
- * @return {string[]} lines
- */
-function splitMimeEncodedString(str, maxlen = 12) {
-    const minWordLength = 12; // require at least 12 symbols to fit possible 4 octet UTF-8 sequences
-    const maxWordLength = Math.max(maxlen, minWordLength);
-    const lines = [];
-    while (str.length) {
-        let curLine = str.substr(0, maxWordLength);
-        const match = curLine.match(/=[0-9A-F]?$/i); // skip incomplete escaped char
-        if (match) {
-            curLine = curLine.substr(0, match.index);
-        }
-        let done = false;
-        while (!done) {
-            let chr;
-            done = true;
-            const match = str.substr(curLine.length).match(/^=([0-9A-F]{2})/i); // check if not middle of a unicode char sequence
-            if (match) {
-                chr = parseInt(match[1], 16);
-                // invalid sequence, move one char back anc recheck
-                if (chr < 0xc2 && chr > 0x7f) {
-                    curLine = curLine.substr(0, curLine.length - 3);
-                    done = false;
-                }
-            }
-        }
-        if (curLine.length) {
-            lines.push(curLine);
-        }
-        str = str.substr(curLine.length);
-    }
-    return lines;
-}
-/**
- *
- * @param {number} nr number
- * @returns {boolean} if number is in range
- */
-function checkRanges(nr) {
-    return RANGES.reduce((val, range) => val ||
-        (range.length === 1 && nr === range[0]) ||
-        (range.length === 2 && nr >= range[0] && nr <= range[1]), false);
-}
-/**
- * Encodes all non printable and non ascii bytes to =XX form, where XX is the
- * byte value in hex. This function does not convert linebreaks etc. it
- * only escapes character sequences
- *
- * NOTE: Encoding support depends on util.TextDecoder, which is severely limited
- * prior to Node.js 13.
- *
- * @see https://nodejs.org/api/util.html#util_whatwg_supported_encodings
- * @see https://github.com/nodejs/node/issues/19214
- *
- * @param {string|Uint8Array} data Either a string or an Uint8Array
- * @param {string} encoding WHATWG supported encoding
- * @return {string} Mime encoded string
- */
-function mimeEncode(data = '', encoding = 'utf-8') {
-    const decoder = new TextDecoder(encoding);
-    const buffer = typeof data === 'string'
-        ? encoder.encode(data)
-        : encoder.encode(decoder.decode(data));
-    return buffer.reduce((aggregate, ord, index) => checkRanges(ord) &&
-        !((ord === 0x20 || ord === 0x09) &&
-            (index === buffer.length - 1 ||
-                buffer[index + 1] === 0x0a ||
-                buffer[index + 1] === 0x0d))
-        ? // if the char is in allowed range, then keep as is, unless it is a ws in the end of a line
-            aggregate + String.fromCharCode(ord)
-        : `${aggregate}=${ord < 0x10 ? '0' : ''}${ord
-            .toString(16)
-            .toUpperCase()}`, '');
-}
-/**
- * Encodes a string or an Uint8Array to an UTF-8 MIME Word
- *
- * NOTE: Encoding support depends on util.TextDecoder, which is severely limited
- * prior to Node.js 13.
- *
- * @see https://tools.ietf.org/html/rfc2047
- * @see https://nodejs.org/api/util.html#util_whatwg_supported_encodings
- * @see https://github.com/nodejs/node/issues/19214
- *
- * @param {string|Uint8Array} data String to be encoded
- * @param {'Q' | 'B'} mimeWordEncoding='Q' Encoding for the mime word, either Q or B
- * @param {string} encoding WHATWG supported encoding
- * @return {string} Single or several mime words joined together
- */
-function mimeWordEncode(data, mimeWordEncoding = 'Q', encoding = 'utf-8') {
-    let parts = [];
-    const decoder = new TextDecoder(encoding);
-    const str = typeof data === 'string' ? data : decoder.decode(data);
-    if (mimeWordEncoding === 'Q') {
-        const encodedStr = mimeEncode(str, encoding).replace(/[^a-z0-9!*+\-/=]/gi, (chr) => chr === ' '
-            ? '_'
-            : '=' +
-                (chr.charCodeAt(0) < 0x10 ? '0' : '') +
-                chr.charCodeAt(0).toString(16).toUpperCase());
-        parts =
-            encodedStr.length < MAX_MIME_WORD_LENGTH
-                ? [encodedStr]
-                : splitMimeEncodedString(encodedStr, MAX_MIME_WORD_LENGTH);
-    }
-    else {
-        // Fits as much as possible into every line without breaking utf-8 multibyte characters' octets up across lines
-        let j = 0;
-        let i = 0;
-        while (i < str.length) {
-            if (encoder.encode(str.substring(j, i)).length >
-                MAX_B64_MIME_WORD_BYTE_LENGTH) {
-                // we went one character too far, substring at the char before
-                parts.push(str.substring(j, i - 1));
-                j = i - 1;
-            }
-            else {
-                i++;
-            }
-        }
-        // add the remainder of the string
-        str.substring(j) && parts.push(str.substring(j));
-        parts = parts.map((x) => encoder.encode(x)).map((x) => encodeBase64(x));
-    }
-    return parts
-        .map((p) => `=?UTF-8?${mimeWordEncoding}?${p}?= `)
-        .join('')
-        .trim();
-}
+	/**
+	 * Creates the auto refresh plugin.
+	 * @class The Auto Refresh Plugin
+	 * @param {Owl} carousel - The Owl Carousel
+	 */
+	var AutoRefresh = function(carousel) {
+		/**
+		 * Reference to the core.
+		 * @protected
+		 * @type {Owl}
+		 */
+		this._core = carousel;
 
-const CRLF$1 = '\r\n';
-/**
- * MIME standard wants 76 char chunks when sending out.
- */
-const MIMECHUNK = 76;
-/**
- * meets both base64 and mime divisibility
- */
-const MIME64CHUNK = (MIMECHUNK * 6);
-/**
- * size of the message stream buffer
- */
-const BUFFERSIZE = (MIMECHUNK * 24 * 7);
-let counter = 0;
-function generateBoundary() {
-    let text = '';
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'()+_,-./:=?";
-    for (let i = 0; i < 69; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}
-function convertPersonToAddress(person) {
-    return addressparser(person)
-        .map(({ name, address }) => {
-        return name
-            ? `${mimeWordEncode(name).replace(/,/g, '=2C')} <${address}>`
-            : address;
-    })
-        .join(', ');
-}
-function convertDashDelimitedTextToSnakeCase(text) {
-    return text
-        .toLowerCase()
-        .replace(/^(.)|-(.)/g, (match) => match.toUpperCase());
-}
-class Message {
-    /**
-     * Construct an rfc2822-compliant message object.
-     *
-     * Special notes:
-     * - The `from` field is required.
-     * - At least one `to`, `cc`, or `bcc` header is also required.
-     * - You can also add whatever other headers you want.
-     *
-     * @see https://tools.ietf.org/html/rfc2822
-     * @param {Partial<MessageHeaders>} headers Message headers
-     */
-    constructor(headers) {
-        this.attachments = [];
-        this.header = {
-            'message-id': `<${new Date().getTime()}.${counter++}.${process.pid}@${hostname()}>`,
-            date: getRFC2822Date(),
-        };
-        this.content = 'text/plain; charset=utf-8';
-        this.alternative = null;
-        for (const header in headers) {
-            // allow user to override default content-type to override charset or send a single non-text message
-            if (/^content-type$/i.test(header)) {
-                this.content = headers[header];
-            }
-            else if (header === 'text') {
-                this.text = headers[header];
-            }
-            else if (header === 'attachment' &&
-                typeof headers[header] === 'object') {
-                const attachment = headers[header];
-                if (Array.isArray(attachment)) {
-                    for (let i = 0; i < attachment.length; i++) {
-                        this.attach(attachment[i]);
-                    }
-                }
-                else if (attachment != null) {
-                    this.attach(attachment);
-                }
-            }
-            else if (header === 'subject') {
-                this.header.subject = mimeWordEncode(headers.subject);
-            }
-            else if (/^(cc|bcc|to|from)/i.test(header)) {
-                this.header[header.toLowerCase()] = convertPersonToAddress(headers[header]);
-            }
-            else {
-                // allow any headers the user wants to set??
-                this.header[header.toLowerCase()] = headers[header];
-            }
-        }
-    }
-    /**
-     * Attach a file to the message.
-     *
-     * Can be called multiple times, each adding a new attachment.
-     *
-     * @public
-     * @param {MessageAttachment} options attachment options
-     * @returns {Message} the current instance for chaining
-     */
-    attach(options) {
-        // sender can specify an attachment as an alternative
-        if (options.alternative) {
-            this.alternative = options;
-            this.alternative.charset = options.charset || 'utf-8';
-            this.alternative.type = options.type || 'text/html';
-            this.alternative.inline = true;
-        }
-        else {
-            this.attachments.push(options);
-        }
-        return this;
-    }
-    /**
-     * @public
-     * @returns {{ isValid: boolean, validationError: (string | undefined) }} an object specifying whether this message is validly formatted, and the first validation error if it is not.
-     */
-    checkValidity() {
-        if (typeof this.header.from !== 'string' &&
-            Array.isArray(this.header.from) === false) {
-            return {
-                isValid: false,
-                validationError: 'Message must have a `from` header',
-            };
-        }
-        if (typeof this.header.to !== 'string' &&
-            Array.isArray(this.header.to) === false &&
-            typeof this.header.cc !== 'string' &&
-            Array.isArray(this.header.cc) === false &&
-            typeof this.header.bcc !== 'string' &&
-            Array.isArray(this.header.bcc) === false) {
-            return {
-                isValid: false,
-                validationError: 'Message must have at least one `to`, `cc`, or `bcc` header',
-            };
-        }
-        if (this.attachments.length > 0) {
-            const failed = [];
-            this.attachments.forEach((attachment) => {
-                if (attachment.path) {
-                    if (existsSync(attachment.path) === false) {
-                        failed.push(`${attachment.path} does not exist`);
-                    }
-                }
-                else if (attachment.stream) {
-                    if (!attachment.stream.readable) {
-                        failed.push('attachment stream is not readable');
-                    }
-                }
-                else if (!attachment.data) {
-                    failed.push('attachment has no data associated with it');
-                }
-            });
-            return {
-                isValid: failed.length === 0,
-                validationError: failed.join(', '),
-            };
-        }
-        return { isValid: true, validationError: undefined };
-    }
-    /**
-     * @public
-     * @deprecated does not conform to the `errback` style followed by the rest of the library, and will be removed in the next major version. use `checkValidity` instead.
-     * @param {function(isValid: boolean, invalidReason: (string | undefined)): void} callback .
-     * @returns {void}
-     */
-    valid(callback) {
-        const { isValid, validationError } = this.checkValidity();
-        callback(isValid, validationError);
-    }
-    /**
-     * @public
-     * @returns {MessageStream} a stream of the current message
-     */
-    stream() {
-        return new MessageStream(this);
-    }
-    /**
-     * @public
-     * @param {function(Error, string): void} callback the function to call with the error and buffer
-     * @returns {void}
-     */
-    read(callback) {
-        let buffer = '';
-        const str = this.stream();
-        str.on('data', (data) => (buffer += data));
-        str.on('end', (err) => callback(err, buffer));
-        str.on('error', (err) => callback(err, buffer));
-    }
-    readAsync() {
-        return new Promise((resolve, reject) => {
-            this.read((err, buffer) => {
-                if (err != null) {
-                    reject(err);
-                }
-                else {
-                    resolve(buffer);
-                }
-            });
-        });
-    }
-}
-class MessageStream extends Stream {
-    /**
-     * @param {Message} message the message to stream
-     */
-    constructor(message) {
-        super();
-        this.message = message;
-        this.readable = true;
-        this.paused = false;
-        this.buffer = Buffer.alloc(MIMECHUNK * 24 * 7);
-        this.bufferIndex = 0;
-        /**
-         * @param {string} [data] the data to output
-         * @param {Function} [callback] the function
-         * @param {any[]} [args] array of arguments to pass to the callback
-         * @returns {void}
-         */
-        const output = (data) => {
-            // can we buffer the data?
-            if (this.buffer != null) {
-                const bytes = Buffer.byteLength(data);
-                if (bytes + this.bufferIndex < this.buffer.length) {
-                    this.buffer.write(data, this.bufferIndex);
-                    this.bufferIndex += bytes;
-                }
-                // we can't buffer the data, so ship it out!
-                else if (bytes > this.buffer.length) {
-                    if (this.bufferIndex) {
-                        this.emit('data', this.buffer.toString('utf-8', 0, this.bufferIndex));
-                        this.bufferIndex = 0;
-                    }
-                    const loops = Math.ceil(data.length / this.buffer.length);
-                    let loop = 0;
-                    while (loop < loops) {
-                        this.emit('data', data.substring(this.buffer.length * loop, this.buffer.length * (loop + 1)));
-                        loop++;
-                    }
-                } // we need to clean out the buffer, it is getting full
-                else {
-                    if (!this.paused) {
-                        this.emit('data', this.buffer.toString('utf-8', 0, this.bufferIndex));
-                        this.buffer.write(data, 0);
-                        this.bufferIndex = bytes;
-                    }
-                    else {
-                        // we can't empty out the buffer, so let's wait till we resume before adding to it
-                        this.once('resume', () => output(data));
-                    }
-                }
-            }
-        };
-        /**
-         * @param {MessageAttachment} [attachment] the attachment whose headers you would like to output
-         * @returns {void}
-         */
-        const outputAttachmentHeaders = (attachment) => {
-            let data = [];
-            const headers = {
-                'content-type': attachment.type +
-                    (attachment.charset ? `; charset=${attachment.charset}` : '') +
-                    (attachment.method ? `; method=${attachment.method}` : ''),
-                'content-transfer-encoding': 'base64',
-                'content-disposition': attachment.inline
-                    ? 'inline'
-                    : `attachment; filename="${mimeWordEncode(attachment.name)}"`,
-            };
-            // allow sender to override default headers
-            if (attachment.headers != null) {
-                for (const header in attachment.headers) {
-                    headers[header.toLowerCase()] = attachment.headers[header];
-                }
-            }
-            for (const header in headers) {
-                data = data.concat([
-                    convertDashDelimitedTextToSnakeCase(header),
-                    ': ',
-                    headers[header],
-                    CRLF$1,
-                ]);
-            }
-            output(data.concat([CRLF$1]).join(''));
-        };
-        /**
-         * @param {string} data the data to output as base64
-         * @param {function(): void} [callback] the function to call after output is finished
-         * @returns {void}
-         */
-        const outputBase64 = (data, callback) => {
-            const loops = Math.ceil(data.length / MIMECHUNK);
-            let loop = 0;
-            while (loop < loops) {
-                output(data.substring(MIMECHUNK * loop, MIMECHUNK * (loop + 1)) + CRLF$1);
-                loop++;
-            }
-            if (callback) {
-                callback();
-            }
-        };
-        const outputFile = (attachment, next) => {
-            var _a;
-            const chunk = MIME64CHUNK * 16;
-            const buffer = Buffer.alloc(chunk);
-            const inputEncoding = ((_a = attachment === null || attachment === void 0 ? void 0 : attachment.headers) === null || _a === void 0 ? void 0 : _a['content-transfer-encoding']) || 'base64';
-            const encoding = inputEncoding === '7bit'
-                ? 'ascii'
-                : inputEncoding === '8bit'
-                    ? 'binary'
-                    : inputEncoding;
-            /**
-             * @param {Error} err the error to emit
-             * @param {number} fd the file descriptor
-             * @returns {void}
-             */
-            const opened = (err, fd) => {
-                if (err) {
-                    this.emit('error', err);
-                    return;
-                }
-                const readBytes = (err, bytes) => {
-                    if (err || this.readable === false) {
-                        this.emit('error', err || new Error('message stream was interrupted somehow!'));
-                        return;
-                    }
-                    // guaranteed to be encoded without padding unless it is our last read
-                    outputBase64(buffer.toString(encoding, 0, bytes), () => {
-                        if (bytes == chunk) {
-                            // we read a full chunk, there might be more
-                            read(fd, buffer, 0, chunk, null, readBytes);
-                        } // that was the last chunk, we are done reading the file
-                        else {
-                            this.removeListener('error', closeSync);
-                            close(fd, next);
-                        }
-                    });
-                };
-                read(fd, buffer, 0, chunk, null, readBytes);
-                this.once('error', closeSync);
-            };
-            open(attachment.path, 'r', opened);
-        };
-        /**
-         * @param {MessageAttachment} attachment the metadata to use as headers
-         * @param {function(): void} callback the function to call after output is finished
-         * @returns {void}
-         */
-        const outputStream = (attachment, callback) => {
-            const { stream } = attachment;
-            if (stream === null || stream === void 0 ? void 0 : stream.readable) {
-                let previous = Buffer.alloc(0);
-                stream.resume();
-                stream.on('end', () => {
-                    outputBase64(previous.toString('base64'), callback);
-                    this.removeListener('pause', stream.pause);
-                    this.removeListener('resume', stream.resume);
-                    this.removeListener('error', stream.resume);
-                });
-                stream.on('data', (buff) => {
-                    // do we have bytes from a previous stream data event?
-                    let buffer = Buffer.isBuffer(buff) ? buff : Buffer.from(buff);
-                    if (previous.byteLength > 0) {
-                        buffer = Buffer.concat([previous, buffer]);
-                    }
-                    const padded = buffer.length % MIME64CHUNK;
-                    previous = Buffer.alloc(padded);
-                    // encode as much of the buffer to base64 without empty bytes
-                    if (padded > 0) {
-                        // copy dangling bytes into previous buffer
-                        buffer.copy(previous, 0, buffer.length - padded);
-                    }
-                    outputBase64(buffer.toString('base64', 0, buffer.length - padded));
-                });
-                this.on('pause', stream.pause);
-                this.on('resume', stream.resume);
-                this.on('error', stream.resume);
-            }
-            else {
-                this.emit('error', { message: 'stream not readable' });
-            }
-        };
-        const outputAttachment = (attachment, callback) => {
-            const build = attachment.path
-                ? outputFile
-                : attachment.stream
-                    ? outputStream
-                    : outputData;
-            outputAttachmentHeaders(attachment);
-            build(attachment, callback);
-        };
-        /**
-         * @param {string} boundary the boundary text between outputs
-         * @param {MessageAttachment[]} list the list of potential messages to output
-         * @param {number} index the index of the list item to output
-         * @param {function(): void} callback the function to call if index is greater than upper bound
-         * @returns {void}
-         */
-        const outputMessage = (boundary, list, index, callback) => {
-            if (index < list.length) {
-                output(`--${boundary}${CRLF$1}`);
-                if (list[index].related) {
-                    outputRelated(list[index], () => outputMessage(boundary, list, index + 1, callback));
-                }
-                else {
-                    outputAttachment(list[index], () => outputMessage(boundary, list, index + 1, callback));
-                }
-            }
-            else {
-                output(`${CRLF$1}--${boundary}--${CRLF$1}${CRLF$1}`);
-                callback();
-            }
-        };
-        const outputMixed = () => {
-            const boundary = generateBoundary();
-            output(`Content-Type: multipart/mixed; boundary="${boundary}"${CRLF$1}${CRLF$1}--${boundary}${CRLF$1}`);
-            if (this.message.alternative == null) {
-                outputText(this.message);
-                outputMessage(boundary, this.message.attachments, 0, close$1);
-            }
-            else {
-                outputAlternative(
-                // typescript bug; should narrow to { alternative: MessageAttachment }
-                this.message, () => outputMessage(boundary, this.message.attachments, 0, close$1));
-            }
-        };
-        /**
-         * @param {MessageAttachment} attachment the metadata to use as headers
-         * @param {function(): void} callback the function to call after output is finished
-         * @returns {void}
-         */
-        const outputData = (attachment, callback) => {
-            var _a, _b;
-            outputBase64(attachment.encoded
-                ? (_a = attachment.data) !== null && _a !== void 0 ? _a : ''
-                : Buffer.from((_b = attachment.data) !== null && _b !== void 0 ? _b : '').toString('base64'), callback);
-        };
-        /**
-         * @param {Message} message the message to output
-         * @returns {void}
-         */
-        const outputText = (message) => {
-            let data = [];
-            data = data.concat([
-                'Content-Type:',
-                message.content,
-                CRLF$1,
-                'Content-Transfer-Encoding: 7bit',
-                CRLF$1,
-            ]);
-            data = data.concat(['Content-Disposition: inline', CRLF$1, CRLF$1]);
-            data = data.concat([message.text || '', CRLF$1, CRLF$1]);
-            output(data.join(''));
-        };
-        /**
-         * @param {MessageAttachment} message the message to output
-         * @param {function(): void} callback the function to call after output is finished
-         * @returns {void}
-         */
-        const outputRelated = (message, callback) => {
-            const boundary = generateBoundary();
-            output(`Content-Type: multipart/related; boundary="${boundary}"${CRLF$1}${CRLF$1}--${boundary}${CRLF$1}`);
-            outputAttachment(message, () => {
-                var _a;
-                outputMessage(boundary, (_a = message.related) !== null && _a !== void 0 ? _a : [], 0, () => {
-                    output(`${CRLF$1}--${boundary}--${CRLF$1}${CRLF$1}`);
-                    callback();
-                });
-            });
-        };
-        /**
-         * @param {Message} message the message to output
-         * @param {function(): void} callback the function to call after output is finished
-         * @returns {void}
-         */
-        const outputAlternative = (message, callback) => {
-            const boundary = generateBoundary();
-            output(`Content-Type: multipart/alternative; boundary="${boundary}"${CRLF$1}${CRLF$1}--${boundary}${CRLF$1}`);
-            outputText(message);
-            output(`--${boundary}${CRLF$1}`);
-            /**
-             * @returns {void}
-             */
-            const finish = () => {
-                output([CRLF$1, '--', boundary, '--', CRLF$1, CRLF$1].join(''));
-                callback();
-            };
-            if (message.alternative.related) {
-                outputRelated(message.alternative, finish);
-            }
-            else {
-                outputAttachment(message.alternative, finish);
-            }
-        };
-        const close$1 = (err) => {
-            var _a, _b;
-            if (err) {
-                this.emit('error', err);
-            }
-            else {
-                this.emit('data', (_b = (_a = this.buffer) === null || _a === void 0 ? void 0 : _a.toString('utf-8', 0, this.bufferIndex)) !== null && _b !== void 0 ? _b : '');
-                this.emit('end');
-            }
-            this.buffer = null;
-            this.bufferIndex = 0;
-            this.readable = false;
-            this.removeAllListeners('resume');
-            this.removeAllListeners('pause');
-            this.removeAllListeners('error');
-            this.removeAllListeners('data');
-            this.removeAllListeners('end');
-        };
-        /**
-         * @returns {void}
-         */
-        const outputHeaderData = () => {
-            if (this.message.attachments.length || this.message.alternative) {
-                output(`MIME-Version: 1.0${CRLF$1}`);
-                outputMixed();
-            } // you only have a text message!
-            else {
-                outputText(this.message);
-                close$1();
-            }
-        };
-        /**
-         * @returns {void}
-         */
-        const outputHeader = () => {
-            let data = [];
-            for (const header in this.message.header) {
-                // do not output BCC in the headers (regex) nor custom Object.prototype functions...
-                if (!/bcc/i.test(header) &&
-                    Object.prototype.hasOwnProperty.call(this.message.header, header)) {
-                    data = data.concat([
-                        convertDashDelimitedTextToSnakeCase(header),
-                        ': ',
-                        this.message.header[header],
-                        CRLF$1,
-                    ]);
-                }
-            }
-            output(data.join(''));
-            outputHeaderData();
-        };
-        this.once('destroy', close$1);
-        process.nextTick(outputHeader);
-    }
-    /**
-     * @public
-     * pause the stream
-     * @returns {void}
-     */
-    pause() {
-        this.paused = true;
-        this.emit('pause');
-    }
-    /**
-     * @public
-     * resume the stream
-     * @returns {void}
-     */
-    resume() {
-        this.paused = false;
-        this.emit('resume');
-    }
-    /**
-     * @public
-     * destroy the stream
-     * @returns {void}
-     */
-    destroy() {
-        this.emit('destroy', this.bufferIndex > 0 ? { message: 'message stream destroyed' } : null);
-    }
-    /**
-     * @public
-     * destroy the stream at first opportunity
-     * @returns {void}
-     */
-    destroySoon() {
-        this.emit('destroy');
-    }
-}
+		/**
+		 * Refresh interval.
+		 * @protected
+		 * @type {number}
+		 */
+		this._interval = null;
+
+		/**
+		 * Whether the element is currently visible or not.
+		 * @protected
+		 * @type {Boolean}
+		 */
+		this._visible = null;
+
+		/**
+		 * All event handlers.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._handlers = {
+			'initialized.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.autoRefresh) {
+					this.watch();
+				}
+			}, this)
+		};
+
+		// set default options
+		this._core.options = $.extend({}, AutoRefresh.Defaults, this._core.options);
+
+		// register event handlers
+		this._core.$element.on(this._handlers);
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 */
+	AutoRefresh.Defaults = {
+		autoRefresh: true,
+		autoRefreshInterval: 500
+	};
+
+	/**
+	 * Watches the element.
+	 */
+	AutoRefresh.prototype.watch = function() {
+		if (this._interval) {
+			return;
+		}
+
+		this._visible = this._core.isVisible();
+		this._interval = window.setInterval($.proxy(this.refresh, this), this._core.settings.autoRefreshInterval);
+	};
+
+	/**
+	 * Refreshes the element.
+	 */
+	AutoRefresh.prototype.refresh = function() {
+		if (this._core.isVisible() === this._visible) {
+			return;
+		}
+
+		this._visible = !this._visible;
+
+		this._core.$element.toggleClass('owl-hidden', !this._visible);
+
+		this._visible && (this._core.invalidate('width') && this._core.refresh());
+	};
+
+	/**
+	 * Destroys the plugin.
+	 */
+	AutoRefresh.prototype.destroy = function() {
+		var handler, property;
+
+		window.clearInterval(this._interval);
+
+		for (handler in this._handlers) {
+			this._core.$element.off(handler, this._handlers[handler]);
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] != 'function' && (this[property] = null);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.AutoRefresh = AutoRefresh;
+
+})(window.Zepto || window.jQuery, window, document);
 
 /**
- * @readonly
- * @enum
+ * Lazy Plugin
+ * @version 2.3.4
+ * @author Bartosz Wojciechowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
  */
-const SMTPErrorStates = {
-    COULDNOTCONNECT: 1,
-    BADRESPONSE: 2,
-    AUTHFAILED: 3,
-    TIMEDOUT: 4,
-    ERROR: 5,
-    NOCONNECTION: 6,
-    AUTHNOTSUPPORTED: 7,
-    CONNECTIONCLOSED: 8,
-    CONNECTIONENDED: 9,
-    CONNECTIONAUTH: 10,
-};
-class SMTPError extends Error {
-    /**
-     * @protected
-     * @param {string} message error message
-     */
-    constructor(message) {
-        super(message);
-        this.code = null;
-        this.smtp = null;
-        this.previous = null;
-    }
-    /**
-     *
-     * @param {string} message error message
-     * @param {number} code smtp error state
-     * @param {Error | null} error previous error
-     * @param {unknown} smtp arbitrary data
-     * @returns {SMTPError} error
-     */
-    static create(message, code, error, smtp) {
-        const msg = (error === null || error === void 0 ? void 0 : error.message) ? `${message} (${error.message})` : message;
-        const err = new SMTPError(msg);
-        err.code = code;
-        err.smtp = smtp;
-        if (error) {
-            err.previous = error;
-        }
-        return err;
-    }
-}
+;(function($, window, document, undefined) {
 
-class SMTPResponseMonitor {
-    constructor(stream, timeout, onerror) {
-        let buffer = '';
-        const notify = () => {
-            var _a, _b;
-            if (buffer.length) {
-                // parse buffer for response codes
-                const line = buffer.replace('\r', '');
-                if (!((_b = (_a = line
-                    .trim()
-                    .split(/\n/)
-                    .pop()) === null || _a === void 0 ? void 0 : _a.match(/^(\d{3})\s/)) !== null && _b !== void 0 ? _b : false)) {
-                    return;
-                }
-                const match = line ? line.match(/(\d+)\s?(.*)/) : null;
-                const data = match !== null
-                    ? { code: match[1], message: match[2], data: line }
-                    : { code: -1, data: line };
-                stream.emit('response', null, data);
-                buffer = '';
+	/**
+	 * Creates the lazy plugin.
+	 * @class The Lazy Plugin
+	 * @param {Owl} carousel - The Owl Carousel
+	 */
+	var Lazy = function(carousel) {
+
+		/**
+		 * Reference to the core.
+		 * @protected
+		 * @type {Owl}
+		 */
+		this._core = carousel;
+
+		/**
+		 * Already loaded items.
+		 * @protected
+		 * @type {Array.<jQuery>}
+		 */
+		this._loaded = [];
+
+		/**
+		 * Event handlers.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._handlers = {
+			'initialized.owl.carousel change.owl.carousel resized.owl.carousel': $.proxy(function(e) {
+				if (!e.namespace) {
+					return;
+				}
+
+				if (!this._core.settings || !this._core.settings.lazyLoad) {
+					return;
+				}
+
+				if ((e.property && e.property.name == 'position') || e.type == 'initialized') {
+					var settings = this._core.settings,
+						n = (settings.center && Math.ceil(settings.items / 2) || settings.items),
+						i = ((settings.center && n * -1) || 0),
+						position = (e.property && e.property.value !== undefined ? e.property.value : this._core.current()) + i,
+						clones = this._core.clones().length,
+						load = $.proxy(function(i, v) { this.load(v) }, this);
+					//TODO: Need documentation for this new option
+					if (settings.lazyLoadEager > 0) {
+						n += settings.lazyLoadEager;
+						// If the carousel is looping also preload images that are to the "left"
+						if (settings.loop) {
+              position -= settings.lazyLoadEager;
+              n++;
             }
-        };
-        const error = (err) => {
-            stream.emit('response', SMTPError.create('connection encountered an error', SMTPErrorStates.ERROR, err));
-        };
-        const timedout = (err) => {
-            stream.end();
-            stream.emit('response', SMTPError.create('timedout while connecting to smtp server', SMTPErrorStates.TIMEDOUT, err));
-        };
-        const watch = (data) => {
-            if (data !== null) {
-                buffer += data.toString();
-                notify();
-            }
-        };
-        const close = (err) => {
-            stream.emit('response', SMTPError.create('connection has closed', SMTPErrorStates.CONNECTIONCLOSED, err));
-        };
-        const end = (err) => {
-            stream.emit('response', SMTPError.create('connection has ended', SMTPErrorStates.CONNECTIONENDED, err));
-        };
-        this.stop = (err) => {
-            stream.removeAllListeners('response');
-            stream.removeListener('data', watch);
-            stream.removeListener('end', end);
-            stream.removeListener('close', close);
-            stream.removeListener('error', error);
-            if (err != null && typeof onerror === 'function') {
-                onerror(err);
-            }
-        };
-        stream.on('data', watch);
-        stream.on('end', end);
-        stream.on('close', close);
-        stream.on('error', error);
-        stream.setTimeout(timeout, timedout);
-    }
-}
+					}
+
+					while (i++ < n) {
+						this.load(clones / 2 + this._core.relative(position));
+						clones && $.each(this._core.clones(this._core.relative(position)), load);
+						position++;
+					}
+				}
+			}, this)
+		};
+
+		// set the default options
+		this._core.options = $.extend({}, Lazy.Defaults, this._core.options);
+
+		// register event handler
+		this._core.$element.on(this._handlers);
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 */
+	Lazy.Defaults = {
+		lazyLoad: false,
+		lazyLoadEager: 0
+	};
+
+	/**
+	 * Loads all resources of an item at the specified position.
+	 * @param {Number} position - The absolute position of the item.
+	 * @protected
+	 */
+	Lazy.prototype.load = function(position) {
+		var $item = this._core.$stage.children().eq(position),
+			$elements = $item && $item.find('.owl-lazy');
+
+		if (!$elements || $.inArray($item.get(0), this._loaded) > -1) {
+			return;
+		}
+
+		$elements.each($.proxy(function(index, element) {
+			var $element = $(element), image,
+                url = (window.devicePixelRatio > 1 && $element.attr('data-src-retina')) || $element.attr('data-src') || $element.attr('data-srcset');
+
+			this._core.trigger('load', { element: $element, url: url }, 'lazy');
+
+			if ($element.is('img')) {
+				$element.one('load.owl.lazy', $.proxy(function() {
+					$element.css('opacity', 1);
+					this._core.trigger('loaded', { element: $element, url: url }, 'lazy');
+				}, this)).attr('src', url);
+            } else if ($element.is('source')) {
+                $element.one('load.owl.lazy', $.proxy(function() {
+                    this._core.trigger('loaded', { element: $element, url: url }, 'lazy');
+                }, this)).attr('srcset', url);
+			} else {
+				image = new Image();
+				image.onload = $.proxy(function() {
+					$element.css({
+						'background-image': 'url("' + url + '")',
+						'opacity': '1'
+					});
+					this._core.trigger('loaded', { element: $element, url: url }, 'lazy');
+				}, this);
+				image.src = url;
+			}
+		}, this));
+
+		this._loaded.push($item.get(0));
+	};
+
+	/**
+	 * Destroys the plugin.
+	 * @public
+	 */
+	Lazy.prototype.destroy = function() {
+		var handler, property;
+
+		for (handler in this.handlers) {
+			this._core.$element.off(handler, this.handlers[handler]);
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] != 'function' && (this[property] = null);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.Lazy = Lazy;
+
+})(window.Zepto || window.jQuery, window, document);
 
 /**
- * @readonly
- * @enum
+ * AutoHeight Plugin
+ * @version 2.3.4
+ * @author Bartosz Wojciechowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
  */
-const AUTH_METHODS = {
-    PLAIN: 'PLAIN',
-    'CRAM-MD5': 'CRAM-MD5',
-    LOGIN: 'LOGIN',
-    XOAUTH2: 'XOAUTH2',
-};
-/**
- * @readonly
- * @enum
- */
-const SMTPState = {
-    NOTCONNECTED: 0,
-    CONNECTING: 1,
-    CONNECTED: 2,
-};
-const DEFAULT_TIMEOUT = 5000;
-const SMTP_PORT = 25;
-const SMTP_SSL_PORT = 465;
-const SMTP_TLS_PORT = 587;
-const CRLF = '\r\n';
-const GREYLIST_DELAY = 300;
-let DEBUG = 0;
-/**
- * @param {...any[]} args the message(s) to log
- * @returns {void}
- */
-const log = (...args) => {
-    if (DEBUG === 1) {
-        args.forEach((d) => console.log(typeof d === 'object'
-            ? d instanceof Error
-                ? d.message
-                : JSON.stringify(d)
-            : d));
-    }
-};
-/**
- * @param {function(...any[]): void} callback the function to call
- * @param {...any[]} args the arguments to apply to the function
- * @returns {void}
- */
-const caller = (callback, ...args) => {
-    if (typeof callback === 'function') {
-        callback(...args);
-    }
-};
-class SMTPConnection extends EventEmitter {
-    /**
-     * SMTP class written using python's (2.7) smtplib.py as a base.
-     *
-     * To target a Message Transfer Agent (MTA), omit all options.
-     *
-     * NOTE: `host` is trimmed before being used to establish a connection; however, the original untrimmed value will still be visible in configuration.
-     */
-    constructor({ timeout, host, user, password, domain, port, ssl, tls, logger, authentication, } = {}) {
-        var _a;
-        super();
-        this.timeout = DEFAULT_TIMEOUT;
-        this.log = log;
-        this.authentication = [
-            AUTH_METHODS['CRAM-MD5'],
-            AUTH_METHODS.LOGIN,
-            AUTH_METHODS.PLAIN,
-            AUTH_METHODS.XOAUTH2,
-        ];
-        this._state = SMTPState.NOTCONNECTED;
-        this._secure = false;
-        this.loggedin = false;
-        this.sock = null;
-        this.features = null;
-        this.monitor = null;
-        this.domain = hostname();
-        this.host = 'localhost';
-        this.ssl = false;
-        this.tls = false;
-        this.greylistResponseTracker = new WeakSet();
-        if (Array.isArray(authentication)) {
-            this.authentication = authentication;
-        }
-        if (typeof timeout === 'number') {
-            this.timeout = timeout;
-        }
-        if (typeof domain === 'string') {
-            this.domain = domain;
-        }
-        if (typeof host === 'string') {
-            this.host = host;
-        }
-        if (ssl != null &&
-            (typeof ssl === 'boolean' ||
-                (typeof ssl === 'object' && Array.isArray(ssl) === false))) {
-            this.ssl = ssl;
-        }
-        if (tls != null &&
-            (typeof tls === 'boolean' ||
-                (typeof tls === 'object' && Array.isArray(tls) === false))) {
-            this.tls = tls;
-        }
-        this.port = port || (ssl ? SMTP_SSL_PORT : tls ? SMTP_TLS_PORT : SMTP_PORT);
-        this.loggedin = user && password ? false : true;
-        if (!user && ((_a = password === null || password === void 0 ? void 0 : password.length) !== null && _a !== void 0 ? _a : 0) > 0) {
-            throw new Error('`password` cannot be set without `user`');
-        }
-        // keep these strings hidden when quicky debugging/logging
-        this.user = () => user;
-        this.password = () => password;
-        if (typeof logger === 'function') {
-            this.log = log;
-        }
-    }
-    /**
-     * @public
-     * @param {0 | 1} level -
-     * @returns {void}
-     */
-    debug(level) {
-        DEBUG = level;
-    }
-    /**
-     * @public
-     * @returns {SMTPState} the current state
-     */
-    state() {
-        return this._state;
-    }
-    /**
-     * @public
-     * @returns {boolean} whether or not the instance is authorized
-     */
-    authorized() {
-        return this.loggedin;
-    }
-    /**
-     * Establish an SMTP connection.
-     *
-     * NOTE: `host` is trimmed before being used to establish a connection; however, the original untrimmed value will still be visible in configuration.
-     *
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {number} [port] the port to use for the connection
-     * @param {string} [host] the hostname to use for the connection
-     * @param {ConnectOptions} [options={}] the options
-     * @returns {void}
-     */
-    connect(callback, port = this.port, host = this.host, options = {}) {
-        this.port = port;
-        this.host = host;
-        this.ssl = options.ssl || this.ssl;
-        if (this._state !== SMTPState.NOTCONNECTED) {
-            this.quit(() => this.connect(callback, port, host, options));
-        }
-        /**
-         * @returns {void}
-         */
-        const connected = () => {
-            this.log(`connected: ${this.host}:${this.port}`);
-            if (this.ssl && !this.tls) {
-                // if key/ca/cert was passed in, check if connection is authorized
-                if (typeof this.ssl !== 'boolean' &&
-                    this.sock instanceof TLSSocket &&
-                    !this.sock.authorized) {
-                    this.close(true);
-                    caller(callback, SMTPError.create('could not establish an ssl connection', SMTPErrorStates.CONNECTIONAUTH));
-                }
-                else {
-                    this._secure = true;
-                }
-            }
-        };
-        /**
-         * @param {Error} err err
-         * @returns {void}
-         */
-        const connectedErrBack = (err) => {
-            if (!err) {
-                connected();
-            }
-            else {
-                this.close(true);
-                this.log(err);
-                caller(callback, SMTPError.create('could not connect', SMTPErrorStates.COULDNOTCONNECT, err));
-            }
-        };
-        const response = (err, msg) => {
-            if (err) {
-                if (this._state === SMTPState.NOTCONNECTED && !this.sock) {
-                    return;
-                }
-                this.close(true);
-                caller(callback, err);
-            }
-            else if (msg.code == '220') {
-                this.log(msg.data);
-                // might happen first, so no need to wait on connected()
-                this._state = SMTPState.CONNECTED;
-                caller(callback, null, msg.data);
-            }
-            else {
-                this.log(`response (data): ${msg.data}`);
-                this.quit(() => {
-                    caller(callback, SMTPError.create('bad response on connection', SMTPErrorStates.BADRESPONSE, err, msg.data));
-                });
-            }
-        };
-        this._state = SMTPState.CONNECTING;
-        this.log(`connecting: ${this.host}:${this.port}`);
-        if (this.ssl) {
-            this.sock = connect(this.port, this.host.trim(), typeof this.ssl === 'object' ? this.ssl : {}, connected);
-        }
-        else {
-            this.sock = new Socket();
-            this.sock.connect(this.port, this.host.trim(), connectedErrBack);
-        }
-        this.monitor = new SMTPResponseMonitor(this.sock, this.timeout, () => this.close(true));
-        this.sock.once('response', response);
-        this.sock.once('error', response); // the socket could reset or throw, so let's handle it and let the user know
-    }
-    /**
-     * @public
-     * @param {string} str the string to send
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    send(str, callback) {
-        if (this.sock != null && this._state === SMTPState.CONNECTED) {
-            this.log(str);
-            this.sock.once('response', (err, msg) => {
-                if (err) {
-                    caller(callback, err);
-                }
-                else {
-                    this.log(msg.data);
-                    caller(callback, null, msg);
-                }
-            });
-            if (this.sock.writable) {
-                this.sock.write(str);
-            }
-        }
-        else {
-            this.close(true);
-            caller(callback, SMTPError.create('no connection has been established', SMTPErrorStates.NOCONNECTION));
-        }
-    }
-    /**
-     * @public
-     * @param {string} cmd command to issue
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {(number[] | number)} [codes=[250]] array codes
-     * @returns {void}
-     */
-    command(cmd, callback, codes = [250]) {
-        const codesArray = Array.isArray(codes)
-            ? codes
-            : typeof codes === 'number'
-                ? [codes]
-                : [250];
-        const response = (err, msg) => {
-            if (err) {
-                caller(callback, err);
-            }
-            else {
-                const code = Number(msg.code);
-                if (codesArray.indexOf(code) !== -1) {
-                    caller(callback, err, msg.data, msg.message);
-                }
-                else if ((code === 450 || code === 451) &&
-                    msg.message.toLowerCase().includes('greylist') &&
-                    this.greylistResponseTracker.has(response) === false) {
-                    this.greylistResponseTracker.add(response);
-                    setTimeout(() => {
-                        this.send(cmd + CRLF, response);
-                    }, GREYLIST_DELAY);
-                }
-                else {
-                    const suffix = msg.message ? `: ${msg.message}` : '';
-                    const errorMessage = `bad response on command '${cmd.split(' ')[0]}'${suffix}`;
-                    caller(callback, SMTPError.create(errorMessage, SMTPErrorStates.BADRESPONSE, null, msg.data));
-                }
-            }
-        };
-        this.greylistResponseTracker.delete(response);
-        this.send(cmd + CRLF, response);
-    }
-    /**
-     * @public
-     * @description SMTP 'helo' command.
-     *
-     * Hostname to send for self command defaults to the FQDN of the local
-     * host.
-     *
-     * As this command was deprecated by rfc2821, it should only be used for compatibility with non-compliant servers.
-     * @see https://tools.ietf.org/html/rfc2821#appendix-F.3
-     *
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {string} domain the domain to associate with the 'helo' request
-     * @returns {void}
-     */
-    helo(callback, domain) {
-        this.command(`helo ${domain || this.domain}`, (err, data) => {
-            if (err) {
-                caller(callback, err);
-            }
-            else {
-                this.parse_smtp_features(data);
-                caller(callback, err, data);
-            }
-        });
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    starttls(callback) {
-        const response = (err, msg) => {
-            if (this.sock == null) {
-                throw new Error('null socket');
-            }
-            if (err) {
-                err.message += ' while establishing a starttls session';
-                caller(callback, err);
-            }
-            else {
-                const secureContext = createSecureContext(typeof this.tls === 'object' ? this.tls : {});
-                const secureSocket = new TLSSocket(this.sock, { secureContext });
-                secureSocket.on('error', (err) => {
-                    this.close(true);
-                    caller(callback, err);
-                });
-                this._secure = true;
-                this.sock = secureSocket;
-                new SMTPResponseMonitor(this.sock, this.timeout, () => this.close(true));
-                caller(callback, msg.data);
-            }
-        };
-        this.command('starttls', response, [220]);
-    }
-    /**
-     * @public
-     * @param {string} data the string to parse for features
-     * @returns {void}
-     */
-    parse_smtp_features(data) {
-        //  According to RFC1869 some (badly written)
-        //  MTA's will disconnect on an ehlo. Toss an exception if
-        //  that happens -ddm
-        data.split('\n').forEach((ext) => {
-            const parse = ext.match(/^(?:\d+[-=]?)\s*?([^\s]+)(?:\s+(.*)\s*?)?$/);
-            // To be able to communicate with as many SMTP servers as possible,
-            // we have to take the old-style auth advertisement into account,
-            // because:
-            // 1) Else our SMTP feature parser gets confused.
-            // 2) There are some servers that only advertise the auth methods we
-            // support using the old style.
-            if (parse != null && this.features != null) {
-                // RFC 1869 requires a space between ehlo keyword and parameters.
-                // It's actually stricter, in that only spaces are allowed between
-                // parameters, but were not going to check for that here.  Note
-                // that the space isn't present if there are no parameters.
-                this.features[parse[1].toLowerCase()] = parse[2] || true;
-            }
-        });
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {string} domain the domain to associate with the 'ehlo' request
-     * @returns {void}
-     */
-    ehlo(callback, domain) {
-        this.features = {};
-        this.command(`ehlo ${domain || this.domain}`, (err, data) => {
-            if (err) {
-                caller(callback, err);
-            }
-            else {
-                this.parse_smtp_features(data);
-                if (this.tls && !this._secure) {
-                    this.starttls(() => this.ehlo(callback, domain));
-                }
-                else {
-                    caller(callback, err, data);
-                }
-            }
-        });
-    }
-    /**
-     * @public
-     * @param {string} opt the features keyname to check
-     * @returns {boolean} whether the extension exists
-     */
-    has_extn(opt) {
-        var _a;
-        return ((_a = this.features) !== null && _a !== void 0 ? _a : {})[opt.toLowerCase()] === undefined;
-    }
-    /**
-     * @public
-     * @description SMTP 'help' command, returns text from the server
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {string} domain the domain to associate with the 'help' request
-     * @returns {void}
-     */
-    help(callback, domain) {
-        this.command(domain ? `help ${domain}` : 'help', callback, [211, 214]);
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    rset(callback) {
-        this.command('rset', callback);
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    noop(callback) {
-        this.send('noop', callback);
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {string} from the sender
-     * @returns {void}
-     */
-    mail(callback, from) {
-        this.command(`mail FROM:${from}`, callback);
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {string} to the receiver
-     * @returns {void}
-     */
-    rcpt(callback, to) {
-        this.command(`RCPT TO:${to}`, callback, [250, 251]);
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    data(callback) {
-        this.command('data', callback, [354]);
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    data_end(callback) {
-        this.command(`${CRLF}.`, callback);
-    }
-    /**
-     * @public
-     * @param {string} data the message to send
-     * @returns {void}
-     */
-    message(data) {
-        var _a, _b;
-        this.log(data);
-        (_b = (_a = this.sock) === null || _a === void 0 ? void 0 : _a.write(data)) !== null && _b !== void 0 ? _b : this.log('no socket to write to');
-    }
-    /**
-     * @public
-     * @description SMTP 'verify' command -- checks for address validity.
-     * @param {string} address the address to validate
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    verify(address, callback) {
-        this.command(`vrfy ${address}`, callback, [250, 251, 252]);
-    }
-    /**
-     * @public
-     * @description SMTP 'expn' command -- expands a mailing list.
-     * @param {string} address the mailing list to expand
-     * @param {function(...any[]): void} callback function to call after response
-     * @returns {void}
-     */
-    expn(address, callback) {
-        this.command(`expn ${address}`, callback);
-    }
-    /**
-     * @public
-     * @description Calls this.ehlo() and, if an error occurs, this.helo().
-     *
-     * If there has been no previous EHLO or HELO command self session, self
-     * method tries ESMTP EHLO first.
-     *
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {string} [domain] the domain to associate with the command
-     * @returns {void}
-     */
-    ehlo_or_helo_if_needed(callback, domain) {
-        // is this code callable...?
-        if (!this.features) {
-            const response = (err, data) => caller(callback, err, data);
-            this.ehlo((err, data) => {
-                if (err) {
-                    this.helo(response, domain);
-                }
-                else {
-                    caller(callback, err, data);
-                }
-            }, domain);
-        }
-    }
-    /**
-     * @public
-     *
-     * Log in on an SMTP server that requires authentication.
-     *
-     * If there has been no previous EHLO or HELO command self session, self
-     * method tries ESMTP EHLO first.
-     *
-     * This method will return normally if the authentication was successful.
-     *
-     * @param {function(...any[]): void} callback function to call after response
-     * @param {string} [user] the username to authenticate with
-     * @param {string} [password] the password for the authentication
-     * @param {{ method: string, domain: string }} [options] login options
-     * @returns {void}
-     */
-    login(callback, user, password, options = {}) {
-        var _a, _b;
-        const login = {
-            user: user ? () => user : this.user,
-            password: password ? () => password : this.password,
-            method: (_b = (_a = options === null || options === void 0 ? void 0 : options.method) === null || _a === void 0 ? void 0 : _a.toUpperCase()) !== null && _b !== void 0 ? _b : '',
-        };
-        const domain = (options === null || options === void 0 ? void 0 : options.domain) || this.domain;
-        const initiate = (err, data) => {
-            var _a;
-            if (err) {
-                caller(callback, err);
-                return;
-            }
-            let method = null;
-            /**
-             * @param {string} challenge challenge
-             * @returns {string} base64 cram hash
-             */
-            const encodeCramMd5 = (challenge) => {
-                const hmac = createHmac('md5', login.password());
-                hmac.update(Buffer.from(challenge, 'base64').toString('ascii'));
-                return Buffer.from(`${login.user()} ${hmac.digest('hex')}`).toString('base64');
-            };
-            /**
-             * @returns {string} base64 login/password
-             */
-            const encodePlain = () => Buffer.from(`\u0000${login.user()}\u0000${login.password()}`).toString('base64');
-            /**
-             * @see https://developers.google.com/gmail/xoauth2_protocol
-             * @returns {string} base64 xoauth2 auth token
-             */
-            const encodeXoauth2 = () => Buffer.from(`user=${login.user()}\u0001auth=Bearer ${login.password()}\u0001\u0001`).toString('base64');
-            // List of authentication methods we support: from preferred to
-            // less preferred methods.
-            if (!method) {
-                const preferred = this.authentication;
-                let auth = '';
-                if (typeof ((_a = this.features) === null || _a === void 0 ? void 0 : _a['auth']) === 'string') {
-                    auth = this.features['auth'];
-                }
-                for (let i = 0; i < preferred.length; i++) {
-                    if (auth.includes(preferred[i])) {
-                        method = preferred[i];
-                        break;
-                    }
-                }
-            }
-            /**
-             * handle bad responses from command differently
-             * @param {Error} err err
-             * @param {unknown} data data
-             * @returns {void}
-             */
-            const failed = (err, data) => {
-                this.loggedin = false;
-                this.close(); // if auth is bad, close the connection, it won't get better by itself
-                caller(callback, SMTPError.create('authorization.failed', SMTPErrorStates.AUTHFAILED, err, data));
-            };
-            /**
-             * @param {Error} err err
-             * @param {unknown} data data
-             * @returns {void}
-             */
-            const response = (err, data) => {
-                if (err) {
-                    failed(err, data);
-                }
-                else {
-                    this.loggedin = true;
-                    caller(callback, err, data);
-                }
-            };
-            /**
-             * @param {Error} err err
-             * @param {unknown} data data
-             * @param {string} msg msg
-             * @returns {void}
-             */
-            const attempt = (err, data, msg) => {
-                if (err) {
-                    failed(err, data);
-                }
-                else {
-                    if (method === AUTH_METHODS['CRAM-MD5']) {
-                        this.command(encodeCramMd5(msg), response, [235, 503]);
-                    }
-                    else if (method === AUTH_METHODS.LOGIN) {
-                        this.command(Buffer.from(login.password()).toString('base64'), response, [235, 503]);
-                    }
-                }
-            };
-            /**
-             * @param {Error} err err
-             * @param {unknown} data data
-             * @param {string} msg msg
-             * @returns {void}
-             */
-            const attemptUser = (err, data) => {
-                if (err) {
-                    failed(err, data);
-                }
-                else {
-                    if (method === AUTH_METHODS.LOGIN) {
-                        this.command(Buffer.from(login.user()).toString('base64'), attempt, [334]);
-                    }
-                }
-            };
-            switch (method) {
-                case AUTH_METHODS['CRAM-MD5']:
-                    this.command(`AUTH  ${AUTH_METHODS['CRAM-MD5']}`, attempt, [334]);
-                    break;
-                case AUTH_METHODS.LOGIN:
-                    this.command(`AUTH ${AUTH_METHODS.LOGIN}`, attemptUser, [334]);
-                    break;
-                case AUTH_METHODS.PLAIN:
-                    this.command(`AUTH ${AUTH_METHODS.PLAIN} ${encodePlain()}`, response, [235, 503]);
-                    break;
-                case AUTH_METHODS.XOAUTH2:
-                    this.command(`AUTH ${AUTH_METHODS.XOAUTH2} ${encodeXoauth2()}`, response, [235, 503]);
-                    break;
-                default:
-                    caller(callback, SMTPError.create('no form of authorization supported', SMTPErrorStates.AUTHNOTSUPPORTED, null, data));
-                    break;
-            }
-        };
-        this.ehlo_or_helo_if_needed(initiate, domain);
-    }
-    /**
-     * @public
-     * @param {boolean} [force=false] whether or not to force destroy the connection
-     * @returns {void}
-     */
-    close(force = false) {
-        if (this.sock) {
-            if (force) {
-                this.log('smtp connection destroyed!');
-                this.sock.destroy();
-            }
-            else {
-                this.log('smtp connection closed.');
-                this.sock.end();
-            }
-        }
-        if (this.monitor) {
-            this.monitor.stop();
-            this.monitor = null;
-        }
-        this._state = SMTPState.NOTCONNECTED;
-        this._secure = false;
-        this.sock = null;
-        this.features = null;
-        this.loggedin = !(this.user() && this.password());
-    }
-    /**
-     * @public
-     * @param {function(...any[]): void} [callback] function to call after response
-     * @returns {void}
-     */
-    quit(callback) {
-        this.command('quit', (err, data) => {
-            caller(callback, err, data);
-            this.close();
-        }, [221, 250]);
-    }
-}
+;(function($, window, document, undefined) {
 
-class SMTPClient {
-    /**
-     * Create a standard SMTP client backed by a self-managed SMTP connection.
-     *
-     * NOTE: `host` is trimmed before being used to establish a connection; however, the original untrimmed value will still be visible in configuration.
-     *
-     * @param {SMTPConnectionOptions} server smtp options
-     */
-    constructor(server) {
-        this.queue = [];
-        this.sending = false;
-        this.ready = false;
-        this.timer = null;
-        this.smtp = new SMTPConnection(server);
-    }
-    /**
-     * @public
-     * @template {Message | MessageHeaders} T
-     * @param {T} msg the message to send
-     * @param {MessageCallback<T>} callback receiver for the error (if any) as well as the passed-in message / headers
-     * @returns {void}
-     */
-    send(msg, callback) {
-        const message = msg instanceof Message
-            ? msg
-            : this._canMakeMessage(msg)
-                ? new Message(msg)
-                : null;
-        if (message == null) {
-            callback(new Error('message is not a valid Message instance'), msg);
-            return;
-        }
-        const { isValid, validationError } = message.checkValidity();
-        if (isValid) {
-            const stack = this.createMessageStack(message, callback);
-            if (stack.to.length === 0) {
-                return callback(new Error('No recipients found in message'), msg);
-            }
-            this.queue.push(stack);
-            this._poll();
-        }
-        else {
-            callback(new Error(validationError), msg);
-        }
-    }
-    /**
-     * @public
-     * @template {Message | MessageHeaders} T
-     * @param {T} msg the message to send
-     * @returns {Promise<T>} a promise that resolves to the passed-in message / headers
-     */
-    sendAsync(msg) {
-        return new Promise((resolve, reject) => {
-            this.send(msg, (err, message) => {
-                if (err != null) {
-                    reject(err);
-                }
-                else {
-                    // unfortunately, the conditional type doesn't reach here
-                    // fortunately, we only return a `Message` when err is null, so this is safe
-                    resolve(message);
-                }
-            });
-        });
-    }
-    /**
-     * @public
-     * @description Converts a message to the raw object used by the internal stack.
-     * @param {Message} message message to convert
-     * @param {MessageCallback} callback errback
-     * @returns {MessageStack} raw message object
-     */
-    createMessageStack(message, callback = function () {
-        /* ø */
-    }) {
-        const [{ address: from }] = addressparser(message.header.from);
-        const stack = {
-            message,
-            to: [],
-            from,
-            callback: callback.bind(this),
-        };
-        const { header: { to, cc, bcc, 'return-path': returnPath }, } = message;
-        if ((typeof to === 'string' || Array.isArray(to)) && to.length > 0) {
-            stack.to = addressparser(to);
-        }
-        if ((typeof cc === 'string' || Array.isArray(cc)) && cc.length > 0) {
-            stack.to = stack.to.concat(addressparser(cc).filter((x) => stack.to.some((y) => y.address === x.address) === false));
-        }
-        if ((typeof bcc === 'string' || Array.isArray(bcc)) && bcc.length > 0) {
-            stack.to = stack.to.concat(addressparser(bcc).filter((x) => stack.to.some((y) => y.address === x.address) === false));
-        }
-        if (typeof returnPath === 'string' && returnPath.length > 0) {
-            const parsedReturnPath = addressparser(returnPath);
-            if (parsedReturnPath.length > 0) {
-                const [{ address: returnPathAddress }] = parsedReturnPath;
-                stack.returnPath = returnPathAddress;
-            }
-        }
-        return stack;
-    }
-    /**
-     * @protected
-     * @returns {void}
-     */
-    _poll() {
-        if (this.timer != null) {
-            clearTimeout(this.timer);
-        }
-        if (this.queue.length) {
-            if (this.smtp.state() == SMTPState.NOTCONNECTED) {
-                this._connect(this.queue[0]);
-            }
-            else if (this.smtp.state() == SMTPState.CONNECTED &&
-                !this.sending &&
-                this.ready) {
-                this._sendmail(this.queue.shift());
-            }
-        }
-        // wait around 1 seconds in case something does come in,
-        // otherwise close out SMTP connection if still open
-        else if (this.smtp.state() == SMTPState.CONNECTED) {
-            this.timer = setTimeout(() => this.smtp.quit(), 1000);
-        }
-    }
-    /**
-     * @protected
-     * @param {MessageStack} stack stack
-     * @returns {void}
-     */
-    _connect(stack) {
-        /**
-         * @param {Error} err callback error
-         * @returns {void}
-         */
-        const connect = (err) => {
-            if (!err) {
-                const begin = (err) => {
-                    if (!err) {
-                        this.ready = true;
-                        this._poll();
-                    }
-                    else {
-                        stack.callback(err, stack.message);
-                        // clear out the queue so all callbacks can be called with the same error message
-                        this.queue.shift();
-                        this._poll();
-                    }
-                };
-                if (!this.smtp.authorized()) {
-                    this.smtp.login(begin);
-                }
-                else {
-                    this.smtp.ehlo_or_helo_if_needed(begin);
-                }
-            }
-            else {
-                stack.callback(err, stack.message);
-                // clear out the queue so all callbacks can be called with the same error message
-                this.queue.shift();
-                this._poll();
-            }
-        };
-        this.ready = false;
-        this.smtp.connect(connect);
-    }
-    /**
-     * @protected
-     * @param {MessageStack} msg message stack
-     * @returns {boolean} can make message
-     */
-    _canMakeMessage(msg) {
-        return (msg.from &&
-            (msg.to || msg.cc || msg.bcc) &&
-            (msg.text !== undefined || this._containsInlinedHtml(msg.attachment)));
-    }
-    /**
-     * @protected
-     * @param {MessageAttachment | MessageAttachment[]} attachment attachment
-     * @returns {boolean} whether the attachment contains inlined html
-     */
-    _containsInlinedHtml(attachment) {
-        if (Array.isArray(attachment)) {
-            return attachment.some((att) => {
-                return this._isAttachmentInlinedHtml(att);
-            });
-        }
-        else {
-            return this._isAttachmentInlinedHtml(attachment);
-        }
-    }
-    /**
-     * @protected
-     * @param {MessageAttachment} attachment attachment
-     * @returns {boolean} whether the attachment is inlined html
-     */
-    _isAttachmentInlinedHtml(attachment) {
-        return (attachment &&
-            (attachment.data || attachment.path) &&
-            attachment.alternative === true);
-    }
-    /**
-     * @protected
-     * @param {MessageStack} stack stack
-     * @param {function(MessageStack): void} next next
-     * @returns {function(Error): void} callback
-     */
-    _sendsmtp(stack, next) {
-        /**
-         * @param {Error} [err] error
-         * @returns {void}
-         */
-        return (err) => {
-            if (!err && next) {
-                next.apply(this, [stack]);
-            }
-            else {
-                // if we snag on SMTP commands, call done, passing the error
-                // but first reset SMTP state so queue can continue polling
-                this.smtp.rset(() => this._senddone(err, stack));
-            }
-        };
-    }
-    /**
-     * @protected
-     * @param {MessageStack} stack stack
-     * @returns {void}
-     */
-    _sendmail(stack) {
-        const from = stack.returnPath || stack.from;
-        this.sending = true;
-        this.smtp.mail(this._sendsmtp(stack, this._sendrcpt), '<' + from + '>');
-    }
-    /**
-     * @protected
-     * @param {MessageStack} stack stack
-     * @returns {void}
-     */
-    _sendrcpt(stack) {
-        var _a;
-        if (stack.to == null || typeof stack.to === 'string') {
-            throw new TypeError('stack.to must be array');
-        }
-        const to = (_a = stack.to.shift()) === null || _a === void 0 ? void 0 : _a.address;
-        this.smtp.rcpt(this._sendsmtp(stack, stack.to.length ? this._sendrcpt : this._senddata), `<${to}>`);
-    }
-    /**
-     * @protected
-     * @param {MessageStack} stack stack
-     * @returns {void}
-     */
-    _senddata(stack) {
-        this.smtp.data(this._sendsmtp(stack, this._sendmessage));
-    }
-    /**
-     * @protected
-     * @param {MessageStack} stack stack
-     * @returns {void}
-     */
-    _sendmessage(stack) {
-        const stream = stack.message.stream();
-        stream.on('data', (data) => this.smtp.message(data));
-        stream.on('end', () => {
-            this.smtp.data_end(this._sendsmtp(stack, () => this._senddone(null, stack)));
-        });
-        // there is no way to cancel a message while in the DATA portion,
-        // so we have to close the socket to prevent a bad email from going out
-        stream.on('error', (err) => {
-            this.smtp.close();
-            this._senddone(err, stack);
-        });
-    }
-    /**
-     * @protected
-     * @param {Error} err err
-     * @param {MessageStack} stack stack
-     * @returns {void}
-     */
-    _senddone(err, stack) {
-        this.sending = false;
-        stack.callback(err, stack.message);
-        this._poll();
-    }
-}
+	/**
+	 * Creates the auto height plugin.
+	 * @class The Auto Height Plugin
+	 * @param {Owl} carousel - The Owl Carousel
+	 */
+	var AutoHeight = function(carousel) {
+		/**
+		 * Reference to the core.
+		 * @protected
+		 * @type {Owl}
+		 */
+		this._core = carousel;
 
-export { AUTH_METHODS, BUFFERSIZE, DEFAULT_TIMEOUT, MIME64CHUNK, MIMECHUNK, Message, SMTPClient, SMTPConnection, SMTPError, SMTPErrorStates, SMTPResponseMonitor, SMTPState, addressparser, getRFC2822Date, getRFC2822DateUTC, isRFC2822Date, mimeEncode, mimeWordEncode };
-//# sourceMappingURL=email.js.map
+		this._previousHeight = null;
 
+		/**
+		 * All event handlers.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._handlers = {
+			'initialized.owl.carousel refreshed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.autoHeight) {
+					this.update();
+				}
+			}, this),
+			'changed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.autoHeight && e.property.name === 'position'){
+					this.update();
+				}
+			}, this),
+			'loaded.owl.lazy': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.autoHeight
+					&& e.element.closest('.' + this._core.settings.itemClass).index() === this._core.current()) {
+					this.update();
+				}
+			}, this)
+		};
+
+		// set default options
+		this._core.options = $.extend({}, AutoHeight.Defaults, this._core.options);
+
+		// register event handlers
+		this._core.$element.on(this._handlers);
+		this._intervalId = null;
+		var refThis = this;
+
+		// These changes have been taken from a PR by gavrochelegnou proposed in #1575
+		// and have been made compatible with the latest jQuery version
+		$(window).on('load', function() {
+			if (refThis._core.settings.autoHeight) {
+				refThis.update();
+			}
+		});
+
+		// Autoresize the height of the carousel when window is resized
+		// When carousel has images, the height is dependent on the width
+		// and should also change on resize
+		$(window).resize(function() {
+			if (refThis._core.settings.autoHeight) {
+				if (refThis._intervalId != null) {
+					clearTimeout(refThis._intervalId);
+				}
+
+				refThis._intervalId = setTimeout(function() {
+					refThis.update();
+				}, 250);
+			}
+		});
+
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 */
+	AutoHeight.Defaults = {
+		autoHeight: false,
+		autoHeightClass: 'owl-height'
+	};
+
+	/**
+	 * Updates the view.
+	 */
+	AutoHeight.prototype.update = function() {
+		var start = this._core._current,
+			end = start + this._core.settings.items,
+			lazyLoadEnabled = this._core.settings.lazyLoad,
+			visible = this._core.$stage.children().toArray().slice(start, end),
+			heights = [],
+			maxheight = 0;
+
+		$.each(visible, function(index, item) {
+			heights.push($(item).height());
+		});
+
+		maxheight = Math.max.apply(null, heights);
+
+		if (maxheight <= 1 && lazyLoadEnabled && this._previousHeight) {
+			maxheight = this._previousHeight;
+		}
+
+		this._previousHeight = maxheight;
+
+		this._core.$stage.parent()
+			.height(maxheight)
+			.addClass(this._core.settings.autoHeightClass);
+	};
+
+	AutoHeight.prototype.destroy = function() {
+		var handler, property;
+
+		for (handler in this._handlers) {
+			this._core.$element.off(handler, this._handlers[handler]);
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] !== 'function' && (this[property] = null);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.AutoHeight = AutoHeight;
+
+})(window.Zepto || window.jQuery, window, document);
+
+/**
+ * Video Plugin
+ * @version 2.3.4
+ * @author Bartosz Wojciechowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
+ */
+;(function($, window, document, undefined) {
+
+	/**
+	 * Creates the video plugin.
+	 * @class The Video Plugin
+	 * @param {Owl} carousel - The Owl Carousel
+	 */
+	var Video = function(carousel) {
+		/**
+		 * Reference to the core.
+		 * @protected
+		 * @type {Owl}
+		 */
+		this._core = carousel;
+
+		/**
+		 * Cache all video URLs.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._videos = {};
+
+		/**
+		 * Current playing item.
+		 * @protected
+		 * @type {jQuery}
+		 */
+		this._playing = null;
+
+		/**
+		 * All event handlers.
+		 * @todo The cloned content removale is too late
+		 * @protected
+		 * @type {Object}
+		 */
+		this._handlers = {
+			'initialized.owl.carousel': $.proxy(function(e) {
+				if (e.namespace) {
+					this._core.register({ type: 'state', name: 'playing', tags: [ 'interacting' ] });
+				}
+			}, this),
+			'resize.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.video && this.isInFullScreen()) {
+					e.preventDefault();
+				}
+			}, this),
+			'refreshed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.is('resizing')) {
+					this._core.$stage.find('.cloned .owl-video-frame').remove();
+				}
+			}, this),
+			'changed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && e.property.name === 'position' && this._playing) {
+					this.stop();
+				}
+			}, this),
+			'prepared.owl.carousel': $.proxy(function(e) {
+				if (!e.namespace) {
+					return;
+				}
+
+				var $element = $(e.content).find('.owl-video');
+
+				if ($element.length) {
+					$element.css('display', 'none');
+					this.fetch($element, $(e.content));
+				}
+			}, this)
+		};
+
+		// set default options
+		this._core.options = $.extend({}, Video.Defaults, this._core.options);
+
+		// register event handlers
+		this._core.$element.on(this._handlers);
+
+		this._core.$element.on('click.owl.video', '.owl-video-play-icon', $.proxy(function(e) {
+			this.play(e);
+		}, this));
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 */
+	Video.Defaults = {
+		video: false,
+		videoHeight: false,
+		videoWidth: false
+	};
+
+	/**
+	 * Gets the video ID and the type (YouTube/Vimeo/vzaar only).
+	 * @protected
+	 * @param {jQuery} target - The target containing the video data.
+	 * @param {jQuery} item - The item containing the video.
+	 */
+	Video.prototype.fetch = function(target, item) {
+			var type = (function() {
+					if (target.attr('data-vimeo-id')) {
+						return 'vimeo';
+					} else if (target.attr('data-vzaar-id')) {
+						return 'vzaar'
+					} else {
+						return 'youtube';
+					}
+				})(),
+				id = target.attr('data-vimeo-id') || target.attr('data-youtube-id') || target.attr('data-vzaar-id'),
+				width = target.attr('data-width') || this._core.settings.videoWidth,
+				height = target.attr('data-height') || this._core.settings.videoHeight,
+				url = target.attr('href');
+
+		if (url) {
+
+			/*
+					Parses the id's out of the following urls (and probably more):
+					https://www.youtube.com/watch?v=:id
+					https://youtu.be/:id
+					https://vimeo.com/:id
+					https://vimeo.com/channels/:channel/:id
+					https://vimeo.com/groups/:group/videos/:id
+					https://app.vzaar.com/videos/:id
+
+					Visual example: https://regexper.com/#(http%3A%7Chttps%3A%7C)%5C%2F%5C%2F(player.%7Cwww.%7Capp.)%3F(vimeo%5C.com%7Cyoutu(be%5C.com%7C%5C.be%7Cbe%5C.googleapis%5C.com)%7Cvzaar%5C.com)%5C%2F(video%5C%2F%7Cvideos%5C%2F%7Cembed%5C%2F%7Cchannels%5C%2F.%2B%5C%2F%7Cgroups%5C%2F.%2B%5C%2F%7Cwatch%5C%3Fv%3D%7Cv%5C%2F)%3F(%5BA-Za-z0-9._%25-%5D*)(%5C%26%5CS%2B)%3F
+			*/
+
+			id = url.match(/(http:|https:|)\/\/(player.|www.|app.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com|be\-nocookie\.com)|vzaar\.com)\/(video\/|videos\/|embed\/|channels\/.+\/|groups\/.+\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
+
+			if (id[3].indexOf('youtu') > -1) {
+				type = 'youtube';
+			} else if (id[3].indexOf('vimeo') > -1) {
+				type = 'vimeo';
+			} else if (id[3].indexOf('vzaar') > -1) {
+				type = 'vzaar';
+			} else {
+				throw new Error('Video URL not supported.');
+			}
+			id = id[6];
+		} else {
+			throw new Error('Missing video URL.');
+		}
+
+		this._videos[url] = {
+			type: type,
+			id: id,
+			width: width,
+			height: height
+		};
+
+		item.attr('data-video', url);
+
+		this.thumbnail(target, this._videos[url]);
+	};
+
+	/**
+	 * Creates video thumbnail.
+	 * @protected
+	 * @param {jQuery} target - The target containing the video data.
+	 * @param {Object} info - The video info object.
+	 * @see `fetch`
+	 */
+	Video.prototype.thumbnail = function(target, video) {
+		var tnLink,
+			icon,
+			path,
+			dimensions = video.width && video.height ? 'width:' + video.width + 'px;height:' + video.height + 'px;' : '',
+			customTn = target.find('img'),
+			srcType = 'src',
+			lazyClass = '',
+			settings = this._core.settings,
+			create = function(path) {
+				icon = '<div class="owl-video-play-icon"></div>';
+
+				if (settings.lazyLoad) {
+					tnLink = $('<div/>',{
+						"class": 'owl-video-tn ' + lazyClass,
+						"srcType": path
+					});
+				} else {
+					tnLink = $( '<div/>', {
+						"class": "owl-video-tn",
+						"style": 'opacity:1;background-image:url(' + path + ')'
+					});
+				}
+				target.after(tnLink);
+				target.after(icon);
+			};
+
+		// wrap video content into owl-video-wrapper div
+		target.wrap( $( '<div/>', {
+			"class": "owl-video-wrapper",
+			"style": dimensions
+		}));
+
+		if (this._core.settings.lazyLoad) {
+			srcType = 'data-src';
+			lazyClass = 'owl-lazy';
+		}
+
+		// custom thumbnail
+		if (customTn.length) {
+			create(customTn.attr(srcType));
+			customTn.remove();
+			return false;
+		}
+
+		if (video.type === 'youtube') {
+			path = "//img.youtube.com/vi/" + video.id + "/hqdefault.jpg";
+			create(path);
+		} else if (video.type === 'vimeo') {
+			$.ajax({
+				type: 'GET',
+				url: '//vimeo.com/api/v2/video/' + video.id + '.json',
+				jsonp: 'callback',
+				dataType: 'jsonp',
+				success: function(data) {
+					path = data[0].thumbnail_large;
+					create(path);
+				}
+			});
+		} else if (video.type === 'vzaar') {
+			$.ajax({
+				type: 'GET',
+				url: '//vzaar.com/api/videos/' + video.id + '.json',
+				jsonp: 'callback',
+				dataType: 'jsonp',
+				success: function(data) {
+					path = data.framegrab_url;
+					create(path);
+				}
+			});
+		}
+	};
+
+	/**
+	 * Stops the current video.
+	 * @public
+	 */
+	Video.prototype.stop = function() {
+		this._core.trigger('stop', null, 'video');
+		this._playing.find('.owl-video-frame').remove();
+		this._playing.removeClass('owl-video-playing');
+		this._playing = null;
+		this._core.leave('playing');
+		this._core.trigger('stopped', null, 'video');
+	};
+
+	/**
+	 * Starts the current video.
+	 * @public
+	 * @param {Event} event - The event arguments.
+	 */
+	Video.prototype.play = function(event) {
+		var target = $(event.target),
+			item = target.closest('.' + this._core.settings.itemClass),
+			video = this._videos[item.attr('data-video')],
+			width = video.width || '100%',
+			height = video.height || this._core.$stage.height(),
+			html,
+			iframe;
+
+		if (this._playing) {
+			return;
+		}
+
+		this._core.enter('playing');
+		this._core.trigger('play', null, 'video');
+
+		item = this._core.items(this._core.relative(item.index()));
+
+		this._core.reset(item.index());
+
+		html = $( '<iframe frameborder="0" allowfullscreen mozallowfullscreen webkitAllowFullScreen ></iframe>' );
+		html.attr( 'height', height );
+		html.attr( 'width', width );
+		if (video.type === 'youtube') {
+			html.attr( 'src', '//www.youtube.com/embed/' + video.id + '?autoplay=1&rel=0&v=' + video.id );
+		} else if (video.type === 'vimeo') {
+			html.attr( 'src', '//player.vimeo.com/video/' + video.id + '?autoplay=1' );
+		} else if (video.type === 'vzaar') {
+			html.attr( 'src', '//view.vzaar.com/' + video.id + '/player?autoplay=true' );
+		}
+
+		iframe = $(html).wrap( '<div class="owl-video-frame" />' ).insertAfter(item.find('.owl-video'));
+
+		this._playing = item.addClass('owl-video-playing');
+	};
+
+	/**
+	 * Checks whether an video is currently in full screen mode or not.
+	 * @todo Bad style because looks like a readonly method but changes members.
+	 * @protected
+	 * @returns {Boolean}
+	 */
+	Video.prototype.isInFullScreen = function() {
+		var element = document.fullscreenElement || document.mozFullScreenElement ||
+				document.webkitFullscreenElement;
+
+		return element && $(element).parent().hasClass('owl-video-frame');
+	};
+
+	/**
+	 * Destroys the plugin.
+	 */
+	Video.prototype.destroy = function() {
+		var handler, property;
+
+		this._core.$element.off('click.owl.video');
+
+		for (handler in this._handlers) {
+			this._core.$element.off(handler, this._handlers[handler]);
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] != 'function' && (this[property] = null);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.Video = Video;
+
+})(window.Zepto || window.jQuery, window, document);
+
+/**
+ * Animate Plugin
+ * @version 2.3.4
+ * @author Bartosz Wojciechowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
+ */
+;(function($, window, document, undefined) {
+
+	/**
+	 * Creates the animate plugin.
+	 * @class The Navigation Plugin
+	 * @param {Owl} scope - The Owl Carousel
+	 */
+	var Animate = function(scope) {
+		this.core = scope;
+		this.core.options = $.extend({}, Animate.Defaults, this.core.options);
+		this.swapping = true;
+		this.previous = undefined;
+		this.next = undefined;
+
+		this.handlers = {
+			'change.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && e.property.name == 'position') {
+					this.previous = this.core.current();
+					this.next = e.property.value;
+				}
+			}, this),
+			'drag.owl.carousel dragged.owl.carousel translated.owl.carousel': $.proxy(function(e) {
+				if (e.namespace) {
+					this.swapping = e.type == 'translated';
+				}
+			}, this),
+			'translate.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this.swapping && (this.core.options.animateOut || this.core.options.animateIn)) {
+					this.swap();
+				}
+			}, this)
+		};
+
+		this.core.$element.on(this.handlers);
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 */
+	Animate.Defaults = {
+		animateOut: false,
+		animateIn: false
+	};
+
+	/**
+	 * Toggles the animation classes whenever an translations starts.
+	 * @protected
+	 * @returns {Boolean|undefined}
+	 */
+	Animate.prototype.swap = function() {
+
+		if (this.core.settings.items !== 1) {
+			return;
+		}
+
+		if (!$.support.animation || !$.support.transition) {
+			return;
+		}
+
+		this.core.speed(0);
+
+		var left,
+			clear = $.proxy(this.clear, this),
+			previous = this.core.$stage.children().eq(this.previous),
+			next = this.core.$stage.children().eq(this.next),
+			incoming = this.core.settings.animateIn,
+			outgoing = this.core.settings.animateOut;
+
+		if (this.core.current() === this.previous) {
+			return;
+		}
+
+		if (outgoing) {
+			left = this.core.coordinates(this.previous) - this.core.coordinates(this.next);
+			previous.one($.support.animation.end, clear)
+				.css( { 'left': left + 'px' } )
+				.addClass('animated owl-animated-out')
+				.addClass(outgoing);
+		}
+
+		if (incoming) {
+			next.one($.support.animation.end, clear)
+				.addClass('animated owl-animated-in')
+				.addClass(incoming);
+		}
+	};
+
+	Animate.prototype.clear = function(e) {
+		$(e.target).css( { 'left': '' } )
+			.removeClass('animated owl-animated-out owl-animated-in')
+			.removeClass(this.core.settings.animateIn)
+			.removeClass(this.core.settings.animateOut);
+		this.core.onTransitionEnd();
+	};
+
+	/**
+	 * Destroys the plugin.
+	 * @public
+	 */
+	Animate.prototype.destroy = function() {
+		var handler, property;
+
+		for (handler in this.handlers) {
+			this.core.$element.off(handler, this.handlers[handler]);
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] != 'function' && (this[property] = null);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.Animate = Animate;
+
+})(window.Zepto || window.jQuery, window, document);
+
+/**
+ * Autoplay Plugin
+ * @version 2.3.4
+ * @author Bartosz Wojciechowski
+ * @author Artus Kolanowski
+ * @author David Deutsch
+ * @author Tom De Caluwé
+ * @license The MIT License (MIT)
+ */
+;(function($, window, document, undefined) {
+
+	/**
+	 * Creates the autoplay plugin.
+	 * @class The Autoplay Plugin
+	 * @param {Owl} scope - The Owl Carousel
+	 */
+	var Autoplay = function(carousel) {
+		/**
+		 * Reference to the core.
+		 * @protected
+		 * @type {Owl}
+		 */
+		this._core = carousel;
+
+		/**
+		 * The autoplay timeout id.
+		 * @type {Number}
+		 */
+		this._call = null;
+
+		/**
+		 * Depending on the state of the plugin, this variable contains either
+		 * the start time of the timer or the current timer value if it's
+		 * paused. Since we start in a paused state we initialize the timer
+		 * value.
+		 * @type {Number}
+		 */
+		this._time = 0;
+
+		/**
+		 * Stores the timeout currently used.
+		 * @type {Number}
+		 */
+		this._timeout = 0;
+
+		/**
+		 * Indicates whenever the autoplay is paused.
+		 * @type {Boolean}
+		 */
+		this._paused = true;
+
+		/**
+		 * All event handlers.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._handlers = {
+			'changed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && e.property.name === 'settings') {
+					if (this._core.settings.autoplay) {
+						this.play();
+					} else {
+						this.stop();
+					}
+				} else if (e.namespace && e.property.name === 'position' && this._paused) {
+					// Reset the timer. This code is triggered when the position
+					// of the carousel was changed through user interaction.
+					this._time = 0;
+				}
+			}, this),
+			'initialized.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.autoplay) {
+					this.play();
+				}
+			}, this),
+			'play.owl.autoplay': $.proxy(function(e, t, s) {
+				if (e.namespace) {
+					this.play(t, s);
+				}
+			}, this),
+			'stop.owl.autoplay': $.proxy(function(e) {
+				if (e.namespace) {
+					this.stop();
+				}
+			}, this),
+			'mouseover.owl.autoplay': $.proxy(function() {
+				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
+					this.pause();
+				}
+			}, this),
+			'mouseleave.owl.autoplay': $.proxy(function() {
+				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
+					this.play();
+				}
+			}, this),
+			'touchstart.owl.core': $.proxy(function() {
+				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
+					this.pause();
+				}
+			}, this),
+			'touchend.owl.core': $.proxy(function() {
+				if (this._core.settings.autoplayHoverPause) {
+					this.play();
+				}
+			}, this)
+		};
+
+		// register event handlers
+		this._core.$element.on(this._handlers);
+
+		// set default options
+		this._core.options = $.extend({}, Autoplay.Defaults, this._core.options);
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 */
+	Autoplay.Defaults = {
+		autoplay: false,
+		autoplayTimeout: 5000,
+		autoplayHoverPause: false,
+		autoplaySpeed: false
+	};
+
+	/**
+	 * Transition to the next slide and set a timeout for the next transition.
+	 * @private
+	 * @param {Number} [speed] - The animation speed for the animations.
+	 */
+	Autoplay.prototype._next = function(speed) {
+		this._call = window.setTimeout(
+			$.proxy(this._next, this, speed),
+			this._timeout * (Math.round(this.read() / this._timeout) + 1) - this.read()
+		);
+
+		if (this._core.is('interacting') || document.hidden) {
+			return;
+		}
+		this._core.next(speed || this._core.settings.autoplaySpeed);
+	}
+
+	/**
+	 * Reads the current timer value when the timer is playing.
+	 * @public
+	 */
+	Autoplay.prototype.read = function() {
+		return new Date().getTime() - this._time;
+	};
+
+	/**
+	 * Starts the autoplay.
+	 * @public
+	 * @param {Number} [timeout] - The interval before the next animation starts.
+	 * @param {Number} [speed] - The animation speed for the animations.
+	 */
+	Autoplay.prototype.play = function(timeout, speed) {
+		var elapsed;
+
+		if (!this._core.is('rotating')) {
+			this._core.enter('rotating');
+		}
+
+		timeout = timeout || this._core.settings.autoplayTimeout;
+
+		// Calculate the elapsed time since the last transition. If the carousel
+		// wasn't playing this calculation will yield zero.
+		elapsed = Math.min(this._time % (this._timeout || timeout), timeout);
+
+		if (this._paused) {
+			// Start the clock.
+			this._time = this.read();
+			this._paused = false;
+		} else {
+			// Clear the active timeout to allow replacement.
+			window.clearTimeout(this._call);
+		}
+
+		// Adjust the origin of the timer to match the new timeout value.
+		this._time += this.read() % timeout - elapsed;
+
+		this._timeout = timeout;
+		this._call = window.setTimeout($.proxy(this._next, this, speed), timeout - elapsed);
+	};
+
+	/**
+	 * Stops the autoplay.
+	 * @public
+	 */
+	Autoplay.prototype.stop = function() {
+		if (this._core.is('rotating')) {
+			// Reset the clock.
+			this._time = 0;
+			this._paused = true;
+
+			window.clearTimeout(this._call);
+			this._core.leave('rotating');
+		}
+	};
+
+	/**
+	 * Pauses the autoplay.
+	 * @public
+	 */
+	Autoplay.prototype.pause = function() {
+		if (this._core.is('rotating') && !this._paused) {
+			// Pause the clock.
+			this._time = this.read();
+			this._paused = true;
+
+			window.clearTimeout(this._call);
+		}
+	};
+
+	/**
+	 * Destroys the plugin.
+	 */
+	Autoplay.prototype.destroy = function() {
+		var handler, property;
+
+		this.stop();
+
+		for (handler in this._handlers) {
+			this._core.$element.off(handler, this._handlers[handler]);
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] != 'function' && (this[property] = null);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.autoplay = Autoplay;
+
+})(window.Zepto || window.jQuery, window, document);
+
+/**
+ * Navigation Plugin
+ * @version 2.3.4
+ * @author Artus Kolanowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
+ */
+;(function($, window, document, undefined) {
+	'use strict';
+
+	/**
+	 * Creates the navigation plugin.
+	 * @class The Navigation Plugin
+	 * @param {Owl} carousel - The Owl Carousel.
+	 */
+	var Navigation = function(carousel) {
+		/**
+		 * Reference to the core.
+		 * @protected
+		 * @type {Owl}
+		 */
+		this._core = carousel;
+
+		/**
+		 * Indicates whether the plugin is initialized or not.
+		 * @protected
+		 * @type {Boolean}
+		 */
+		this._initialized = false;
+
+		/**
+		 * The current paging indexes.
+		 * @protected
+		 * @type {Array}
+		 */
+		this._pages = [];
+
+		/**
+		 * All DOM elements of the user interface.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._controls = {};
+
+		/**
+		 * Markup for an indicator.
+		 * @protected
+		 * @type {Array.<String>}
+		 */
+		this._templates = [];
+
+		/**
+		 * The carousel element.
+		 * @type {jQuery}
+		 */
+		this.$element = this._core.$element;
+
+		/**
+		 * Overridden methods of the carousel.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._overrides = {
+			next: this._core.next,
+			prev: this._core.prev,
+			to: this._core.to
+		};
+
+		/**
+		 * All event handlers.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._handlers = {
+			'prepared.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.dotsData) {
+					this._templates.push('<div class="' + this._core.settings.dotClass + '">' +
+						$(e.content).find('[data-dot]').addBack('[data-dot]').attr('data-dot') + '</div>');
+				}
+			}, this),
+			'added.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.dotsData) {
+					this._templates.splice(e.position, 0, this._templates.pop());
+				}
+			}, this),
+			'remove.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.dotsData) {
+					this._templates.splice(e.position, 1);
+				}
+			}, this),
+			'changed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && e.property.name == 'position') {
+					this.draw();
+				}
+			}, this),
+			'initialized.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && !this._initialized) {
+					this._core.trigger('initialize', null, 'navigation');
+					this.initialize();
+					this.update();
+					this.draw();
+					this._initialized = true;
+					this._core.trigger('initialized', null, 'navigation');
+				}
+			}, this),
+			'refreshed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._initialized) {
+					this._core.trigger('refresh', null, 'navigation');
+					this.update();
+					this.draw();
+					this._core.trigger('refreshed', null, 'navigation');
+				}
+			}, this)
+		};
+
+		// set default options
+		this._core.options = $.extend({}, Navigation.Defaults, this._core.options);
+
+		// register event handlers
+		this.$element.on(this._handlers);
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 * @todo Rename `slideBy` to `navBy`
+	 */
+	Navigation.Defaults = {
+		nav: false,
+		navText: [
+			'<span aria-label="' + 'Previous' + '">&#x2039;</span>',
+			'<span aria-label="' + 'Next' + '">&#x203a;</span>'
+		],
+		navSpeed: false,
+		navElement: 'button type="button" role="presentation"',
+		navContainer: false,
+		navContainerClass: 'owl-nav',
+		navClass: [
+			'owl-prev',
+			'owl-next'
+		],
+		slideBy: 1,
+		dotClass: 'owl-dot',
+		dotsClass: 'owl-dots',
+		dots: true,
+		dotsEach: false,
+		dotsData: false,
+		dotsSpeed: false,
+		dotsContainer: false
+	};
+
+	/**
+	 * Initializes the layout of the plugin and extends the carousel.
+	 * @protected
+	 */
+	Navigation.prototype.initialize = function() {
+		var override,
+			settings = this._core.settings;
+
+		// create DOM structure for relative navigation
+		this._controls.$relative = (settings.navContainer ? $(settings.navContainer)
+			: $('<div>').addClass(settings.navContainerClass).appendTo(this.$element)).addClass('disabled');
+
+		this._controls.$previous = $('<' + settings.navElement + '>')
+			.addClass(settings.navClass[0])
+			.html(settings.navText[0])
+			.prependTo(this._controls.$relative)
+			.on('click', $.proxy(function(e) {
+				this.prev(settings.navSpeed);
+			}, this));
+		this._controls.$next = $('<' + settings.navElement + '>')
+			.addClass(settings.navClass[1])
+			.html(settings.navText[1])
+			.appendTo(this._controls.$relative)
+			.on('click', $.proxy(function(e) {
+				this.next(settings.navSpeed);
+			}, this));
+
+		// create DOM structure for absolute navigation
+		if (!settings.dotsData) {
+			this._templates = [ $('<button role="button">')
+				.addClass(settings.dotClass)
+				.append($('<span>'))
+				.prop('outerHTML') ];
+		}
+
+		this._controls.$absolute = (settings.dotsContainer ? $(settings.dotsContainer)
+			: $('<div>').addClass(settings.dotsClass).appendTo(this.$element)).addClass('disabled');
+
+		this._controls.$absolute.on('click', 'button', $.proxy(function(e) {
+			var index = $(e.target).parent().is(this._controls.$absolute)
+				? $(e.target).index() : $(e.target).parent().index();
+
+			e.preventDefault();
+
+			this.to(index, settings.dotsSpeed);
+		}, this));
+
+		/*$el.on('focusin', function() {
+			$(document).off(".carousel");
+
+			$(document).on('keydown.carousel', function(e) {
+				if(e.keyCode == 37) {
+					$el.trigger('prev.owl')
+				}
+				if(e.keyCode == 39) {
+					$el.trigger('next.owl')
+				}
+			});
+		});*/
+
+		// override public methods of the carousel
+		for (override in this._overrides) {
+			this._core[override] = $.proxy(this[override], this);
+		}
+	};
+
+	/**
+	 * Destroys the plugin.
+	 * @protected
+	 */
+	Navigation.prototype.destroy = function() {
+		var handler, control, property, override, settings;
+		settings = this._core.settings;
+
+		for (handler in this._handlers) {
+			this.$element.off(handler, this._handlers[handler]);
+		}
+		for (control in this._controls) {
+			if (control === '$relative' && settings.navContainer) {
+				this._controls[control].html('');
+			} else {
+				this._controls[control].remove();
+			}
+		}
+		for (override in this.overides) {
+			this._core[override] = this._overrides[override];
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] != 'function' && (this[property] = null);
+		}
+	};
+
+	/**
+	 * Updates the internal state.
+	 * @protected
+	 */
+	Navigation.prototype.update = function() {
+		var i, j, k,
+			lower = this._core.clones().length / 2,
+			upper = lower + this._core.items().length,
+			maximum = this._core.maximum(true),
+			settings = this._core.settings,
+			size = settings.center || settings.autoWidth || settings.dotsData
+				? 1 : settings.dotsEach || settings.items;
+
+		if (settings.slideBy !== 'page') {
+			settings.slideBy = Math.min(settings.slideBy, settings.items);
+		}
+
+		if (settings.dots || settings.slideBy == 'page') {
+			this._pages = [];
+
+			for (i = lower, j = 0, k = 0; i < upper; i++) {
+				if (j >= size || j === 0) {
+					this._pages.push({
+						start: Math.min(maximum, i - lower),
+						end: i - lower + size - 1
+					});
+					if (Math.min(maximum, i - lower) === maximum) {
+						break;
+					}
+					j = 0, ++k;
+				}
+				j += this._core.mergers(this._core.relative(i));
+			}
+		}
+	};
+
+	/**
+	 * Draws the user interface.
+	 * @todo The option `dotsData` wont work.
+	 * @protected
+	 */
+	Navigation.prototype.draw = function() {
+		var difference,
+			settings = this._core.settings,
+			disabled = this._core.items().length <= settings.items,
+			index = this._core.relative(this._core.current()),
+			loop = settings.loop || settings.rewind;
+
+		this._controls.$relative.toggleClass('disabled', !settings.nav || disabled);
+
+		if (settings.nav) {
+			this._controls.$previous.toggleClass('disabled', !loop && index <= this._core.minimum(true));
+			this._controls.$next.toggleClass('disabled', !loop && index >= this._core.maximum(true));
+		}
+
+		this._controls.$absolute.toggleClass('disabled', !settings.dots || disabled);
+
+		if (settings.dots) {
+			difference = this._pages.length - this._controls.$absolute.children().length;
+
+			if (settings.dotsData && difference !== 0) {
+				this._controls.$absolute.html(this._templates.join(''));
+			} else if (difference > 0) {
+				this._controls.$absolute.append(new Array(difference + 1).join(this._templates[0]));
+			} else if (difference < 0) {
+				this._controls.$absolute.children().slice(difference).remove();
+			}
+
+			this._controls.$absolute.find('.active').removeClass('active');
+			this._controls.$absolute.children().eq($.inArray(this.current(), this._pages)).addClass('active');
+		}
+	};
+
+	/**
+	 * Extends event data.
+	 * @protected
+	 * @param {Event} event - The event object which gets thrown.
+	 */
+	Navigation.prototype.onTrigger = function(event) {
+		var settings = this._core.settings;
+
+		event.page = {
+			index: $.inArray(this.current(), this._pages),
+			count: this._pages.length,
+			size: settings && (settings.center || settings.autoWidth || settings.dotsData
+				? 1 : settings.dotsEach || settings.items)
+		};
+	};
+
+	/**
+	 * Gets the current page position of the carousel.
+	 * @protected
+	 * @returns {Number}
+	 */
+	Navigation.prototype.current = function() {
+		var current = this._core.relative(this._core.current());
+		return $.grep(this._pages, $.proxy(function(page, index) {
+			return page.start <= current && page.end >= current;
+		}, this)).pop();
+	};
+
+	/**
+	 * Gets the current succesor/predecessor position.
+	 * @protected
+	 * @returns {Number}
+	 */
+	Navigation.prototype.getPosition = function(successor) {
+		var position, length,
+			settings = this._core.settings;
+
+		if (settings.slideBy == 'page') {
+			position = $.inArray(this.current(), this._pages);
+			length = this._pages.length;
+			successor ? ++position : --position;
+			position = this._pages[((position % length) + length) % length].start;
+		} else {
+			position = this._core.relative(this._core.current());
+			length = this._core.items().length;
+			successor ? position += settings.slideBy : position -= settings.slideBy;
+		}
+
+		return position;
+	};
+
+	/**
+	 * Slides to the next item or page.
+	 * @public
+	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
+	 */
+	Navigation.prototype.next = function(speed) {
+		$.proxy(this._overrides.to, this._core)(this.getPosition(true), speed);
+	};
+
+	/**
+	 * Slides to the previous item or page.
+	 * @public
+	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
+	 */
+	Navigation.prototype.prev = function(speed) {
+		$.proxy(this._overrides.to, this._core)(this.getPosition(false), speed);
+	};
+
+	/**
+	 * Slides to the specified item or page.
+	 * @public
+	 * @param {Number} position - The position of the item or page.
+	 * @param {Number} [speed] - The time in milliseconds for the transition.
+	 * @param {Boolean} [standard=false] - Whether to use the standard behaviour or not.
+	 */
+	Navigation.prototype.to = function(position, speed, standard) {
+		var length;
+
+		if (!standard && this._pages.length) {
+			length = this._pages.length;
+			$.proxy(this._overrides.to, this._core)(this._pages[((position % length) + length) % length].start, speed);
+		} else {
+			$.proxy(this._overrides.to, this._core)(position, speed);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.Navigation = Navigation;
+
+})(window.Zepto || window.jQuery, window, document);
+
+/**
+ * Hash Plugin
+ * @version 2.3.4
+ * @author Artus Kolanowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
+ */
+;(function($, window, document, undefined) {
+	'use strict';
+
+	/**
+	 * Creates the hash plugin.
+	 * @class The Hash Plugin
+	 * @param {Owl} carousel - The Owl Carousel
+	 */
+	var Hash = function(carousel) {
+		/**
+		 * Reference to the core.
+		 * @protected
+		 * @type {Owl}
+		 */
+		this._core = carousel;
+
+		/**
+		 * Hash index for the items.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._hashes = {};
+
+		/**
+		 * The carousel element.
+		 * @type {jQuery}
+		 */
+		this.$element = this._core.$element;
+
+		/**
+		 * All event handlers.
+		 * @protected
+		 * @type {Object}
+		 */
+		this._handlers = {
+			'initialized.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && this._core.settings.startPosition === 'URLHash') {
+					$(window).trigger('hashchange.owl.navigation');
+				}
+			}, this),
+			'prepared.owl.carousel': $.proxy(function(e) {
+				if (e.namespace) {
+					var hash = $(e.content).find('[data-hash]').addBack('[data-hash]').attr('data-hash');
+
+					if (!hash) {
+						return;
+					}
+
+					this._hashes[hash] = e.content;
+				}
+			}, this),
+			'changed.owl.carousel': $.proxy(function(e) {
+				if (e.namespace && e.property.name === 'position') {
+					var current = this._core.items(this._core.relative(this._core.current())),
+						hash = $.map(this._hashes, function(item, hash) {
+							return item === current ? hash : null;
+						}).join();
+
+					if (!hash || window.location.hash.slice(1) === hash) {
+						return;
+					}
+
+					window.location.hash = hash;
+				}
+			}, this)
+		};
+
+		// set default options
+		this._core.options = $.extend({}, Hash.Defaults, this._core.options);
+
+		// register the event handlers
+		this.$element.on(this._handlers);
+
+		// register event listener for hash navigation
+		$(window).on('hashchange.owl.navigation', $.proxy(function(e) {
+			var hash = window.location.hash.substring(1),
+				items = this._core.$stage.children(),
+				position = this._hashes[hash] && items.index(this._hashes[hash]);
+
+			if (position === undefined || position === this._core.current()) {
+				return;
+			}
+
+			this._core.to(this._core.relative(position), false, true);
+		}, this));
+	};
+
+	/**
+	 * Default options.
+	 * @public
+	 */
+	Hash.Defaults = {
+		URLhashListener: false
+	};
+
+	/**
+	 * Destroys the plugin.
+	 * @public
+	 */
+	Hash.prototype.destroy = function() {
+		var handler, property;
+
+		$(window).off('hashchange.owl.navigation');
+
+		for (handler in this._handlers) {
+			this._core.$element.off(handler, this._handlers[handler]);
+		}
+		for (property in Object.getOwnPropertyNames(this)) {
+			typeof this[property] != 'function' && (this[property] = null);
+		}
+	};
+
+	$.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
+
+})(window.Zepto || window.jQuery, window, document);
+
+/**
+ * Support Plugin
+ *
+ * @version 2.3.4
+ * @author Vivid Planet Software GmbH
+ * @author Artus Kolanowski
+ * @author David Deutsch
+ * @license The MIT License (MIT)
+ */
+;(function($, window, document, undefined) {
+
+	var style = $('<support>').get(0).style,
+		prefixes = 'Webkit Moz O ms'.split(' '),
+		events = {
+			transition: {
+				end: {
+					WebkitTransition: 'webkitTransitionEnd',
+					MozTransition: 'transitionend',
+					OTransition: 'oTransitionEnd',
+					transition: 'transitionend'
+				}
+			},
+			animation: {
+				end: {
+					WebkitAnimation: 'webkitAnimationEnd',
+					MozAnimation: 'animationend',
+					OAnimation: 'oAnimationEnd',
+					animation: 'animationend'
+				}
+			}
+		},
+		tests = {
+			csstransforms: function() {
+				return !!test('transform');
+			},
+			csstransforms3d: function() {
+				return !!test('perspective');
+			},
+			csstransitions: function() {
+				return !!test('transition');
+			},
+			cssanimations: function() {
+				return !!test('animation');
+			}
+		};
+
+	function test(property, prefixed) {
+		var result = false,
+			upper = property.charAt(0).toUpperCase() + property.slice(1);
+
+		$.each((property + ' ' + prefixes.join(upper + ' ') + upper).split(' '), function(i, property) {
+			if (style[property] !== undefined) {
+				result = prefixed ? property : true;
+				return false;
+			}
+		});
+
+		return result;
+	}
+
+	function prefixed(property) {
+		return test(property, true);
+	}
+
+	if (tests.csstransitions()) {
+		/* jshint -W053 */
+		$.support.transition = new String(prefixed('transition'))
+		$.support.transition.end = events.transition.end[ $.support.transition ];
+	}
+
+	if (tests.cssanimations()) {
+		/* jshint -W053 */
+		$.support.animation = new String(prefixed('animation'))
+		$.support.animation.end = events.animation.end[ $.support.animation ];
+	}
+
+	if (tests.csstransforms()) {
+		/* jshint -W053 */
+		$.support.transform = new String(prefixed('transform'));
+		$.support.transform3d = tests.csstransforms3d();
+	}
+
+})(window.Zepto || window.jQuery, window, document);
+
+!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.AOS=t():e.AOS=t()}(this,function(){return function(e){function t(o){if(n[o])return n[o].exports;var i=n[o]={exports:{},id:o,loaded:!1};return e[o].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var n={};return t.m=e,t.c=n,t.p="dist/",t(0)}([function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}var i=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var o in n)Object.prototype.hasOwnProperty.call(n,o)&&(e[o]=n[o])}return e},r=n(1),a=(o(r),n(6)),u=o(a),c=n(7),s=o(c),f=n(8),d=o(f),l=n(9),p=o(l),m=n(10),b=o(m),v=n(11),y=o(v),g=n(14),h=o(g),w=[],k=!1,x={offset:120,delay:0,easing:"ease",duration:400,disable:!1,once:!1,startEvent:"DOMContentLoaded",throttleDelay:99,debounceDelay:50,disableMutationObserver:!1},j=function(){var e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];if(e&&(k=!0),k)return w=(0,y.default)(w,x),(0,b.default)(w,x.once),w},O=function(){w=(0,h.default)(),j()},M=function(){w.forEach(function(e,t){e.node.removeAttribute("data-aos"),e.node.removeAttribute("data-aos-easing"),e.node.removeAttribute("data-aos-duration"),e.node.removeAttribute("data-aos-delay")})},S=function(e){return e===!0||"mobile"===e&&p.default.mobile()||"phone"===e&&p.default.phone()||"tablet"===e&&p.default.tablet()||"function"==typeof e&&e()===!0},_=function(e){x=i(x,e),w=(0,h.default)();var t=document.all&&!window.atob;return S(x.disable)||t?M():(x.disableMutationObserver||d.default.isSupported()||(console.info('\n      aos: MutationObserver is not supported on this browser,\n      code mutations observing has been disabled.\n      You may have to call "refreshHard()" by yourself.\n    '),x.disableMutationObserver=!0),document.querySelector("body").setAttribute("data-aos-easing",x.easing),document.querySelector("body").setAttribute("data-aos-duration",x.duration),document.querySelector("body").setAttribute("data-aos-delay",x.delay),"DOMContentLoaded"===x.startEvent&&["complete","interactive"].indexOf(document.readyState)>-1?j(!0):"load"===x.startEvent?window.addEventListener(x.startEvent,function(){j(!0)}):document.addEventListener(x.startEvent,function(){j(!0)}),window.addEventListener("resize",(0,s.default)(j,x.debounceDelay,!0)),window.addEventListener("orientationchange",(0,s.default)(j,x.debounceDelay,!0)),window.addEventListener("scroll",(0,u.default)(function(){(0,b.default)(w,x.once)},x.throttleDelay)),x.disableMutationObserver||d.default.ready("[data-aos]",O),w)};e.exports={init:_,refresh:j,refreshHard:O}},function(e,t){},,,,,function(e,t){(function(t){"use strict";function n(e,t,n){function o(t){var n=b,o=v;return b=v=void 0,k=t,g=e.apply(o,n)}function r(e){return k=e,h=setTimeout(f,t),M?o(e):g}function a(e){var n=e-w,o=e-k,i=t-n;return S?j(i,y-o):i}function c(e){var n=e-w,o=e-k;return void 0===w||n>=t||n<0||S&&o>=y}function f(){var e=O();return c(e)?d(e):void(h=setTimeout(f,a(e)))}function d(e){return h=void 0,_&&b?o(e):(b=v=void 0,g)}function l(){void 0!==h&&clearTimeout(h),k=0,b=w=v=h=void 0}function p(){return void 0===h?g:d(O())}function m(){var e=O(),n=c(e);if(b=arguments,v=this,w=e,n){if(void 0===h)return r(w);if(S)return h=setTimeout(f,t),o(w)}return void 0===h&&(h=setTimeout(f,t)),g}var b,v,y,g,h,w,k=0,M=!1,S=!1,_=!0;if("function"!=typeof e)throw new TypeError(s);return t=u(t)||0,i(n)&&(M=!!n.leading,S="maxWait"in n,y=S?x(u(n.maxWait)||0,t):y,_="trailing"in n?!!n.trailing:_),m.cancel=l,m.flush=p,m}function o(e,t,o){var r=!0,a=!0;if("function"!=typeof e)throw new TypeError(s);return i(o)&&(r="leading"in o?!!o.leading:r,a="trailing"in o?!!o.trailing:a),n(e,t,{leading:r,maxWait:t,trailing:a})}function i(e){var t="undefined"==typeof e?"undefined":c(e);return!!e&&("object"==t||"function"==t)}function r(e){return!!e&&"object"==("undefined"==typeof e?"undefined":c(e))}function a(e){return"symbol"==("undefined"==typeof e?"undefined":c(e))||r(e)&&k.call(e)==d}function u(e){if("number"==typeof e)return e;if(a(e))return f;if(i(e)){var t="function"==typeof e.valueOf?e.valueOf():e;e=i(t)?t+"":t}if("string"!=typeof e)return 0===e?e:+e;e=e.replace(l,"");var n=m.test(e);return n||b.test(e)?v(e.slice(2),n?2:8):p.test(e)?f:+e}var c="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},s="Expected a function",f=NaN,d="[object Symbol]",l=/^\s+|\s+$/g,p=/^[-+]0x[0-9a-f]+$/i,m=/^0b[01]+$/i,b=/^0o[0-7]+$/i,v=parseInt,y="object"==("undefined"==typeof t?"undefined":c(t))&&t&&t.Object===Object&&t,g="object"==("undefined"==typeof self?"undefined":c(self))&&self&&self.Object===Object&&self,h=y||g||Function("return this")(),w=Object.prototype,k=w.toString,x=Math.max,j=Math.min,O=function(){return h.Date.now()};e.exports=o}).call(t,function(){return this}())},function(e,t){(function(t){"use strict";function n(e,t,n){function i(t){var n=b,o=v;return b=v=void 0,O=t,g=e.apply(o,n)}function r(e){return O=e,h=setTimeout(f,t),M?i(e):g}function u(e){var n=e-w,o=e-O,i=t-n;return S?x(i,y-o):i}function s(e){var n=e-w,o=e-O;return void 0===w||n>=t||n<0||S&&o>=y}function f(){var e=j();return s(e)?d(e):void(h=setTimeout(f,u(e)))}function d(e){return h=void 0,_&&b?i(e):(b=v=void 0,g)}function l(){void 0!==h&&clearTimeout(h),O=0,b=w=v=h=void 0}function p(){return void 0===h?g:d(j())}function m(){var e=j(),n=s(e);if(b=arguments,v=this,w=e,n){if(void 0===h)return r(w);if(S)return h=setTimeout(f,t),i(w)}return void 0===h&&(h=setTimeout(f,t)),g}var b,v,y,g,h,w,O=0,M=!1,S=!1,_=!0;if("function"!=typeof e)throw new TypeError(c);return t=a(t)||0,o(n)&&(M=!!n.leading,S="maxWait"in n,y=S?k(a(n.maxWait)||0,t):y,_="trailing"in n?!!n.trailing:_),m.cancel=l,m.flush=p,m}function o(e){var t="undefined"==typeof e?"undefined":u(e);return!!e&&("object"==t||"function"==t)}function i(e){return!!e&&"object"==("undefined"==typeof e?"undefined":u(e))}function r(e){return"symbol"==("undefined"==typeof e?"undefined":u(e))||i(e)&&w.call(e)==f}function a(e){if("number"==typeof e)return e;if(r(e))return s;if(o(e)){var t="function"==typeof e.valueOf?e.valueOf():e;e=o(t)?t+"":t}if("string"!=typeof e)return 0===e?e:+e;e=e.replace(d,"");var n=p.test(e);return n||m.test(e)?b(e.slice(2),n?2:8):l.test(e)?s:+e}var u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},c="Expected a function",s=NaN,f="[object Symbol]",d=/^\s+|\s+$/g,l=/^[-+]0x[0-9a-f]+$/i,p=/^0b[01]+$/i,m=/^0o[0-7]+$/i,b=parseInt,v="object"==("undefined"==typeof t?"undefined":u(t))&&t&&t.Object===Object&&t,y="object"==("undefined"==typeof self?"undefined":u(self))&&self&&self.Object===Object&&self,g=v||y||Function("return this")(),h=Object.prototype,w=h.toString,k=Math.max,x=Math.min,j=function(){return g.Date.now()};e.exports=n}).call(t,function(){return this}())},function(e,t){"use strict";function n(e){var t=void 0,o=void 0,i=void 0;for(t=0;t<e.length;t+=1){if(o=e[t],o.dataset&&o.dataset.aos)return!0;if(i=o.children&&n(o.children))return!0}return!1}function o(){return window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver}function i(){return!!o()}function r(e,t){var n=window.document,i=o(),r=new i(a);u=t,r.observe(n.documentElement,{childList:!0,subtree:!0,removedNodes:!0})}function a(e){e&&e.forEach(function(e){var t=Array.prototype.slice.call(e.addedNodes),o=Array.prototype.slice.call(e.removedNodes),i=t.concat(o);if(n(i))return u()})}Object.defineProperty(t,"__esModule",{value:!0});var u=function(){};t.default={isSupported:i,ready:r}},function(e,t){"use strict";function n(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function o(){return navigator.userAgent||navigator.vendor||window.opera||""}Object.defineProperty(t,"__esModule",{value:!0});var i=function(){function e(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}return function(t,n,o){return n&&e(t.prototype,n),o&&e(t,o),t}}(),r=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i,a=/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i,u=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i,c=/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i,s=function(){function e(){n(this,e)}return i(e,[{key:"phone",value:function(){var e=o();return!(!r.test(e)&&!a.test(e.substr(0,4)))}},{key:"mobile",value:function(){var e=o();return!(!u.test(e)&&!c.test(e.substr(0,4)))}},{key:"tablet",value:function(){return this.mobile()&&!this.phone()}}]),e}();t.default=new s},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(e,t,n){var o=e.node.getAttribute("data-aos-once");t>e.position?e.node.classList.add("aos-animate"):"undefined"!=typeof o&&("false"===o||!n&&"true"!==o)&&e.node.classList.remove("aos-animate")},o=function(e,t){var o=window.pageYOffset,i=window.innerHeight;e.forEach(function(e,r){n(e,i+o,t)})};t.default=o},function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var i=n(12),r=o(i),a=function(e,t){return e.forEach(function(e,n){e.node.classList.add("aos-init"),e.position=(0,r.default)(e.node,t.offset)}),e};t.default=a},function(e,t,n){"use strict";function o(e){return e&&e.__esModule?e:{default:e}}Object.defineProperty(t,"__esModule",{value:!0});var i=n(13),r=o(i),a=function(e,t){var n=0,o=0,i=window.innerHeight,a={offset:e.getAttribute("data-aos-offset"),anchor:e.getAttribute("data-aos-anchor"),anchorPlacement:e.getAttribute("data-aos-anchor-placement")};switch(a.offset&&!isNaN(a.offset)&&(o=parseInt(a.offset)),a.anchor&&document.querySelectorAll(a.anchor)&&(e=document.querySelectorAll(a.anchor)[0]),n=(0,r.default)(e).top,a.anchorPlacement){case"top-bottom":break;case"center-bottom":n+=e.offsetHeight/2;break;case"bottom-bottom":n+=e.offsetHeight;break;case"top-center":n+=i/2;break;case"bottom-center":n+=i/2+e.offsetHeight;break;case"center-center":n+=i/2+e.offsetHeight/2;break;case"top-top":n+=i;break;case"bottom-top":n+=e.offsetHeight+i;break;case"center-top":n+=e.offsetHeight/2+i}return a.anchorPlacement||a.offset||isNaN(t)||(o=t),n+o};t.default=a},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(e){for(var t=0,n=0;e&&!isNaN(e.offsetLeft)&&!isNaN(e.offsetTop);)t+=e.offsetLeft-("BODY"!=e.tagName?e.scrollLeft:0),n+=e.offsetTop-("BODY"!=e.tagName?e.scrollTop:0),e=e.offsetParent;return{top:n,left:t}};t.default=n},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(e){return e=e||document.querySelectorAll("[data-aos]"),Array.prototype.map.call(e,function(e){return{node:e}})};t.default=n}])});
+/*! jQuery.Flipster, v1.1.5 (built 2020-10-17) */
+
+!function(P,t,D){"use strict";function L(n,i){var a=null;return function(){var t=this,e=arguments;null===a&&(a=setTimeout(function(){n.apply(t,e),a=null},i))}}var r,e=(r={},function(t){if(r[t]!==D)return r[t];var e=document.createElement("div").style,n=t.charAt(0).toUpperCase()+t.slice(1),i=(t+" "+["webkit","moz","ms","o"].join(n+" ")+n).split(" ");for(var a in i)if(i[a]in e)return r[t]=i[a];return r[t]=!1}),a="http://www.w3.org/2000/svg",E=P(t),M=e("transform"),i={itemContainer:"ul",itemSelector:"li",start:"center",fadeIn:400,loop:!1,autoplay:!1,pauseOnHover:!0,style:"coverflow",spacing:-.6,click:!0,keyboard:!0,scrollwheel:!0,touch:!0,nav:!1,buttons:!1,buttonPrev:"Previous",buttonNext:"Next",onItemSwitch:!1},T={main:"flipster",active:"flipster--active",container:"flipster__container",nav:"flipster__nav",navChild:"flipster__nav__child",navItem:"flipster__nav__item",navLink:"flipster__nav__link",navCurrent:"flipster__nav__item--current",navCategory:"flipster__nav__item--category",navCategoryLink:"flipster__nav__link--category",button:"flipster__button",buttonPrev:"flipster__button--prev",buttonNext:"flipster__button--next",item:"flipster__item",itemCurrent:"flipster__item--current",itemPast:"flipster__item--past",itemFuture:"flipster__item--future",itemContent:"flipster__item__content"},X=new RegExp("\\b("+T.itemCurrent+"|"+T.itemPast+"|"+T.itemFuture+")(.*?)(\\s|$)","g"),j=new RegExp("\\s\\s+","g");P.fn.flipster=function(e){if("string"==typeof e){var n=Array.prototype.slice.call(arguments,1);return this.each(function(){var t=P(this).data("methods");return t[e]?t[e].apply(this,n):this})}var I=P.extend({},i,e);return this.each(function(){var t,f,r,n,p,s,l,c,u,v=P(this),o=[],h=0,d=!1,e=!1;function i(e){return e=e||"next",P('<button class="'+T.button+" "+("next"===e?T.buttonNext:T.buttonPrev)+'" role="button" />').html((n="next"===(t=e)?I.buttonNext:I.buttonPrev,"custom"===I.buttons?n:'<svg viewBox="0 0 13 20" xmlns="'+a+'" aria-labelledby="title"><title>'+n+'</title><polyline points="10,3 3,10 10,17"'+("next"===t?' transform="rotate(180 6.5,10)"':"")+"/></svg>")).on("click",function(t){y(e),t.preventDefault()});var t,n}function m(){v.css("transition",""),f.css("transition",""),p.css("transition","")}function g(a){var t,e;a&&(v.css("transition","none"),f.css("transition","none"),p.css("transition","none")),r=f.width(),f.height((e=0,p.each(function(){t=P(this).height(),e<t&&(e=t)}),e)),r?(n&&(clearInterval(n),n=!1),p.each(function(t){var e,n,i=P(this);i.attr("class",function(t,e){return e&&e.replace(X,"").replace(j," ")}),e=i.outerWidth(),0!==I.spacing&&i.css("margin-right",e*I.spacing+"px"),n=i.position().left,o[t]=-1*(n+e/2-r/2),t===p.length-1&&(_(),a&&setTimeout(m,1))})):n=n||setInterval(function(){g(a)},500)}function _(){var e,n,i,a=p.length;p.each(function(t){e=P(this),n=" ",i=t===h?(n+=T.itemCurrent,a+1):t<h?(n+=T.itemPast+" "+T.itemPast+"-"+(h-t),a-(h-t)):(n+=T.itemFuture+" "+T.itemFuture+"-"+(t-h),a-(t-h)),e.css("z-index",i).attr("class",function(t,e){return e&&e.replace(X,"").replace(j," ")+n})}),0<=h&&(r&&o[h]!==D||g(!0),M?f.css("transform","translateX("+o[h]+"px)"):f.css({left:o[h]+"px"})),function(){if(I.nav){var t=s.data("flip-category");c.removeClass(T.navCurrent),u.filter(function(){return P(this).data("index")===h||t&&P(this).data("category")===t}).parent().addClass(T.navCurrent)}}()}function y(t){var e=h;if(!(p.length<=1))return"prev"===t?0<h?h--:I.loop&&(h=p.length-1):"next"===t?h<p.length-1?h++:I.loop&&(h=0):"number"==typeof t?h=t:t!==D&&(h=p.index(t),I.loop&&e!=h&&(e==p.length-1&&h!=p.length-2&&(h=0),0==e&&1!=h&&(h=p.length-1))),s=p.eq(h),h!==e&&I.onItemSwitch&&I.onItemSwitch.call(v,p[h],p[e]),_(),v}function b(t){return I.autoplay=t||I.autoplay,clearInterval(d),d=setInterval(function(){var t=h;y("next"),t!==h||I.loop||clearInterval(d)},I.autoplay),v}function x(){return clearInterval(d),d=0,v}function w(t){return x(),I.autoplay&&t&&(d=-1),v}function C(){g(!0),v.hide().css("visibility","").addClass(T.active).fadeIn(I.fadeIn)}function k(){var o;if(f=v.find(I.itemContainer).addClass(T.container),!((p=f.find(I.itemSelector)).length<=1))return p.addClass(T.item).each(function(){var t=P(this);t.children("."+T.itemContent).length||t.wrapInner('<div class="'+T.itemContent+'" />')}),I.click&&p.on("click.flipster touchend.flipster",function(t){e||(P(this).hasClass(T.itemCurrent)||t.preventDefault(),y(this))}),I.buttons&&1<p.length&&(v.find("."+T.button).remove(),v.append(i("prev"),i("next"))),o={},!I.nav||p.length<=1||(l&&l.remove(),l=P('<ul class="'+T.nav+'" role="navigation" />'),u=P(""),p.each(function(t){var e=P(this),n=e.data("flip-category"),i=e.data("flip-title")||e.attr("title")||t,a=P('<a href="#" class="'+T.navLink+'">'+i+"</a>").data("index",t);if(u=u.add(a),n){if(!o[n]){var r=P('<li class="'+T.navItem+" "+T.navCategory+'">'),s=P('<a href="#" class="'+T.navLink+" "+T.navCategoryLink+'" data-flip-category="'+n+'">'+n+"</a>").data("category",n).data("index",t);o[n]=P('<ul class="'+T.navChild+'" />'),u=u.add(s),r.append(s,o[n]).appendTo(l)}o[n].append(a)}else l.append(a);a.wrap('<li class="'+T.navItem+'">')}),l.on("click","a",function(t){var e=P(this).data("index");0<=e&&(y(e),t.preventDefault())}),"after"===I.nav?v.append(l):v.prepend(l),c=l.find("."+T.navItem)),0<=h&&y(h),v}t={jump:y,next:function(){return y("next")},prev:function(){return y("prev")},play:b,stop:x,pause:w,index:k},v.data("methods",t),v.hasClass(T.active)||function(){var t;if(v.css("visibility","hidden"),k(),p.length<=1)v.css("visibility","");else{t=!!I.style&&"flipster--"+I.style.split(" ").join(" flipster--"),v.addClass([T.main,M?"flipster--transform":" flipster--no-transform",t,I.click?"flipster--click":""].join(" ")),I.start&&(h="center"===I.start?Math.floor(p.length/2):I.start),y(h);var e,n,i,a,r,s,o,l,c=v.find("img");if(c.length){var u=0;c.on("load",function(){++u>=c.length&&C()}),setTimeout(C,750)}else C();E.on("resize.flipster",L(g,400)),I.autoplay&&b(),I.pauseOnHover&&f.on("mouseenter.flipster",function(){d?w(!0):x()}).on("mouseleave.flipster",function(){-1===d&&b()}),e=v,I.keyboard&&(e[0].tabIndex=0,e.on("keydown.flipster",L(function(t){var e=t.which;37!==e&&39!==e||(y(37===e?"prev":"next"),t.preventDefault())},250))),function(t){if(I.scrollwheel){var e,n,i=!1,a=0,r=0,s=0,o=/mozilla/.test(navigator.userAgent.toLowerCase())&&!/webkit/.test(navigator.userAgent.toLowerCase());t.on("mousewheel.flipster wheel.flipster",function(){i=!0}).on("mousewheel.flipster wheel.flipster",L(function(t){clearTimeout(r),r=setTimeout(function(){s=a=0},300),t=t.originalEvent,s+=t.wheelDelta||-1*(t.deltaY+t.deltaX),Math.abs(s)<25&&!o||(a++,n!==(e=0<s?"prev":"next")&&(a=0),n=e,(a<6||a%3==0)&&y(e),s=0)},50)),t.on("mousewheel.flipster wheel.flipster",function(t){i&&(t.preventDefault(),i=!1)})}}(f),n=f,I.touch&&n.on({"touchstart.flipster":function(t){t=t.originalEvent,i=t.touches?t.touches[0].clientX:t.clientX,a=t.touches?t.touches[0].clientY:t.clientY},"touchmove.flipster":function(t){t=t.originalEvent,r=t.touches?t.touches[0].clientX:t.clientX,s=t.touches?t.touches[0].clientY:t.clientY,l=r-i,o=s-a,30<Math.abs(l)&&Math.abs(o)<100&&t.preventDefault()},"touchend.flipster touchcancel.flipster ":function(){l=r-i,o=s-a,30<Math.abs(l)&&Math.abs(o)<100&&y(0<l?"prev":"next")}})}}()})}}(jQuery,window);
 /*!
  * Toastify js 1.12.0
  * https://github.com/apvarun/toastify-js

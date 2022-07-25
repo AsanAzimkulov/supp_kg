@@ -29,6 +29,7 @@
 -------------------------------------------------------------------*/
 
 
+
 /*-------------------------------------------------------------------*/
 /* === Import Bootstrap functions and variables === */
 @import "../node_modules/bootstrap/scss/functions";
@@ -151,7 +152,7 @@
 
 }
 
-.navbar-mobile-hidden {
+.navbar-hidden {
   margin-top: -200px !important;
 }
 
@@ -258,6 +259,11 @@
 .product-image {
   max-width: 300px;
   height: auto;
+}
+
+.open-product-page, .open-product-page:hover{
+  text-decoration: none;
+  color: unset;
 }
 
 .product {
@@ -776,19 +782,23 @@ nav {
 
 /* UI Kit */
 
+
 .white-popup-wrapper {
   position: fixed;
   z-index: 100;
-  display: block;
+  display: none;
   top: 8%;
   left: calc(50% - 37.5%) !important;
+  display: none;
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .white-popup {
   box-shadow: 0 0 10px #DDD;
   padding: 40px;
   background: white;
-  min-width: 75vw;
+  width: 75vw;
   min-height: 400px;
   pointer-events: all;
 }
@@ -800,6 +810,7 @@ nav {
   justify-content: flex-end;
   font-size: 2.0em;
 }
+
 
 @media(max-width: 768px) {
 
@@ -844,6 +855,10 @@ nav {
     left: calc(50% - 39%);
   }
 }
+
+
+@import '_product-popup.scss';
+
 /*-------------------------------------------------------------------*/
 /* === Components === */
 @import "components/buttons";

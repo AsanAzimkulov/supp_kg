@@ -1,12 +1,12 @@
 $(".fixed-cart").on('click', function () {
-  $('.navbar').addClass('navbar-mobile-hidden')
+  $('.navbar').addClass('navbar-hidden')
   $('.cart-wrapper').addClass('d-block');
   $('body').addClass("overlay");
   $('body').addClass('overflow-y-hidden');
 });
 
 $(".cart-wrapper, .close-cart").on('click', function () {
-  $('.navbar').removeClass('navbar-mobile-hidden')
+  $('.navbar').removeClass('navbar-hidden')
   $('.cart-wrapper').removeClass('d-block');
   $('body').removeClass("overlay");
   $('body').removeClass('overflow-y-hidden');
@@ -15,7 +15,7 @@ $(".cart-wrapper, .close-cart").on('click', function () {
 $('.cart').on("click", (e) => e.stopPropagation())
 
 $("#to-checkout").click(function () {
-  $('.navbar').removeClass('navbar-mobile-hidden')
+  $('.navbar').removeClass('navbar-hidden')
   $('.cart-wrapper').removeClass('d-block');
   const offset = $('#contact').offset();
   $('html, body').animate({

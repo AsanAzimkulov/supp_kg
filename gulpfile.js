@@ -7,7 +7,9 @@ var del = require('del');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
 var merge = require('merge-stream');
-
+var rename = require("gulp-rename");
+var header = require("gulp-header");
+var fs = require('fs');
 
 
 gulp.task('sass', function () {
@@ -43,40 +45,52 @@ gulp.task('clean:vendors', function () {
 });
 
 /*Building vendor scripts needed for basic template rendering*/
-gulp.task('buildBaseVendorScripts', function () {
+gulp.task('buildVendorScripts', function () {
   return gulp.src([
     './node_modules/jquery/dist/jquery.min.js',
     './node_modules/popper.js/dist/umd/popper.min.js',
     './node_modules/bootstrap/dist/js/bootstrap.min.js',
+    './node_modules/owl.carousel/dist/owl.carousel.js',
+    './node_modules/aos/dist/aos.js',
+    './node_modules/jquery.flipster/dist/jquery.flipster.min.js',
     './node_modules/toastify-js/src/toastify.js',
   ])
     .pipe(concat('vendor.bundle.base.js'))
-    .pipe(gulp.dest('./vendors/base'));
+    .pipe(gulp.dest('./bundle/vendor/js'));
 });
 
 gulp.task('buildOwnScripts', function () {
   return gulp.src(
-    'js/*.js'
+    ['js/**/*.js', '!js/utils/utils.js']
   )
     .pipe(concat('main.js'))
-    .pipe(gulp.dest('./bundle/'))
+    .pipe(header(fs.readFileSync('js/utils/utils.js')))
+    .pipe(gulp.dest('./bundle/js/'))
     .pipe(browserSync.stream());
 });
 
 
-gulp.task('copyAddonsScripts', function () {
+gulp.task('buildVendorStyles', function () {
+  return gulp.src(
+    './vendors/**/*.css'
+  )
+    .pipe(concat('vendor.style.css'))
+    .pipe(gulp.dest('./bundle/vendor/css'))
+    .pipe(browserSync.stream());
+});
+
+
+/*gulp.task('copyAddonsScripts', function () {
   var aScript1 = gulp.src(['./node_modules/owl.carousel/dist/owl.carousel.js'])
     .pipe(gulp.dest('./vendors/owl.carousel/js'));
   var aScript2 = gulp.src(['./node_modules/aos/dist/aos.js'])
     .pipe(gulp.dest('./vendors/aos/js'));
   var aScript3 = gulp.src(['./node_modules/jquery.flipster/dist/jquery.flipster.min.js'])
     .pipe(gulp.dest('./vendors/jquery-flipster/js'));
-  var aScript4 = gulp.src(['./node_modules/emailjs/email.js'])
-    .pipe(gulp.dest('./vendors/emailjs/js'));
-  var aScript5 = gulp.src(['./node_modules/toastify-js/src/toastify.js'])
+  var aScript4 = gulp.src(['./node_modules/toastify-js/src/toastify.js'])
     .pipe(gulp.dest('./vendors/toastify-js/js'));
-  return merge(aScript1, aScript2, aScript3, aScript4, aScript5);
-});
+  return merge(aScript1, aScript2, aScript3, aScript4);
+});*/
 
 gulp.task('copyAddonsStyles', function () {
   var aStyle1 = gulp.src(['./node_modules/owl.carousel/dist/assets/owl.carousel.css'])
@@ -92,10 +106,15 @@ gulp.task('copyAddonsStyles', function () {
   var aStyle6 = gulp.src(['./node_modules/@mdi/font/css/materialdesignicons.min.css'])
     .pipe(gulp.dest('./vendors/mdi/css'));
   var aStyle7 = gulp.src(['./node_modules/@mdi/font/fonts/*'])
-    .pipe(gulp.dest('./vendors/mdi/fonts'));
+    .pipe(gulp.dest('./bundle/vendor/fonts/'))
   return merge(aStyle1, aStyle2, aStyle3, aStyle4, aStyle5, aStyle6, aStyle7);
 });
 
+gulp.task('renameFont', function () {
+  return gulp.src('./bundle/vendor/fonts/*.*')
+    .pipe(rename(function (path) { path.extname = '.eot' }))
+    .pipe(gulp.dest('./bundle/vendor/fonts/'));
+});
 
 // Static Server + watching scss/html/js files
 
@@ -114,7 +133,7 @@ gulp.task('serve', gulp.series('sass', function () {
 }));
 
 /*sequence for building vendor scripts and styles*/
-gulp.task('bundleVendors', gulp.series('clean:vendors', 'buildBaseVendorScripts', 'copyAddonsScripts', 'copyAddonsStyles'));
+gulp.task('bundleVendors', gulp.series('clean:vendors', 'buildVendorScripts', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'buildOwnScripts'));
 
 
 gulp.task('default', gulp.series('serve'));
