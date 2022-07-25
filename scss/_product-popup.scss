@@ -1,0 +1,44 @@
+.product-popup {
+
+  &__body {
+  }
+
+  &__title{
+    color: #61607b;
+    font-weight: 450;
+    margin-bottom: 1.5em;
+  }
+
+  &__image {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    @media(min-width: 500px){
+      width: 90%;
+    }
+    @media(min-width: 768px){
+      width: 75%;
+    }
+    @media(min-width: 1200px){
+      width: 60%;
+      max-width: 600px;
+    }
+  }
+
+  &__description {
+  }
+}
+.white-popup-wrapper {
+}
+.medium-4 {
+}
+.columns {
+}
+.white-popup {
+}
+.close-white-popup {
+}
+.mdi {
+}
+.mdi-close {
+}

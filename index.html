@@ -6,18 +6,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Supp_kg</title>
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/owl.carousel/css/owl.carousel.css">
-  <link rel="stylesheet" href="vendors/owl.carousel/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="vendors/aos/css/aos.css">
-  <link rel="stylesheet" href="vendors/jquery-flipster/css/jquery.flipster.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="images/logobad.svg" />
-  <script type="text/javascript" src="vendors/services/email.min.js"></script>
-  <script type="text/javascript" src="vendors/services/email.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-  <script src="js/script.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="bundle/vendor/css/vendor.style.css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <script src="https://www.jsdelivr.com/package/npm/emailjs"></script>
   <script>
     window.emailJsAccounts = {
       dev: {
@@ -33,10 +25,12 @@
     }
   </script>
   <script type="text/javascript">
+    window.onload = function () {
       (function () {
         // https://dashboard.emailjs.com/admin/account
         emailjs.init(window.emailJsAccounts.dev.publicKey);
       })();
+    };
   </script>
   <script src="js/emailjsLogic.js"></script>
 </head>
@@ -70,16 +64,17 @@
 
   <div class="product-popup white-popup-wrapper" id="product-popup">
     <div class="medium-4 columns">
-      <div class="product-popup-body white-popup">
+      <div class="product-popup__body white-popup">
         <a href="javascript:;" class="close-white-popup"><i class="mdi mdi-close"></i></a>
-        <h1 id="product-popup-title"></h1>
-
-        <hr style="margin: 0 0 10px 0" />
+        <h3 class="product-popup__title"></h3>
+        <img class="product-popup__image">
+        <hr style="margin: 20px 0" />
+        <p class="product-popup__description"></p>
       </div>
-
     </div>
   </div>
-  <div id="mobile-menu-overlay"></div>
+
+
   <div id="app-overlay"></div>
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
@@ -324,10 +319,35 @@
           <div class="d-flex row products-container">
             <div class="product medium-4 columns"
               data-name="Кальций, магний, цинк, Calcium Magnesium & Zinc, Mason Natural, 100 таблеток" data-price="890"
-              data-id="0" data-image-url="images/calcium_magnesium_zink.png">
-              <img src="images/calcium_magnesium_zink.png" alt="Calcium, Magnesium & Zink" class="product-image" />
-              <h4 class="product-title">Кальций, магний, цинк, Calcium Magnesium & Zinc, Mason Natural, 100 таблеток
-              </h4>
+              data-id="0" data-image-url="images/calcium_magnesium_zink.png"
+              data-info="Продукт прошел лабораторные испытания и имеет гарантию качества Mason
+              Производится в соответствии со стандартом качества cGMP — сертификат 5 звёзд 
+              
+              Кальций – это макроэлемент, который отвечает за формирование костной ткани (99% этого вещества находится в костях и зубах), нормальную передачу нервных импульсов;
+               свертываемость крови
+              он используется в крови с целью высвобождения инсулина и передачи сигнала для сокращения мышечных волокон. В случае недостатка кальция в крови организм автоматически забирает его из костей и зубов, тем самым поддерживая нормальные функции мышц, но ослабляя крепость костей.
+              
+              Магний - благотворно влияет на рост костей; нормализует сердечный ритм, снижает артериальное давление; регулирует уровень сахара в крови; устраняет судороги в мышцах; уменьшает боли в суставах. Магний, действуя в комплексе с кальцием, способен повышать минеральную плотность костных тканей.
+              
+              Цинк:
+              повышает сопротивляемость организма заболеваниям;
+              нейтрализует действие свободных радикалов;
+               участвует в метаболизме витамина А – залога хорошего зрения;
+               улучшает работу мозга.
+              Ускоряет заживление ран. Элемент способен стимулировать заживление тканей, за счет стимулирования роста клеток.
+              
+              Особенность продукта заключается в комбинации кальция, магния и цинка в одной таблетке, а особая органическая (хелатная) форма минералов позволяет достигнуть максимальной степени усвоения организмом.
+              
+              Помогает развиваться организму подростков
+              Перед приёмом проконсультируйтесь с врачом 
+              
+              Рекомендации по применению
+              Взрослым принимать по одной таблетке, от одного до трех раз в день, желательно с пищей, в качестве пищевой добавки.">
+              <a href="#" aria-label="open product info modal window" class="open-product-page">
+                <img src="images/calcium_magnesium_zink.png" alt="Calcium, Magnesium & Zink" class="product-image" />
+                <h4 class="product-title">Кальций, магний, цинк, Calcium Magnesium & Zinc, Mason Natural, 100 таблеток
+                </h4>
+              </a>
               <h5 class="product-price">Цена: <span>890</span> сом/шт</h5>
 
               <div class="input-group product-qty-input-group">
@@ -352,8 +372,19 @@
               <button class="tiny btn btn-outline-primary m-auto product-add-to-cart-button">Добавить в корзину</button>
             </div>
             <div class="product medium-4 columns" data-name="21st Century, цитрат цинка, 50 мг, 60 таблеток"
-              data-price="770" data-id="1" data-image-url="images/zinc_citrate.png">
-              <img src="images/zinc_citrate.png" alt="Zink citrate" class="product-image" />
+              data-price="770" data-id="1" data-image-url="images/zinc_citrate.png"
+              data-info="О дополнительном приеме витаминных комплексов говорят практически все, но немногие во всем многообразии витаминов и минералов выделяют цинк. А, к слову сказать, его дефицит может вызвать нарушения в работе всего организма. Цинк очень важный микроэлемент, который не синтезируется организмом самостоятельно, а поступает с пищей. Особенно остро нуждаются в минерале вегетарианцы, ведь основными источниками цинка являются морепродукты, красное мясо, молоко и молочные продукты. Для чего нам нужен цинк? 
+              Улучшает состояние кожи. За счет того, что цинк участвует в синтезе коллагена – важнейшего белка для прочности и эластичности кожи. Международными исследованиями доказано, что цинк снижает активность бактерий, которые вызывают угревую сыпь, воспаления и другие проблемы с кожей.
+              Борется с воспалительными процессами. Цинк снижает выработку молекул, которые вызывают воспаления, а также уменьшает частоту и тяжесть инфекций
+              Улучшает память и внимание. Цинк формирует клетки головного мозга, что способствует его росту, а также нормализации передачи нервных импульсов
+              
+              Цинк нужен для производства белков и ДНК, для роста и восстановления мышц, важен для правильного ощущения вкуса и запаха, способствует заживлению ран, помогает иммунной системе бороться с бактериями и вирусами, улучшает пищеварение, регулирует выработку гормонов,помогает росту подростков и некоторых парней до 25 лет, повышает иммунитет, улучшает внешний вид и даёт красоту.
+              
+              Рекомендации по применению
+              В качестве минеральной добавки для взрослых принимать по одной (1) таблетке в день во время любого приема пищи или в соответствии с назначением врача. Не следует превышать рекомендованную дозировку. Результаты зависят от индивидуальных особенностей организма.">
+              <a href="#" aria-label="open product info modal window" class="open-product-page">
+                <img src="images/zinc_citrate.png" alt="Zink citrate" class="product-image" />
+              </a>
               <h4 class="product-title">21st Century, цитрат цинка, 50 мг, 60 таблеток</h4>
               <!-- <input type="text" class="count" value="1" /> -->
               <h5 class="product-price">Цена: <span>770</span> сом/шт</h5>
@@ -377,10 +408,10 @@
               </div>
               <button class="tiny btn btn-outline-primary m-auto product-add-to-cart-button">Добавить в корзину</button>
             </div>
-            <div class="product medium-4 columns" data-name="L-Arginine Gold California" data-price="1000" data-id="2"
-              data-image-url="images/l_arginine.png"
+            <div class="product medium-4 columns"
+              data-name="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" data-price="1000"
+              data-id="2" data-image-url="images/l_arginine.png"
               data-info="L-Arginine от California Gold Nutrition
-
               Аргинин отвечает за синтез белков и протеина и используется для повышения выносливости и мышечной массы, принимает участие в образовании оксида азота, обеспечивая нормальную работу всех органов человеческого тела. Аминокислота стимулирует выработку инсулина, а также необходима для выработки креатина, который влияет на работу головного мозга. В спорте способствует формированию мышечной ткани, улучшает питание мышц. L-форма аргинина способствует быстрому усвоению, отсутствию дискомфорта в ЖКТ, так же помогает для роста и развития подростков 
               
               Пищевые добавки с высоким содержанием данной аминокислоты включают в свой рацион различные группы населения, в том числе спортсмены,  люди с высоким кровяным давлением и многие другие. В некоторых случаях L-аргинин (https://sayyes.com.ua/arginin/) используется для лечения людей, чье здоровье находится в критическом состоянии.
@@ -392,9 +423,11 @@
               Рекомендации по применению:
               
               взрослым по 3 капсулы в день во время еды. Противопоказания: Индивидуальная непереносимость компонентов, беременность, кормление грудью. Перед применением рекомендуется проконсультироваться с врачом.">
-              <img src="images/l_arginine.png"
-                alt="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" class="product-image" />
-              <h4 class="product-title">California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул</h4>
+              <a href="#" aria-label="open product info modal window" class="open-product-page">
+                <img src="images/l_arginine.png"
+                  alt="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" class="product-image" />
+                <h4 class="product-title">California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул</h4>
+              </a>
 
               <h5 class="product-price">Цена: <span>1000</span> сом/шт</h5>
               <!-- <input type="text" class="count" value="1" /> -->
@@ -518,13 +551,6 @@
                   здоровья</span></a>
             <p class="mb-0 text-small pt-1">© 2020-2022 . Все права защищены.</p>
           </div>
-          <!-- <div>
-            <div class="d-flex">
-              <a href="#" class="text-small text-white mx-2 footer-link">Privacy Policy </a>
-              <a href="#" class="text-small text-white mx-2 footer-link">Customer Support </a>
-              <a href="#" class="text-small text-white mx-2 footer-link">Careers </a>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -535,16 +561,9 @@
     <% }); %>
     </script>
   </footer>
-  <script src="vendors/base/vendor.bundle.base.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js'></script>
-  <script src="vendors/owl.carousel/js/owl.carousel.js"></script>
-  <script src="vendors/aos/js/aos.js"></script>
-  <script src="vendors/jquery-flipster/js/jquery.flipster.min.js"></script>
-  <script src="js/template.js"></script>
-  <script src="js/plus_minus.js" type="text/javascript"></script>
-  <script src="js/main.js"></script>
-  <script src="js/product.js"></script>
-  <script src="js/components/white-popup.js"></script>
+  <script src="bundle/vendor/js/vendor.bundle.base.js"></script>
+  <script src="bundle/js/main.js"></script>
 </body>
 
 </html>
