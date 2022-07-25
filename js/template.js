@@ -76,7 +76,7 @@
       } else {
         $('.monthly').removeClass("text-active");
         $('.yearly').addClass("text-active");
-        $("#toggle-switch").removeAttr("checked");
+        $("#toggle-switch").removeAttr("checked");'buildOwnScripts'
       }
     });
 
