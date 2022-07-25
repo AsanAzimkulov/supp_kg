@@ -11,7 +11,8 @@ const getProductInfo = (product) => {
 }
 
 const generateProductPage = () => {
-
+  const productPage = $('#product-popup');
+  
 };
 
 

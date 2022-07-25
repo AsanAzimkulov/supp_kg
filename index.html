@@ -38,37 +38,6 @@
         emailjs.init(window.emailJsAccounts.dev.publicKey);
       })();
   </script>
-  <!-- <script type="text/javascript">
-    window.onload = function () {
-      document.getElementById('contact-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        // these IDs from the previous steps
-        emailjs.sendForm(window.accounts.dev.serviceId, window.accounts.dev.templateId, this)
-          .then(function () {
-            console.log('SUCCESS!');
-            Toastify({
-              text: "Вы успешно сделали заказ!",
-              className: "info",
-              style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-                marginTop: '50px'
-              }
-            }).showToast();
-
-          }, function (error) {
-            console.log('FAILED...', error);
-            Toastify({
-              text: "Что-то пошло не так. Свяжитесь с нами по телефону или в соцсетях.",
-              className: "error",
-              style: {
-                background: 'linear-gradient(211deg, rgba(162,154,195,1) 0%, rgba(226,36,36,1) 100%)',
-              }
-            }).showToast();
-
-          });
-      });
-    }
-  </script> -->
   <script src="js/emailjsLogic.js"></script>
 </head>
 
@@ -99,24 +68,13 @@
     </div>
   </div>
 
-
-  <div class="product-popup">
+  <div class="product-popup white-popup-wrapper" id="product-popup">
     <div class="medium-4 columns">
-      <div class="product-popup-body">
-        <a href="javascript:;" class="close-cart"><i class="mdi mdi-close"></i></a>
-        <h1>Корзина</h1>
-        <div class="row">
-          <div class="medium-6 columns">
-            <button class="tiny btn btn-outline-primary m-auto" id="clear">Очистить корзину</button>
-          </div>
-          <div class="medium-6 columns">
-            <button class="tiny btn btn-outline-primary m-auto" id='to-checkout'
-              title="Work in progress">Заказать</button>
-          </div>
-        </div>
-        <div id="cartItems" class="products-container">Loading cart...</div>
+      <div class="product-popup-body white-popup">
+        <a href="javascript:;" class="close-white-popup"><i class="mdi mdi-close"></i></a>
+        <h1 id="product-popup-title"></h1>
+
         <hr style="margin: 0 0 10px 0" />
-        <p style='font-size: 1.1em;'>Стоимость: <strong id="totalPrice">0 сом</strong></p>
       </div>
 
     </div>
@@ -420,11 +378,24 @@
               <button class="tiny btn btn-outline-primary m-auto product-add-to-cart-button">Добавить в корзину</button>
             </div>
             <div class="product medium-4 columns" data-name="L-Arginine Gold California" data-price="1000" data-id="2"
-              data-image-url="images/l_arginine.png">
-              <div class="div"><img src="images/l_arginine.png"
-                  alt="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" class="product-image" />
-                <h4 class="product-title">California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул</h4>
-              </div>
+              data-image-url="images/l_arginine.png"
+              data-info="L-Arginine от California Gold Nutrition
+
+              Аргинин отвечает за синтез белков и протеина и используется для повышения выносливости и мышечной массы, принимает участие в образовании оксида азота, обеспечивая нормальную работу всех органов человеческого тела. Аминокислота стимулирует выработку инсулина, а также необходима для выработки креатина, который влияет на работу головного мозга. В спорте способствует формированию мышечной ткани, улучшает питание мышц. L-форма аргинина способствует быстрому усвоению, отсутствию дискомфорта в ЖКТ, так же помогает для роста и развития подростков 
+              
+              Пищевые добавки с высоким содержанием данной аминокислоты включают в свой рацион различные группы населения, в том числе спортсмены,  люди с высоким кровяным давлением и многие другие. В некоторых случаях L-аргинин (https://sayyes.com.ua/arginin/) используется для лечения людей, чье здоровье находится в критическом состоянии.
+              
+              Улучшение показателей при занятиях спортом
+              Некоторые результаты исследований свидетельствуют о том, что прием пищевых добавок с высоким содержанием  L-аргинина может улучшать показатели во время выполнения физических упражнений. Подобный эффект связывают с увеличением количества оксида азота в крови, что существенно улучшает кровоток и обеспечивает насыщение мышц кислородом.
+              Так, проводимое в 2017-ом году исследование с участием 56-ти футболистов показало, что регулярное потребление 2-х граммов аминокислоты на протяжении 45-ти дней значительно повышает физические показатели. Кроме того, потребление 6-ти граммов этого вещества за один час до тренировки позволяло повышать уровень оксида азота в крови и увеличивать выносливость спортсменов.
+              
+              Рекомендации по применению:
+              
+              взрослым по 3 капсулы в день во время еды. Противопоказания: Индивидуальная непереносимость компонентов, беременность, кормление грудью. Перед применением рекомендуется проконсультироваться с врачом.">
+              <img src="images/l_arginine.png"
+                alt="California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул" class="product-image" />
+              <h4 class="product-title">California Gold Nutrition, L-Аргинин, 500 Мг, 60 Растительных Капсул</h4>
+
               <h5 class="product-price">Цена: <span>1000</span> сом/шт</h5>
               <!-- <input type="text" class="count" value="1" /> -->
               <div class="input-group product-qty-input-group">
@@ -573,6 +544,7 @@
   <script src="js/plus_minus.js" type="text/javascript"></script>
   <script src="js/main.js"></script>
   <script src="js/product.js"></script>
+  <script src="js/components/white-popup.js"></script>
 </body>
 
 </html>
