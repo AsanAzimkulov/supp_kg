@@ -41,7 +41,7 @@
   },
   "scripts": {
     "start": "gulp serve",
-    "build": "gulp bundleVendors",
+    "build": "gulp bundle",
     "deploy": "gulp deployBuild"
   },
   "author": "Asan Azimkulov",

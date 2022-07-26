@@ -30,3 +30,9 @@ $("#to-checkout").click(function () {
 $('#app-overlay').on('click', function () {
   $('body').removeClass('overlay');
 })
+
+
+$('a.footer-link').on("click", (e) => {
+  e.preventDefault();
+  utils.copyLink(e.target.getAttribute('href'));
+})

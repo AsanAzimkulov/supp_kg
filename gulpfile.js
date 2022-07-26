@@ -63,14 +63,19 @@ gulp.task('buildVendorScripts', function () {
     .pipe(gulp.dest('./bundle/vendor/js'));
 });
 
+gulp.task('generateUpperChunk', function () {
+  return gulp.src(['js/utils/utils.js', 'js/cart.js'])
+    .pipe(concat('upperChunk.js'))
+    .pipe(gulp.dest('bundle/chunks'))
+})
+
 gulp.task('buildOwnScripts', function () {
   return gulp.src(
-    ['js/**/*.js', '!js/utils/utils.js', '!js/cart.js']
+    ['js/**/*.js', '!js/utils/utils.js', '!js/cart.js', '!js/chunks/*.js']
   )
     .pipe(concat('main.js'))
     .pipe(sourcemaps.write('./maps'))
-    .pipe(header(fs.readFileSync('js/cart.js')))
-    .pipe(header(fs.readFileSync('js/utils/utils.js')))
+    .pipe(header(fs.readFileSync('bundle/chunks/upperChunk.js')))
     .pipe(gulp.dest('./bundle/js/'))
     .pipe(browserSync.stream());
 });
@@ -141,19 +146,20 @@ gulp.task('serve', gulp.series('sass', function () {
 
   gulp.watch('scss/**/*.scss', gulp.series('sass'));
   gulp.watch('**/*.html').on('change', browserSync.reload);
-  gulp.watch('js/**/*.js').on('change', gulp.series('buildOwnScripts'));
+  gulp.watch('js/**/*.js').on('change', gulp.series('generateUpperChunk', 'buildOwnScripts'));
 
 }));
 
 
 gulp.task('deployClean', function (done) {
-  del(['./bundle/js/main.js', './bundle/vendor/js/vendor.bundle.base.js'])
+  del(['./bundle/js/main.js', './bundle/vendor/js/vendor.bundle.base.js', './bundle/chunks'])
     .then(() => done())
 });
 
 /*sequence for building vendor scripts and styles*/
-gulp.task('bundleVendors', gulp.series('clean:vendors', 'buildVendorScripts', 'copyVendorScriptsSourcemaps', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'buildOwnScripts'));
-gulp.task('deployBuild', gulp.series('clean:vendors', 'buildVendorScripts', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'buildOwnScripts', 'minifyJsBundles', 'deployClean'));
+gulp.task('bundle', gulp.series('clean:vendors', 'buildVendorScripts', 'copyVendorScriptsSourcemaps', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts'));
+
+gulp.task('deployBuild', gulp.series('clean:vendors', 'buildVendorScripts', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts', 'minifyJsBundles', 'deployClean'));
 
 
 gulp.task('default', gulp.series('serve'));

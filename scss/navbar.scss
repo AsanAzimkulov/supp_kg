@@ -2,6 +2,11 @@
 	width: 100%;
 	padding: 1.875rem 1rem;
 	background: theme-color(primary);
+  &__mobile-menu-logo{
+    color: #3c37f1;
+    font-weight: 500;
+    margin-top: 0.5em;
+  }
 	@media (max-width: 991px) {
 		padding: .875rem 1rem;
 		height: $mobile-header-height;
