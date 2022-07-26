@@ -55,7 +55,7 @@ window.onload = function () {
     data['template_id'] = account.templateId;
     data['user_id'] = account.publicKey;
 
-    $.ajax('https://api.emailjs.com/api/v1.0/email/sed', {
+    $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json', // auto-detection
