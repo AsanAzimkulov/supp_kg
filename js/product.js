@@ -61,6 +61,7 @@ $('.product').on('click', function (e) {
 
 })
 
+
 $('.product-add-to-cart-button').on('click', function () {
   $('.fixed-cart').addClass('fixed-cart--shake');
 })

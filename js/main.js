@@ -33,7 +33,7 @@ $('#app-overlay').on('click', function () {
 })
 
 
-$('a.footer-link').on("click", (e) => {
+$('a.footer-link').on("click", function (e) {
   e.preventDefault();
   utils.copyLink(e.target.getAttribute('href'));
 })
