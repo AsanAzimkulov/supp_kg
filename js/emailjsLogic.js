@@ -19,7 +19,7 @@ window.onload = function () {
     event.preventDefault();
 
 
-    const account = window.emailJsAccounts.dev;
+    const account = window.emailJsAccounts.prod;
     const data = {
       template_params: {},
     };
