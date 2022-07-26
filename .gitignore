@@ -5,4 +5,7 @@ gulpfile.js
 package-lock.json
 vendors/
 scss/
+scss
+node_modules
 .vscode
+bundle/chunks

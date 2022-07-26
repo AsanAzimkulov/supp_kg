@@ -1,7 +1,23 @@
 
 window.onload = function () {
+  window.emailJsAccounts = {
+    dev: {
+      publicKey: 'vqBagreTqyIsDjOsq',
+      serviceId: 'service_9mt3fe5',
+      templateId: 'template_w7s8t38'
+    },
+    prod: {
+      publicKey: 'objDnN9KLt6PMPx-O',
+      serviceId: 'service_shnb0y3',
+      templateId: 'template_n5c9a8q',
+    }
+  }
+
+  emailjs.init(window.emailJsAccounts.dev.publicKey);
+
   document.getElementById('contact-form').addEventListener('submit', function (event) {
     event.preventDefault();
+
 
     const account = window.emailJsAccounts.dev;
     const data = {
@@ -9,13 +25,12 @@ window.onload = function () {
     };
     const form = this;
 
-    cart = window.localStorage.getItem('cart');
-    if (cart) {
-      const cartObjects = JSON.parse(cart);
-      const total = cartObjects.reduce((acc, obj) => (obj.total += acc), 0);
-
+    cartJson = window.localStorage.getItem('cart');
+    if (cartJson) {
+      const cartObjects = JSON.parse(cartJson);
+      const total = cartObjects.reduce((acc, obj) => (obj.total + acc), 0);
       const objectsInfo = cartObjects.map((obj, order, arr) => {
-        let stringifiedInfo = `Наименование товара: ${obj.name}, количество: ${obj.count}шт/${obj.total}сом (Цена 1шт - ${obj.price}сом)`;
+        let stringifiedInfo = `Наименование товара: ${obj.name}, количество: ${obj.count}шт/${obj.count * obj.price}сом (Цена 1шт - ${obj.price}сом)`;
         if (order < (arr.length - 1)) {
           stringifiedInfo += ';';
         } else {
@@ -40,7 +55,7 @@ window.onload = function () {
     data['template_id'] = account.templateId;
     data['user_id'] = account.publicKey;
 
-    $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+    $.ajax('https://api.emailjs.com/api/v1.0/email/sed', {
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json', // auto-detection
@@ -54,8 +69,14 @@ window.onload = function () {
           marginTop: '50px'
         }
       }).showToast();
+      form.reset();
+      cart.clearItems();
     }).fail(function (error) {
       console.log('FAILED...', error.responseText);
+      $('#contact-form-error-popup').addClass('d-block');
+      $('body').addClass("overlay");
+      $('body').addClass('overflow-y-hidden');
+      $('.navbar').addClass('navbar-hidden')
       Toastify({
         text: "Что-то пошло не так. Свяжитесь с нами по телефону или в соцсетях.",
         className: "error",
@@ -63,6 +84,11 @@ window.onload = function () {
           background: 'linear-gradient(211deg, rgba(162,154,195,1) 0%, rgba(226,36,36,1) 100%)',
         }
       }).showToast();
+      const cart = utils.getStringifiedCart();
+      const href = e.currentTarget.getAttribute('href');
+      $('#contact-form-error-popup .socials-fix a').each(function () {
+        this.setAttribute('href', href + cart);
+      })
     });
   });
 

@@ -1,0 +1,24 @@
+#contact-form-error-popup{
+  padding-bottom: 2.3em;
+  @media(max-width: 498px){
+    .socials-fix a, .socials-fix img{
+      width: 100%;
+    }
+    .social-link-gmail {
+      display: block;
+      margin: -1.6em 0em -2.2em -1em;
+      }
+  }
+  .marked {
+    color: #0056b3;
+    cursor: pointer;
+    &:hover{
+      border-bottom: 2px solid  #0056b3;
+      filter: brightness(120%);
+    }
+    &:active{
+      filter: brightness(85%);
+    }
+  }
+
+}
