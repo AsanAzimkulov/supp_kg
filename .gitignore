@@ -9,3 +9,4 @@ scss
 node_modules
 .vscode
 bundle/chunks
+js
