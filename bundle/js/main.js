@@ -13,6 +13,17 @@ const utils = {
       }
     }).showToast();
   },
+  copyText(text, message) {
+    navigator.clipboard.writeText(text);
+    Toastify({
+      text: message,
+      className: "info",
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+        marginTop: '50px'
+      }
+    }).showToast();
+  },
   getStringifiedCart() {
     const cartJson = window.localStorage.getItem('cart');
     if (cartJson) {
@@ -284,10 +295,28 @@ document.addEventListener('DOMContentLoaded', function () {
   e.preventDefault();
   const cart = utils.getStringifiedCart();
   const href = e.currentTarget.getAttribute('href');
-  e.currentTarget.setAttribute('href', href + cart);
-  window.location.href = href + cart;
-
+  if (href.includes("telegram") || href.includes("instagram")) { //not supported direct message link
+    utils.copyText(cart, 'Корзина скопирована')
+    setTimeout(() => window.location.href = href, 700)
+  } else {
+    e.currentTarget.setAttribute('href', href + cart);
+    window.location.href = href + cart;
+  }
 })
+
+$('#contact-form-error-popup .marked').on('click', function () {
+  const cart = utils.getStringifiedCart();
+  utils.copyText(cart, 'Корзина скопирована')
+})
+
+$('#contact-form-error-popup .close-white-popup').on('click', () => {
+  $('#contact-form-error-popup').removeClass('d-block');
+})
+
+$('#app-overlay').on('click', function () {
+  $('#contact-form-error-popup').removeClass('d-block');
+})
+
 
 
 window.onload = function () {
@@ -346,7 +375,7 @@ window.onload = function () {
     data['template_id'] = account.templateId;
     data['user_id'] = account.publicKey;
 
-    $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+    $.ajax('https://api.emailjs.com/api/v1.0/email/sed', {
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json', // auto-detection
@@ -364,6 +393,10 @@ window.onload = function () {
       cart.clearItems();
     }).fail(function (error) {
       console.log('FAILED...', error.responseText);
+      $('#contact-form-error-popup').addClass('d-block');
+      $('body').addClass("overlay");
+      $('body').addClass('overflow-y-hidden');
+      $('.navbar').addClass('navbar-hidden')
       Toastify({
         text: "Что-то пошло не так. Свяжитесь с нами по телефону или в соцсетях.",
         className: "error",
@@ -436,6 +469,7 @@ $("#to-checkout").click(function () {
 
 $('#app-overlay').on('click', function () {
   $('body').removeClass('overlay');
+  $('body').removeClass('overflow-y-hidden');
 })
 
 
@@ -576,11 +610,11 @@ $('.product').on('click', function (e) {
     e.stopImmediatePropagation();
   }
 
-}).on('click', 'div', function (e) {
-  // clicked on descendant div
+})
 
-  e.stopPropagation();
-});
+$('.product-add-to-cart-button').on('click', function () {
+  $('.fixed-cart').addClass('fixed-cart--shake');
+})
 
 
 (function ($) {

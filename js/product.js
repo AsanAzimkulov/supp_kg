@@ -59,9 +59,9 @@ $('.product').on('click', function (e) {
     e.stopImmediatePropagation();
   }
 
-}).on('click', 'div', function (e) {
-  // clicked on descendant div
+})
 
-  e.stopPropagation();
-});
+$('.product-add-to-cart-button').on('click', function () {
+  $('.fixed-cart').addClass('fixed-cart--shake');
+})
 

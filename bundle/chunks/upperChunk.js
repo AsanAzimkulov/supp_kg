@@ -13,6 +13,17 @@ const utils = {
       }
     }).showToast();
   },
+  copyText(text, message) {
+    navigator.clipboard.writeText(text);
+    Toastify({
+      text: message,
+      className: "info",
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+        marginTop: '50px'
+      }
+    }).showToast();
+  },
   getStringifiedCart() {
     const cartJson = window.localStorage.getItem('cart');
     if (cartJson) {

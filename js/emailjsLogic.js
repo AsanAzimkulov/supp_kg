@@ -55,7 +55,7 @@ window.onload = function () {
     data['template_id'] = account.templateId;
     data['user_id'] = account.publicKey;
 
-    $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+    $.ajax('https://api.emailjs.com/api/v1.0/email/sed', {
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json', // auto-detection
@@ -73,6 +73,10 @@ window.onload = function () {
       cart.clearItems();
     }).fail(function (error) {
       console.log('FAILED...', error.responseText);
+      $('#contact-form-error-popup').addClass('d-block');
+      $('body').addClass("overlay");
+      $('body').addClass('overflow-y-hidden');
+      $('.navbar').addClass('navbar-hidden')
       Toastify({
         text: "Что-то пошло не так. Свяжитесь с нами по телефону или в соцсетях.",
         className: "error",

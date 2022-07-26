@@ -29,6 +29,7 @@ $("#to-checkout").click(function () {
 
 $('#app-overlay').on('click', function () {
   $('body').removeClass('overlay');
+  $('body').removeClass('overflow-y-hidden');
 })
 
 
