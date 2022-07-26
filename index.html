@@ -9,30 +9,6 @@
   <link rel="shortcut icon" href="images/logobad.svg" />
   <link rel="stylesheet" type="text/css" href="bundle/vendor/css/vendor.style.css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
-  <script src="https://www.jsdelivr.com/package/npm/emailjs"></script>
-  <script>
-    window.emailJsAccounts = {
-      dev: {
-        publicKey: 'vqBagreTqyIsDjOsq',
-        serviceId: 'service_9mt3fe5',
-        templateId: 'template_w7s8t38'
-      },
-      prod: {
-        publicKey: 'objDnN9KLt6PMPx-O',
-        serviceId: 'service_shnb0y3',
-        templateId: 'template_n5c9a8q',
-      }
-    }
-  </script>
-  <script type="text/javascript">
-    window.onload = function () {
-      (function () {
-        // https://dashboard.emailjs.com/admin/account
-        emailjs.init(window.emailJsAccounts.dev.publicKey);
-      })();
-    };
-  </script>
-  <script src="js/emailjsLogic.js"></script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -527,13 +503,23 @@
           <div class="col-sm-6">
             <div class="row">
               <div class="col-sm-4 beg-footer-row">
-                <h6 class="footer-title">Social Share</h6>
+                <h6 class="footer-title">Поделиться:</h6>
                 <ul class="list-footer">
-                  <li><a href="" class="footer-link">Home</a></li>
-                  <li><a href="" class="footer-link">About</a></li>
-                  <li><a href="" class="footer-link">Services</a></li>
-                  <li><a href="" class="footer-link">Portfolio</a></li>
-                  <li><a href="" class="footer-link">Contact</a></li>
+                  <li><a
+                      href="https://telegram.me/share/url?url=https://telegram.me/share/url?url=<URL>&text=Магазин Бадов г.Бишкек:%0ahttps://supp-kg.vercel.app/#home"
+                      class="footer-link">Главная</a></li>
+                  <li><a
+                      href="https://telegram.me/share/url?url=https://telegram.me/share/url?url=<URL>&text=Магазин Бадов г.Бишкек, страница 'О нас':%0ahttps://supp-kg.vercel.app/#about"
+                      class="footer-link">О нас</a></li>
+                  <li><a
+                      href="https://telegram.me/share/url?url=https://telegram.me/share/url?url=<URL>&text=Магазин Бадов г.Бишкек, про Бады:%0ahttps://supp-kg.vercel.app/#product-info"
+                      class="footer-link">Про Бады</a></li>
+                  <li><a
+                      href="https://telegram.me/share/url?url=https://telegram.me/share/url?url=<URL>&text=Магазин Бадов г.Бишкек, Список товаров:%0ahttps://supp-kg.vercel.app/#products"
+                      class="footer-link">Товары</a></li>
+                  <li><a
+                      href="https://telegram.me/share/url?url=https://telegram.me/share/url?url=<URL>&text=Магазин Бадов г.Бишкек, оформить заказ:%0ahttps://supp-kg.vercel.app/#contacts"
+                      class="footer-link">Оформить заказ</a></li>
                 </ul>
               </div>
             </div>

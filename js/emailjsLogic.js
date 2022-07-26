@@ -1,7 +1,23 @@
 
 window.onload = function () {
+  window.emailJsAccounts = {
+    dev: {
+      publicKey: 'vqBagreTqyIsDjOsq',
+      serviceId: 'service_9mt3fe5',
+      templateId: 'template_w7s8t38'
+    },
+    prod: {
+      publicKey: 'objDnN9KLt6PMPx-O',
+      serviceId: 'service_shnb0y3',
+      templateId: 'template_n5c9a8q',
+    }
+  }
+
+  emailjs.init(window.emailJsAccounts.dev.publicKey);
+  
   document.getElementById('contact-form').addEventListener('submit', function (event) {
     event.preventDefault();
+
 
     const account = window.emailJsAccounts.dev;
     const data = {
@@ -9,13 +25,12 @@ window.onload = function () {
     };
     const form = this;
 
-    cart = window.localStorage.getItem('cart');
-    if (cart) {
-      const cartObjects = JSON.parse(cart);
+    cartJson = window.localStorage.getItem('cart');
+    if (cartJson) {
+      const cartObjects = JSON.parse(cartJson);
       const total = cartObjects.reduce((acc, obj) => (obj.total += acc), 0);
-
       const objectsInfo = cartObjects.map((obj, order, arr) => {
-        let stringifiedInfo = `Наименование товара: ${obj.name}, количество: ${obj.count}шт/${obj.total}сом (Цена 1шт - ${obj.price}сом)`;
+        let stringifiedInfo = `Наименование товара: ${obj.name}, количество: ${obj.count}шт/${obj.count * obj.price}сом (Цена 1шт - ${obj.price}сом)`;
         if (order < (arr.length - 1)) {
           stringifiedInfo += ';';
         } else {
@@ -54,6 +69,8 @@ window.onload = function () {
           marginTop: '50px'
         }
       }).showToast();
+      form.reset();
+      cart.clearItems();
     }).fail(function (error) {
       console.log('FAILED...', error.responseText);
       Toastify({

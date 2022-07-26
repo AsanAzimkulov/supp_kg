@@ -9,6 +9,9 @@ var concat = require('gulp-concat');
 var merge = require('merge-stream');
 var rename = require("gulp-rename");
 var header = require("gulp-header");
+var minify = require('gulp-minify');
+var uglify = require('gulp-uglify');
+const javascriptObfuscator = require('gulp-javascript-obfuscator');
 var fs = require('fs');
 
 
@@ -50,9 +53,10 @@ gulp.task('buildVendorScripts', function () {
     './node_modules/jquery/dist/jquery.min.js',
     './node_modules/popper.js/dist/umd/popper.min.js',
     './node_modules/bootstrap/dist/js/bootstrap.min.js',
-    './node_modules/owl.carousel/dist/owl.carousel.js',
+    './node_modules/owl.carousel/dist/owl.carousel.min.js',
     './node_modules/aos/dist/aos.js',
     './node_modules/jquery.flipster/dist/jquery.flipster.min.js',
+    './node_modules/emailjs-com/dist/email.min.js',
     './node_modules/toastify-js/src/toastify.js',
   ])
     .pipe(concat('vendor.bundle.base.js'))
@@ -61,9 +65,11 @@ gulp.task('buildVendorScripts', function () {
 
 gulp.task('buildOwnScripts', function () {
   return gulp.src(
-    ['js/**/*.js', '!js/utils/utils.js']
+    ['js/**/*.js', '!js/utils/utils.js', '!js/cart.js']
   )
     .pipe(concat('main.js'))
+    .pipe(sourcemaps.write('./maps'))
+    .pipe(header(fs.readFileSync('js/cart.js')))
     .pipe(header(fs.readFileSync('js/utils/utils.js')))
     .pipe(gulp.dest('./bundle/js/'))
     .pipe(browserSync.stream());
@@ -80,17 +86,11 @@ gulp.task('buildVendorStyles', function () {
 });
 
 
-/*gulp.task('copyAddonsScripts', function () {
-  var aScript1 = gulp.src(['./node_modules/owl.carousel/dist/owl.carousel.js'])
-    .pipe(gulp.dest('./vendors/owl.carousel/js'));
-  var aScript2 = gulp.src(['./node_modules/aos/dist/aos.js'])
-    .pipe(gulp.dest('./vendors/aos/js'));
-  var aScript3 = gulp.src(['./node_modules/jquery.flipster/dist/jquery.flipster.min.js'])
-    .pipe(gulp.dest('./vendors/jquery-flipster/js'));
-  var aScript4 = gulp.src(['./node_modules/toastify-js/src/toastify.js'])
-    .pipe(gulp.dest('./vendors/toastify-js/js'));
-  return merge(aScript1, aScript2, aScript3, aScript4);
-});*/
+gulp.task('copyVendorScriptsSourcemaps', function () {
+  var aScript1 = gulp.src(['./node_modules/bootstrap/dist/js/bootstrap.min.js.map'])
+    .pipe(gulp.dest('bundle/vendor/js'));
+  return aScript1;
+});
 
 gulp.task('copyAddonsStyles', function () {
   var aStyle1 = gulp.src(['./node_modules/owl.carousel/dist/assets/owl.carousel.css'])
@@ -116,6 +116,19 @@ gulp.task('renameFont', function () {
     .pipe(gulp.dest('./bundle/vendor/fonts/'));
 });
 
+
+
+gulp.task('minifyJsBundles', function () {
+  return gulp.src(['./bundle/js/main.js', './bundle/vendor/js/vendor.bundle.base.js'], { base: "./" })
+    .pipe(minify({
+      ext: {
+        min: '.min.js'
+      },
+    }))
+    .pipe(javascriptObfuscator({ compact: true }))
+    .pipe(gulp.dest('./'));
+})
+
 // Static Server + watching scss/html/js files
 
 gulp.task('serve', gulp.series('sass', function () {
@@ -132,8 +145,15 @@ gulp.task('serve', gulp.series('sass', function () {
 
 }));
 
+
+gulp.task('deployClean', function (done) {
+  del(['./bundle/js/main.js', './bundle/vendor/js/vendor.bundle.base.js'])
+    .then(() => done())
+});
+
 /*sequence for building vendor scripts and styles*/
-gulp.task('bundleVendors', gulp.series('clean:vendors', 'buildVendorScripts', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'buildOwnScripts'));
+gulp.task('bundleVendors', gulp.series('clean:vendors', 'buildVendorScripts', 'copyVendorScriptsSourcemaps', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'buildOwnScripts'));
+gulp.task('deployBuild', gulp.series('clean:vendors', 'buildVendorScripts', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'buildOwnScripts', 'minifyJsBundles', 'deployClean'));
 
 
 gulp.task('default', gulp.series('serve'));

@@ -5,14 +5,14 @@ $(".fixed-cart").on('click', function () {
   $('body').addClass('overflow-y-hidden');
 });
 
-$(".cart-wrapper, .close-cart").on('click', function () {
+$(".cart-wrapper, .close-cart, #to-checkout").on('click', function () {
   $('.navbar').removeClass('navbar-hidden')
   $('.cart-wrapper').removeClass('d-block');
   $('body').removeClass("overlay");
   $('body').removeClass('overflow-y-hidden');
 });
 
-$('.cart').on("click", (e) => e.stopPropagation())
+$('.cart').on("click", (e) => e.stopPropagation());
 
 $("#to-checkout").click(function () {
   $('.navbar').removeClass('navbar-hidden')
