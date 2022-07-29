@@ -51,11 +51,12 @@ window.onload = function () {
     data.template_params['customer_name'] = form.querySelector('.customer-name').value || 'Имя не указано.';
     data.template_params['contact_way'] = form.querySelector('.contact-way').value;
     data.template_params['message'] = form.querySelector('.message').value || 'сообщение не оставлено.';
+
     data['service_id'] = account.serviceId;
     data['template_id'] = account.templateId;
     data['user_id'] = account.publicKey;
 
-    $.ajax('https://api.emailjs.com/api/v1.0/email/send', {
+    $.ajax('https://api.emailjs.com/api/v1.0/email/sed', {
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json', // auto-detection

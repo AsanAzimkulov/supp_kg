@@ -1,6 +1,7 @@
 $('#contact-form-error-popup .socials-fix a').on("click", function (e) {
   e.preventDefault();
-  const cart = utils.getStringifiedCart();
+  const cart = utils.getStringifiedShortCart();
+
   const href = e.currentTarget.getAttribute('href');
   if (href.includes("telegram") || href.includes("instagram")) { //not supported direct message link
     utils.copyText(cart, 'Корзина скопирована')

@@ -45,6 +45,27 @@ const utils = {
       return 'Корзина пуста.'
     }
   },
+  getStringifiedShortCart() {
+    const cartJson = window.localStorage.getItem('cart');
+    if (cartJson) {
+      const cartObjects = JSON.parse(cartJson);
+      const total = cartObjects.reduce((acc, obj) => (obj.total + acc), 0);
+      const objectsInfo = cartObjects.map((obj, order, arr) => {
+        let stringifiedInfo = 'id: ' + order + '/ ' + obj.count + 'шт/' + (obj.count * obj.price) + 'сом (1шт/' + obj.price + 'сом)';
+        if (order < (arr.length - 1)) {
+          stringifiedInfo += ';';
+        } else {
+          stringifiedInfo += '.';
+        }
+
+        return stringifiedInfo;
+      });
+      objectsInfo.push('Стоимость заказа: ' + total + 'сом.');
+      return objectsInfo.join('\n');
+    } else {
+      return 'Корзина пуста.'
+    }
+  },
   insertCartInLink(link) {
     const cart = utils.getStringifiedCart();
     return link + cart;

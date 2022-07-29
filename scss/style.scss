@@ -741,84 +741,8 @@ nav {
 }
 
 
-/* UI Kit */
 
 
-.white-popup-wrapper {
-  position: fixed;
-  z-index: 100;
-  display: none;
-  top: 8%;
-  left: calc(50% - 37.5%) !important;
-  display: none;
-  height: 100vh;
-  overflow-y: auto;
-}
-
-.white-popup {
-  box-shadow: 0 0 10px #DDD;
-  padding: 40px;
-  background: white;
-  width: 75vw;
-  min-height: 400px;
-  pointer-events: all;
-  padding-bottom: 17vh;
-
-
-}
-
-
-
-.close-white-popup {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 2.0em;
-}
-
-
-@media(max-width: 768px) {
-
-
-  .close-white-popup {
-    font-size: 2.2em;
-  }
-
-  .white-popup {
-    width: 85vw;
-  }
-
-  .white-popup-wrapper {
-    left: calc(50% - 42.5%) !important;
-  }
-}
-
-@media(max-width: 500px) {
-
-
-  .close-white-popup {
-    font-size: 2.4em;
-  }
-}
-
-
-@media(max-width: 500px) {
-  .white-popup-wrapper {
-    left: calc(50% - 44%);
-  }
-}
-
-
-@media(min-width: 2000px) {
-  .white-popup-wrapper {
-    left: calc(50% - 40%);
-  }
-}
-
-@media(min-width: 2500px) {
-  .white-popup-wrapper {
-    left: calc(50% - 39%);
-  }
-}
 
 @import '_fixed-cart.scss';
 @import '_product-popup.scss';
@@ -833,3 +757,7 @@ nav {
 @import "components/owl-carousel";
 @import "components/flipster";
 
+
+/* UI Kit */
+
+@import 'uikit/_white-popup.scss';
