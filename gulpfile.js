@@ -157,9 +157,9 @@ gulp.task('deployClean', function (done) {
 });
 
 /*sequence for building vendor scripts and styles*/
-gulp.task('bundle', gulp.series('clean:vendors', 'buildVendorScripts', 'copyVendorScriptsSourcemaps', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts'));
+gulp.task('bundle', gulp.series('clean:vendors', 'buildVendorScripts', 'sass', 'copyVendorScriptsSourcemaps', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts'));
 
-gulp.task('deployBuild', gulp.series('clean:vendors', 'buildVendorScripts', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts', 'minifyJsBundles', 'deployClean'));
+gulp.task('deployBuild', gulp.series('clean:vendors', 'buildVendorScripts', 'sass', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts', 'minifyJsBundles', 'deployClean'));
 
 
 gulp.task('default', gulp.series('serve'));

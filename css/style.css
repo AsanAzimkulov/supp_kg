@@ -20001,6 +20001,7 @@ nav {
   .white-popup {
     width: 85vw;
     padding: 20px;
+    padding-bottom: 17%;
   }
   .white-popup-wrapper {
     left: calc(50% - 42.5%) !important;
