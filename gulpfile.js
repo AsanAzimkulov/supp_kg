@@ -24,6 +24,17 @@ gulp.task('sass', function () {
     .pipe(browserSync.stream());
 });
 
+gulp.task('sassBundle', function () {
+  return gulp.src('./scss/**/style.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
+    .pipe(sourcemaps.write('./maps'))
+    .pipe(gulp.dest('./css'));
+});
+
+
+
+
 
 
 // Static Server without watching scss files
@@ -157,9 +168,9 @@ gulp.task('deployClean', function (done) {
 });
 
 /*sequence for building vendor scripts and styles*/
-gulp.task('bundle', gulp.series('clean:vendors', 'buildVendorScripts', 'sass', 'copyVendorScriptsSourcemaps', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts'));
+gulp.task('bundle', gulp.series('clean:vendors', 'buildVendorScripts', 'sassBundle', 'copyVendorScriptsSourcemaps', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts'));
 
-gulp.task('deployBuild', gulp.series('clean:vendors', 'buildVendorScripts', 'sass', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts', 'minifyJsBundles', 'deployClean'));
+gulp.task('deployBuild', gulp.series('clean:vendors', 'buildVendorScripts', 'sassBundle', 'copyAddonsStyles', 'buildVendorStyles', 'renameFont', 'generateUpperChunk', 'buildOwnScripts', 'minifyJsBundles', 'deployClean'));
 
 
 gulp.task('default', gulp.series('serve'));
