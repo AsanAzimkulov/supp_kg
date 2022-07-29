@@ -45,9 +45,11 @@ $('.product').on('click', function (e) {
   if (e.target.classList.contains('product-title') || e.target.classList.contains('product-image')) {
     generateProductPage(getProductInfo(this));
 
+
     $('body').addClass('overlay');
     $('body').addClass('overflow-y-hidden');
     $('#product-popup').addClass('d-block')
+    document.getElementById('product-popup').scrollTo(0, 0);
     $('.navbar').addClass("navbar-hidden");
 
     $('#app-overlay, .close-white-popup').on('click', function () {
